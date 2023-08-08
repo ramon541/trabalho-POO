@@ -8,7 +8,7 @@ package trabalhopoo;
  *
  * @author Ramon
  */
-public class TrabalhoPOO {
+public class Main {
 
     /**
      * @param args the command line arguments
