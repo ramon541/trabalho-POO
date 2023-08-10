@@ -4,10 +4,6 @@
  */
 package Controllers;
 
-/**
- *
- * @author Ramon
- */
-public class NewClass {
+public class Pessoa {
     
 }
