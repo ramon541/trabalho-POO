@@ -4,6 +4,6 @@
  */
 package Controllers;
 
-public class AlimentoRefeicao {
+public class SeguirController {
     
 }

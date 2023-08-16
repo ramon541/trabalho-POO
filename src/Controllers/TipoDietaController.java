@@ -4,6 +4,10 @@
  */
 package Controllers;
 
-public class Post {
+/**
+ *
+ * @author grao0139
+ */
+public class TipoDietaController {
     
 }

@@ -4,6 +4,6 @@
  */
 package Controllers;
 
-public class Receita {
+public class PreferenciaController {
     
 }

@@ -4,6 +4,10 @@
  */
 package Controllers;
 
-public class Preferencia {
+/**
+ *
+ * @author grao0139
+ */
+public class MensagemController {
     
 }

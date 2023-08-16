@@ -4,6 +4,6 @@
  */
 package Controllers;
 
-public class TipoUsuario {
+public class PostController {
     
 }

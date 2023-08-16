@@ -4,10 +4,6 @@
  */
 package Controllers;
 
-/**
- *
- * @author grao0139
- */
-public class Mensagem {
+public class RefeicaoController {
     
 }

@@ -4,6 +4,6 @@
  */
 package Controllers;
 
-public class Pessoa {
+public class PessoaController {
     
 }

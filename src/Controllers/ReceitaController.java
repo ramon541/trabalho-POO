@@ -4,6 +4,6 @@
  */
 package Controllers;
 
-public class Seguir {
+public class ReceitaController {
     
 }
