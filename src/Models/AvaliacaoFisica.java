@@ -8,20 +8,23 @@ import java.util.Date;
 
 public class AvaliacaoFisica {
     private int id;
-    private String pessoa;
+    private Pessoa pessoa;
+    private double fatorTaxaAtividade;
     private double peso;
     private double altura;
     private int idade;
     private double pescoco;
     private double cintura;
     private double quadril;
+    private Date dataCriacao;
+    private Date dataModificacao;
+    private double imc;
+    private double tmb;
+    private double bodyFat;
     private double massaGorda;
     private double massaMagra;
-    private  Date dataCriacao;
-    private Date dataModificacao;
 
-    // criar métodos -> IMC, TMB, BF, body fat em kg, lean muscle em kg
-
+    //Get and Set *************************
     public int getId() {
         return id;
     }
@@ -30,14 +33,13 @@ public class AvaliacaoFisica {
         this.id = id;
     }
 
-    public String getPessoa() {
-        return pessoa;
+    public double getFatorTaxaAtividade() {
+        return fatorTaxaAtividade;
     }
 
-    public void setPessoa(String pessoa) {
-        this.pessoa = pessoa;
+    public void setFatorTaxaAtividade(double fatorTaxaAtividade) {
+        this.fatorTaxaAtividade = fatorTaxaAtividade;
     }
-
     public double getPeso() {
         return peso;
     }
@@ -86,22 +88,6 @@ public class AvaliacaoFisica {
         this.quadril = quadril;
     }
 
-    public double getMassaGorda() {
-        return massaGorda;
-    }
-
-    public void setMassaGorda(double massaGorda) {
-        this.massaGorda = massaGorda;
-    }
-
-    public double getMassaMagra() {
-        return massaMagra;
-    }
-
-    public void setMassaMagra(double massaMagra) {
-        this.massaMagra = massaMagra;
-    }
-
     public Date getDataCriacao() {
         return dataCriacao;
     }
@@ -117,4 +103,40 @@ public class AvaliacaoFisica {
     public void setDataModificacao(Date dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
+    public double getBodyFat() {
+        return bodyFat;
+    }
+    public double getMassaGorda() {
+        return massaGorda;
+    }
+
+    public double getMassaMagra() {
+        return massaMagra;
+    }
+    //Métodos *************************
+
+    public void CalcularIMC(){
+        this.imc = this.peso / Math.pow(this.altura, 2);
+    }
+
+    public void CalcularTMB(){
+        if (pessoa.getSexo() == "Masculino"){
+            this.tmb = this.fatorTaxaAtividade * (66 + ((13.7 * this.peso) + ( 5 * this.altura) - (6.8 * this.idade)));
+        }else {
+            this.tmb = this.fatorTaxaAtividade * (655 + ((9.6 * this.peso) + ( 1.8 * this.altura) - (4.7 * this.idade)));
+        }
+    }
+
+    public void CalcularBodyFat(){
+        if(pessoa.getSexo() == "Masculino"){
+            this.bodyFat = (86.010 * Math.log10(this.cintura - this.pescoco)) - (70.041 * Math.log10(this.altura)) + 36.76;
+        }else {
+
+            this.bodyFat = (163.205 * Math.log10(this.cintura + this.quadril - this.pescoco)) - (97.684 * Math.log10(this.altura)) - 78.387;
+        }
+        this.massaGorda = this.peso * (this.bodyFat/100);
+        this.massaMagra = this.peso - this.massaGorda;
+    }
+
+    //Relatórios *************************
 }
