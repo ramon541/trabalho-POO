@@ -22,14 +22,6 @@ public class AvaliacaoFisica {
 
     // criar métodos -> IMC, TMB, BF, body fat em kg, lean muscle em kg
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getPessoa() {
         return pessoa;
     }
