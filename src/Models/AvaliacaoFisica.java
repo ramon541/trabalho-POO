@@ -29,10 +29,6 @@ public class AvaliacaoFisica {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public double getFatorTaxaAtividade() {
         return fatorTaxaAtividade;
     }
@@ -120,7 +116,7 @@ public class AvaliacaoFisica {
     }
 
     public void CalcularTMB(){
-        if (pessoa.getSexo() == "Masculino"){
+        if (pessoa.getSexo().equals("Masculino")){
             this.tmb = this.fatorTaxaAtividade * (66 + ((13.7 * this.peso) + ( 5 * this.altura) - (6.8 * this.idade)));
         }else {
             this.tmb = this.fatorTaxaAtividade * (655 + ((9.6 * this.peso) + ( 1.8 * this.altura) - (4.7 * this.idade)));
@@ -128,7 +124,7 @@ public class AvaliacaoFisica {
     }
 
     public void CalcularBodyFat(){
-        if(pessoa.getSexo() == "Masculino"){
+        if(pessoa.getSexo().equals("Masculino")){
             this.bodyFat = (86.010 * Math.log10(this.cintura - this.pescoco)) - (70.041 * Math.log10(this.altura)) + 36.76;
         }else {
 

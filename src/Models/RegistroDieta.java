@@ -17,14 +17,6 @@ public class RegistroDieta {
     private Date dataCriacao;
     private Date dataModificacao;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public Pessoa getPessoa() {
         return pessoa;
     }

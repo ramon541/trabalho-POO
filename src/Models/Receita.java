@@ -13,14 +13,6 @@ public class Receita {
     private Date dataCriacao;
     private Date dataModificacao;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -91,5 +83,9 @@ public class Receita {
 
     public void setDataModificacao(Date dataModificacao) {
         this.dataModificacao = dataModificacao;
+    }
+
+    public double calculateCalories() {
+        return ((4 * this.carboidratos) + (4 * this.proteinas) + (9 * this.gorduras));
     }
 }
