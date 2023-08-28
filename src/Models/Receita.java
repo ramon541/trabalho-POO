@@ -84,4 +84,8 @@ public class Receita {
     public void setDataModificacao(Date dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
+
+    public double calculateCalories() {
+        return ((4 * this.carboidratos) + (4 * this.proteinas) + (9 * this.gorduras));
+    }
 }
