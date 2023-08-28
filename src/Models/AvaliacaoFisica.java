@@ -40,6 +40,7 @@ public class AvaliacaoFisica {
     public void setFatorTaxaAtividade(double fatorTaxaAtividade) {
         this.fatorTaxaAtividade = fatorTaxaAtividade;
     }
+
     public double getPeso() {
         return peso;
     }
@@ -103,9 +104,11 @@ public class AvaliacaoFisica {
     public void setDataModificacao(Date dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
+
     public double getBodyFat() {
         return bodyFat;
     }
+
     public double getMassaGorda() {
         return massaGorda;
     }
@@ -113,6 +116,7 @@ public class AvaliacaoFisica {
     public double getMassaMagra() {
         return massaMagra;
     }
+
     //Métodos *************************
 
     public void CalcularIMC(){
@@ -139,4 +143,5 @@ public class AvaliacaoFisica {
     }
 
     //Relatórios *************************
+
 }
