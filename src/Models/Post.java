@@ -3,11 +3,22 @@ package Models;
 import java.util.Date;
 
 public class Post {
-    private int id;
+    protected long id;
+
+    private static long serial;
     private String pessoa;
     private String conteudoDaMensagem;
     private Date dataCriacao;
     private Date dataModificacao;
+
+    public Post(){
+        serial++;
+        this.id = serial;
+    }
+
+    public long getId(){
+        return this.id;
+    }
 
     public String getPessoa() {
         return pessoa;

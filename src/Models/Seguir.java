@@ -3,12 +3,21 @@ package Models;
 import java.util.Date;
 
 public class Seguir {
-    private int id;
+    protected long id;
+    private static long serial;
     private String pessoaOrigem;
     private String pessoaSeguindo;
     private Date dataCriacao;
     private Date dataModificacao;
 
+    public Seguir(){
+        serial++;
+        this.id = serial;
+    }
+
+    public long getId(){
+        return this.id;
+    }
     public String getPessoaOrigem() {
         return pessoaOrigem;
     }

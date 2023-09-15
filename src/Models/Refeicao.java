@@ -3,7 +3,8 @@ package Models;
 import java.util.Date;
 
 public class Refeicao {
-    private int id;
+    protected long id;
+    private static long serial;
     private String dieta;
     private double carboidrato;
     private double proteina;
@@ -12,6 +13,14 @@ public class Refeicao {
     private String nomeDaRefeicao;
     private Date dataCriacao;
     private Date dataModificacao;
+    public Refeicao(){
+        serial++;
+        this.id = serial;
+    }
+
+    public long getId(){
+        return this.id;
+    }
 
     public String getDieta() {
         return dieta;

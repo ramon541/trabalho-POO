@@ -3,13 +3,23 @@ package Models;
 import java.util.Date;
 
 public class TipoDieta {
-    private int id;
+    protected long id;
+    private static long serial;
     private String nome;
     private double carboidrato;
     private double proteina;
     private double gordura;
     private Date dataCriacao;
     private Date dataModificacao;
+
+    public TipoDieta(){
+        serial++;
+        this.id = serial;
+    }
+
+    public long getId() {
+        return this.id;
+    }
 
     public String getNome() {
         return nome;

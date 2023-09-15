@@ -2,7 +2,9 @@ package Models;
 
 import java.util.Date;
 public class Receita {
-    private int id;
+
+    protected long id;
+    private static long serial;
     private String nome;
     private double carboidratos;
     private double proteinas;
@@ -13,6 +15,14 @@ public class Receita {
     private Date dataCriacao;
     private Date dataModificacao;
 
+    public Receita() {
+        serial++;
+        this.id = serial;
+    }
+
+    public long getId() {
+        return this.id;
+    }
     public String getNome() {
         return nome;
     }

@@ -4,6 +4,8 @@
  */
 package Views;
 
+import Models.Pessoa;
+
 public class View {
 
     public static void main(String[] args) {

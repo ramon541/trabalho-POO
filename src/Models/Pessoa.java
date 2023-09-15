@@ -3,7 +3,8 @@ package Models;
 import java.util.Date;
 
 public class Pessoa {
-    private int id;
+    protected long id;
+    private static long serial;
     private String nome;
     private String sexo;
     private Date nascimento;
@@ -13,6 +14,14 @@ public class Pessoa {
     private Date dataCriacao;
     private Date dataModificacao;
 
+    public Pessoa() {
+        serial++;
+        this.id = serial;
+    }
+
+    public long getId() {
+        return id;
+    }
     public String getNome() {
         return nome;
     }
