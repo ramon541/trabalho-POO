@@ -7,7 +7,8 @@ package Models;
 import java.util.Date;
 
 public class AvaliacaoFisica {
-    private int id;
+    protected long id;
+    private static long serial;
     private Pessoa pessoa;
     private double fatorTaxaAtividade;
     private double peso;
@@ -24,8 +25,12 @@ public class AvaliacaoFisica {
     private double massaGorda;
     private double massaMagra;
 
-    //Get and Set *************************
-    public int getId() {
+    public AvaliacaoFisica() {
+        serial++;
+        this.id = serial;
+    }
+
+    public long getId() {
         return id;
     }
 

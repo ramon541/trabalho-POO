@@ -3,11 +3,21 @@ package Models;
 import java.util.Date;
 
 public class Preferencia {
-    private int id;
+    protected long id;
+    private static long serial;
     private String pessoa;
     private String alimento;
     private Date dataCriacao;
     private Date dataModificacao;
+
+    public Preferencia() {
+        serial++;
+        this.id = serial;
+    }
+
+    public long getId() {
+        return this.id;
+    }
 
     public String getPessoa() {
         return pessoa;

@@ -3,12 +3,22 @@ package Models;
 import java.util.Date;
 
 public class Mensagem {
-    private int id;
+    protected long id;
+    private static long serial;
     private String pessoaOrigem;
     private String pessoaDestino;
     private String mensagem;
     private Date dataCriacao;
     private Date dataModificacao;
+
+    public Mensagem() {
+        serial++;
+        this.id = serial;
+    }
+
+    public long getId() {
+        return this.id;
+    }
 
     public String getPessoaOrigem() {
         return pessoaOrigem;

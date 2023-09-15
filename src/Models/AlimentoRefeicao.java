@@ -3,7 +3,8 @@ package Models;
 import java.util.Date;
 
 public class AlimentoRefeicao {
-    private int id;
+    protected long id;
+    private static long serial;
     private String refeicao;
     private String alimento;
     private double porcao;
@@ -12,6 +13,11 @@ public class AlimentoRefeicao {
     private double calorias;
     private Date dataCriacao;
     private Date dataModificacao;
+
+    public AlimentoRefeicao() {
+        serial++;
+        this.id = serial;
+    }
 
     public String getRefeicao() {
         return refeicao;

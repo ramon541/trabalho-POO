@@ -7,7 +7,8 @@ package Models;
 import java.util.Date;
 
 public class RegistroDieta {
-    private int id;
+    protected long id;
+    private static long serial;
     private Pessoa pessoa;
     private AvaliacaoFisica avaliacaoFisica;
     private TipoDieta tipoDieta;
@@ -16,6 +17,15 @@ public class RegistroDieta {
     private int nRefeicoes;
     private Date dataCriacao;
     private Date dataModificacao;
+
+    public RegistroDieta() {
+        serial++;
+        this.id = serial;
+    }
+
+    public long getId(){
+        return this.id;
+    }
 
     public Pessoa getPessoa() {
         return pessoa;
