@@ -1,6 +1,8 @@
 package Models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Objects;
 
 public class Pessoa {
     protected long id;
@@ -11,12 +13,14 @@ public class Pessoa {
     private String login;
     private String senha;
     private String tipoUsuario;
-    private Date dataCriacao;
-    private Date dataModificacao;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataModificacao;
 
     public Pessoa() {
         serial++;
         this.id = serial;
+
+        this.setDataCriacao();
     }
 
     public long getId() {
@@ -70,19 +74,32 @@ public class Pessoa {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public Date getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setDataCriacao() {
+        this.dataCriacao = Util.getDataAtual();
     }
 
-    public Date getDataModificacao() {
+    public LocalDateTime getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(Date dataModificacao) {
-        this.dataModificacao = dataModificacao;
+    public void setDataModificacao() {
+        this.dataModificacao = Util.getDataAtual();
+    }
+
+    @Override
+    public boolean equals(Object pessoa) {
+        if(this == pessoa) return true;
+        if(pessoa == null) return false;
+        if(getClass() != pessoa.getClass());
+        final Pessoa other = (Pessoa) pessoa;
+        if(!Objects.equals(this.getLogin(), other.getLogin()) && !Objects.equals(this.getSenha(), other.getSenha())) {
+            return false;
+        }
+
+        return true;
     }
 }
