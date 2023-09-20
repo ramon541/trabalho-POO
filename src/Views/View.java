@@ -3,14 +3,10 @@ package Views;
 import Models.Pessoa;
 import Models.Util;
 
-import java.util.Scanner;
-
 public class View {
 
-    public static int loopPrograma() {
+    public static void loopPrograma() {
         Menu menu = new Menu();
-        Scanner scan = new Scanner(System.in);
-        int fecharPrograma = 0;
         int opc = 0;
         while (opc != 5) {
             opc = menu.menuPrincipal();
@@ -37,8 +33,8 @@ public class View {
                     break;
 
                 case 9:
-                    opc = 5;
-                    fecharPrograma = 9;
+                    System.out.println("Saindo...");
+                    System.exit(0);
                     break;
 
                 default:
@@ -46,12 +42,10 @@ public class View {
                     break;
             }
         }
-        return fecharPrograma;
     }
     public static void main(String[] args) {
         Menu menu = new Menu();
-        Scanner scan = new Scanner(System.in);
-        int opc = 0;
+        int opc;
         while (true) {
             opc = menu.menuLogin();
             switch (opc) {
@@ -62,12 +56,7 @@ public class View {
                         System.out.println("Login feito com sucesso!!");
                         Util.setPessoaLogada(logado);
 
-                        opc = loopPrograma();
-                        if (opc == 9){
-                            System.out.println("Saindo...");
-                            scan.close();
-                            System.exit(0);
-                        }
+                        loopPrograma();
                     } else {
                         System.out.println("Login Inválido. Tente novamente...");
                     }
