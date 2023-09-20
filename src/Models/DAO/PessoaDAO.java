@@ -26,7 +26,7 @@ public class PessoaDAO {
         return true;
     }
 
-    Pessoa buscaLogin(String login, String senha) {
+    public Pessoa buscaLogin(String login, String senha) {
         for(Pessoa p : this.pessoas) {
             if(p != null && p.getLogin().equals(login) && p.getSenha().equals(senha)) {
                 return p;
