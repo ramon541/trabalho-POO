@@ -6,6 +6,7 @@ package Views;
 
 import Models.DAO.PessoaDAO;
 import Models.Pessoa;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.Scanner;
 
@@ -63,6 +64,24 @@ public class Menu {
     }
 
     public void registrar () {
+        Pessoa novoUsuario = new Pessoa();
 
+        System.out.println("==============================");
+        System.out.println("REGISTRAR");
+        System.out.println("==============================");
+        System.out.print("Nome: ");
+        novoUsuario.setNome(scan.nextLine());
+        System.out.println("Login: ");
+        novoUsuario.setLogin(scan.nextLine());
+        System.out.println("Senha: ");
+        novoUsuario.setSenha(scan.nextLine());
+
+        PessoaDAO novoUsuarioDAO = new PessoaDAO();
+        boolean adicionado = novoUsuarioDAO.adicionaPessoa(novoUsuario);
+        if (adicionado){
+            System.out.println("Cadastro realizado com sucesso!!");
+        }else {
+            System.out.println("Falha no cadastro. Tente novamente!!");
+        }
     }
 }

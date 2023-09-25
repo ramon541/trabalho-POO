@@ -63,7 +63,7 @@ public class Loops {
                     break;
 
                 case 2:
-                    //Método para criar o cadastro de um novo usuário
+                    menu.registrar();
                     break;
 
                 default:

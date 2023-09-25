@@ -15,7 +15,7 @@ public class PessoaDAO {
         this.adicionaPessoa(p1);
     }
 
-    boolean adicionaPessoa(Pessoa pessoa) {
+    public boolean adicionaPessoa(Pessoa pessoa) {
         int posicaoLivre = this.proximaPosicaoLivre();
         if(posicaoLivre == -1) {
             return false;
