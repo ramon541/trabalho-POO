@@ -71,13 +71,12 @@ public class Menu {
         System.out.println("==============================");
         System.out.print("Nome: ");
         novoUsuario.setNome(scan.nextLine());
-        System.out.println("Login: ");
+        System.out.print("Login: ");
         novoUsuario.setLogin(scan.nextLine());
-        System.out.println("Senha: ");
+        System.out.print("Senha: ");
         novoUsuario.setSenha(scan.nextLine());
 
-        PessoaDAO novoUsuarioDAO = new PessoaDAO();
-        boolean adicionado = novoUsuarioDAO.adicionaPessoa(novoUsuario);
+        boolean adicionado = this.pessoaDAO.adicionaPessoa(novoUsuario);
         if (adicionado){
             System.out.println("Cadastro realizado com sucesso!!");
         }else {
