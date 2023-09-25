@@ -15,7 +15,7 @@ public class PessoaDAO {
         this.adicionaPessoa(p1);
     }
 
-    boolean adicionaPessoa(Pessoa pessoa) {
+    public boolean adicionaPessoa(Pessoa pessoa) {
         int posicaoLivre = this.proximaPosicaoLivre();
         if(posicaoLivre == -1) {
             return false;
@@ -36,7 +36,7 @@ public class PessoaDAO {
         return null;
     }
 
-    Pessoa buscaPorNome(String nome) {
+    public Pessoa buscaPorNome(String nome) {
         for(Pessoa p : this.pessoas) {
             if(p != null && p.getNome().equals(nome)) return p;
         }
@@ -44,7 +44,7 @@ public class PessoaDAO {
         return null;
     }
 
-    boolean ehVazio() {
+    public boolean ehVazio() {
         for(Pessoa pessoa : this.pessoas) {
             if(pessoa != null) return false;
         }
@@ -52,7 +52,7 @@ public class PessoaDAO {
         return true;
     }
 
-    void mostrarTodos() {
+    public void mostrarTodos() {
         if(ehVazio()) {
             System.out.println("Não existe pessoa cadastrada.");
         } else {
@@ -75,7 +75,7 @@ public class PessoaDAO {
         return -1;
     }
 
-    boolean remover(long id) {
+    public boolean remover(long id) {
         for(Pessoa p : this.pessoas) {
             if(p != null && p.getId() == id) {
                 p = null;
