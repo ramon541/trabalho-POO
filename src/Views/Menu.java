@@ -6,6 +6,7 @@ package Views;
 
 import Models.DAO.PessoaDAO;
 import Models.Pessoa;
+import Models.Util;
 import org.w3c.dom.ls.LSOutput;
 
 import java.util.Scanner;
@@ -21,6 +22,7 @@ public class Menu {
         builder.append("==============================\n");
         builder.append("\n1 - Logar");
         builder.append("\n2 - Cadastrar");
+        builder.append("\n3 - Finalizar programa");
         builder.append("\n\nQual a sua opção? R: ");
 
         System.out.print(builder);
@@ -34,14 +36,13 @@ public class Menu {
         builder.append("==============================\n");
         builder.append("SEJA BEM VINDO AO MEU PROGRAMA\n");
         builder.append("==============================\n");
-        builder.append("\n1 - Alimento/Receita;");
-        builder.append("\n2 - Avaliação física;");
-        //No Registo de Dieta terá o Tipo de Dieta (Equilibrada, Low Carb, Cetogênica...) e também perguntará o Objetivo (Diminuir o Peso, Manter o Peso, Melhorar Composição Corporal e Aumentar o Peso.)
-        builder.append("\n3 - Registro de Dieta;");
-        //Em Refeições (café da manhã, almoço, café da tarde, janta, ceia ou outro nome) terá o Alimento das Refeições que iremos conseguri adicionar os elementos e terá também a Preferência
-        builder.append("\n4 - Refeições;");
-        builder.append("\n5 - Logout;");
-        builder.append("\n9 - Fechar programa;");
+        builder.append("\n1 - Avaliação Física");
+        builder.append("\n2 - Dieta");
+        builder.append("\n3 - Rede Social");
+        if (Util.getPessoaLogada().getTipoUsuario().equals("admin")){
+            builder.append("\n8 - Painel Administrativo");
+        }
+        builder.append("\n9 - Logout;");
         builder.append("\n\nQual a sua opção? R: ");
 
         System.out.print(builder);
@@ -55,9 +56,9 @@ public class Menu {
         System.out.println("==============================");
         System.out.println("LOGIN");
         System.out.println("==============================");
-        System.out.print("\nUsuário: ");
+        System.out.print("Usuário: ");
         login = scan.nextLine();
-        System.out.print("\nSenha: ");
+        System.out.print("Senha: ");
         senha = scan.nextLine();
 
         return pessoaDAO.buscaLogin(login, senha);
