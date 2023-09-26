@@ -1,5 +1,7 @@
 package Models;
 
+import Models.DAO.AvaliacaoFisicaDAO;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
@@ -15,12 +17,15 @@ public class Pessoa {
     private String tipoUsuario;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
+    private AvaliacaoFisicaDAO avaliacaoFisicaDAO;
 
     public Pessoa() {
+        //Ações padrão para todos os usuários
         serial++;
         this.id = serial;
-
+        this.setTipoUsuario("comum");
         this.setDataCriacao();
+        this.avaliacaoFisicaDAO = new AvaliacaoFisicaDAO();
     }
 
     public long getId() {

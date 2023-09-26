@@ -6,35 +6,38 @@ import Models.Util;
 public class Loops {
     Menu menu = new Menu();
 
+    public Loops() {
+        this.main();
+    }
+
     public void programa() {
         int opc = 0;
-        while (opc != 5) {
+        while (opc != 9) {
             opc = menu.menuPrincipal();
             switch (opc) {
                 case 1:
-                    System.out.println("Menu Alimento Refeição");
-                    break;
-
-                case 2:
                     System.out.println("Menu Avaliação física");
                     break;
 
+                case 2:
+                    System.out.println("Menu Dieta");
+                    break;
+
                 case 3:
-                    System.out.println("Menu Registro de Dieta");
+                    System.out.println("Menu Rede Social");
                     break;
 
-                case 4:
-                    System.out.println("Menu Refeições");
-                    break;
-
-                case 5:
-                    System.out.println("Logout...");
-                    Util.setPessoaLogada(null);
+                case 8:
+                    if (Util.getPessoaLogada().getTipoUsuario().equals("admin")){
+                        //Menu painel admin
+                    } else {
+                        System.out.println("\n\nOPÇÃO INVÁLIDA!!");
+                    }
                     break;
 
                 case 9:
-                    System.out.println("Saindo...");
-                    System.exit(0);
+                    System.out.println("Logout...");
+                    Util.setPessoaLogada(null);
                     break;
 
                 default:
@@ -56,7 +59,7 @@ public class Loops {
                         System.out.println("Login feito com sucesso!!");
                         Util.setPessoaLogada(logado);
 
-                        programa();
+                        this.programa();
                     } else {
                         System.out.println("Login Inválido. Tente novamente...");
                     }
@@ -64,6 +67,11 @@ public class Loops {
 
                 case 2:
                     menu.registrar();
+                    break;
+
+                case 3:
+                    System.out.println("Saindo...");
+                    System.exit(0);
                     break;
 
                 default:

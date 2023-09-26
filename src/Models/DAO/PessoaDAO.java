@@ -6,11 +6,13 @@ public class PessoaDAO {
     Pessoa[] pessoas = new Pessoa[10];
 
     public PessoaDAO() {
+        //Usuário teste
         Pessoa p1 = new Pessoa();
-        p1.setNome("Fulano");
+        p1.setNome("Admin");
         p1.setSexo("Masculino");
-        p1.setLogin("fulaninho");
-        p1.setSenha("fulaninho");
+        p1.setLogin("admin");
+        p1.setSenha("admin");
+        p1.setTipoUsuario("admin");
 
         this.adicionaPessoa(p1);
     }
