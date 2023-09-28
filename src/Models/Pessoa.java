@@ -2,8 +2,9 @@ package Models;
 
 import Models.DAO.AvaliacaoFisicaDAO;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Pessoa {
@@ -11,13 +12,13 @@ public class Pessoa {
     private static long serial;
     private String nome;
     private String sexo;
-    private Date nascimento;
+    private LocalDate nascimento;
     private String login;
     private String senha;
     private String tipoUsuario;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
-    private AvaliacaoFisicaDAO avaliacaoFisicaDAO;
+    private final AvaliacaoFisicaDAO avaliacaoFisicaDAO;
 
     public Pessoa() {
         //Ações padrão para todos os usuários
@@ -47,12 +48,13 @@ public class Pessoa {
         this.sexo = sexo;
     }
 
-    public Date getNascimento() {
+    public LocalDate getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(Date nascimento) {
-        this.nascimento = nascimento;
+    public void setNascimento(String nascimento) {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.nascimento = LocalDate.parse(nascimento, formato);
     }
 
     public String getLogin() {
@@ -95,6 +97,9 @@ public class Pessoa {
         this.dataModificacao = Util.getDataAtual();
     }
 
+    public AvaliacaoFisicaDAO getAvaliacaoFisicaDAO() {
+        return avaliacaoFisicaDAO;
+    }
     @Override
     public boolean equals(Object pessoa) {
         if(this == pessoa) return true;

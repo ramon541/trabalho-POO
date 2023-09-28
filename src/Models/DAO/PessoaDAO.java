@@ -9,6 +9,7 @@ public class PessoaDAO {
         //Usuário teste
         Pessoa p1 = new Pessoa();
         p1.setNome("Admin");
+        p1.setNascimento("01/01/2000");
         p1.setSexo("Masculino");
         p1.setLogin("admin");
         p1.setSenha("admin");
