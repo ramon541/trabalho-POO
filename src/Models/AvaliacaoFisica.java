@@ -4,21 +4,21 @@
  */
 package Models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class AvaliacaoFisica {
     protected long id;
     private static long serial;
-    private Pessoa pessoa;
+    private final Pessoa pessoa;
     private double fatorTaxaAtividade;
     private double peso;
     private double altura;
     private int idade;
-    private double pescoco;
-    private double cintura;
-    private double quadril;
-    private Date dataCriacao;
-    private Date dataModificacao;
+    private int pescoco;
+    private int cintura;
+    private int quadril;
+    private final LocalDateTime dataCriacao;
+    private LocalDateTime dataModificacao;
     private double imc;
     private double tmb;
     private double bodyFat;
@@ -28,11 +28,15 @@ public class AvaliacaoFisica {
     public AvaliacaoFisica() {
         serial++;
         this.id = serial;
+        this.dataCriacao = Util.getDataAtual();
+        this.pessoa = Util.getPessoaLogada();
     }
 
     public long getId() {
         return id;
     }
+
+    public Pessoa getPessoa() { return this.pessoa; }
 
     public double getFatorTaxaAtividade() {
         return fatorTaxaAtividade;
@@ -41,6 +45,7 @@ public class AvaliacaoFisica {
     public void setFatorTaxaAtividade(double fatorTaxaAtividade) {
         this.fatorTaxaAtividade = fatorTaxaAtividade;
     }
+
     public double getPeso() {
         return peso;
     }
@@ -69,7 +74,7 @@ public class AvaliacaoFisica {
         return pescoco;
     }
 
-    public void setPescoco(double pescoco) {
+    public void setPescoco(int pescoco) {
         this.pescoco = pescoco;
     }
 
@@ -77,7 +82,7 @@ public class AvaliacaoFisica {
         return cintura;
     }
 
-    public void setCintura(double cintura) {
+    public void setCintura(int cintura) {
         this.cintura = cintura;
     }
 
@@ -85,25 +90,36 @@ public class AvaliacaoFisica {
         return quadril;
     }
 
-    public void setQuadril(double quadril) {
+    public void setQuadril(int quadril) {
         this.quadril = quadril;
     }
 
-    public Date getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-
-    public Date getDataModificacao() {
+    public LocalDateTime getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(Date dataModificacao) {
-        this.dataModificacao = dataModificacao;
+    public double getImc() {
+        return imc;
     }
+
+    public void setImc(double imc) {
+        this.imc = imc;
+    }
+
+    public double getTmb() {
+        return tmb;
+    }
+
+    public void setTmb(double tmb) {
+        this.tmb = tmb;
+    }
+
+    public void setDataModificacao(LocalDateTime dataModificacao) { this.dataModificacao = dataModificacao; }
+
     public double getBodyFat() {
         return bodyFat;
     }
@@ -116,19 +132,19 @@ public class AvaliacaoFisica {
     }
     //Métodos *************************
 
-    public void CalcularIMC(){
-        this.imc = this.peso / Math.pow(this.altura, 2);
+    public void calcularIMC(){
+        setImc(this.peso / ((this.altura/100) * (this.altura/100)));
     }
 
-    public void CalcularTMB(){
+    public void calcularTMB(){
         if (pessoa.getSexo().equals("Masculino")){
-            this.tmb = this.fatorTaxaAtividade * (66 + ((13.7 * this.peso) + ( 5 * this.altura) - (6.8 * this.idade)));
+            setTmb(this.fatorTaxaAtividade * (66 + ((13.7 * this.peso) + ( 5 * this.altura) - (6.8 * this.idade))));
         }else {
-            this.tmb = this.fatorTaxaAtividade * (655 + ((9.6 * this.peso) + ( 1.8 * this.altura) - (4.7 * this.idade)));
+            setTmb(this.fatorTaxaAtividade * (655 + ((9.6 * this.peso) + ( 1.8 * this.altura) - (4.7 * this.idade))));
         }
     }
 
-    public void CalcularBodyFat(){
+    public void calcularBodyFat(){
         if(pessoa.getSexo().equals("Masculino")){
             this.bodyFat = (86.010 * Math.log10(this.cintura - this.pescoco)) - (70.041 * Math.log10(this.altura)) + 36.76;
         }else {
@@ -137,6 +153,28 @@ public class AvaliacaoFisica {
         }
         this.massaGorda = this.peso * (this.bodyFat/100);
         this.massaMagra = this.peso - this.massaGorda;
+    }
+
+    @Override
+    public String toString() {
+        String builder =
+                "Peso: " + String.format("%.2f",this.peso) + " KG\n" +
+                "Altura: " + this.altura + " cm\n" +
+                "Idade: " + this.idade + " anos\n" +
+                "Pescoço: " + this.pescoco + " cm \n" +
+                "Cintura: " + this.cintura + " cm \n";
+        if (pessoa.getSexo().equals("Feminino")){
+            builder += "Quadril: " + this.quadril + " cm \n";
+        }
+        builder +=
+                "IMC: " + String.format("%.2f",this.imc) + " kg/m²\n" +
+                "TMB: " + String.format("%.2f",this.tmb) + " calorias\n" +
+                "BF: " + String.format("%.2f",this.bodyFat) + " %\n" +
+                "Massa gorda: " + String.format("%.2f",this.massaGorda) + " kg\n" +
+                "Massa magra: " + String.format("%.2f",this.massaMagra) + " kg\n" +
+                "Avaliação feita em: " + this.dataCriacao;
+
+        return builder;
     }
 
     //Relatórios *************************

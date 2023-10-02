@@ -7,16 +7,35 @@ public class Loops {
     Menu menu = new Menu();
 
     public Loops() {
-        this.main();
+        this.raiz();
     }
 
+    public void avaliacaoFisica() {
+        int opc = 0;
+        while (opc != 2) {
+            opc = menu.avaliacaoFisica();
+            switch (opc) {
+                case 1:
+                    menu.newAvaliacaoFisica();
+                    break;
+
+                case 2:
+                    System.out.println("Voltando...");
+                    break;
+
+                default:
+                    System.out.println("\n\nOPÇÃO INVÁLIDA!!");
+                    break;
+            }
+        }
+    }
     public void programa() {
         int opc = 0;
         while (opc != 9) {
             opc = menu.menuPrincipal();
             switch (opc) {
                 case 1:
-                    System.out.println("Menu Avaliação física");
+                    avaliacaoFisica();
                     break;
 
                 case 2:
@@ -47,7 +66,7 @@ public class Loops {
         }
     }
 
-    public void main() {
+    public void raiz() {
         int opc;
         while (true) {
             opc = menu.menuLogin();
