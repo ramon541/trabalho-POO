@@ -7,12 +7,11 @@ package Views;
 import Models.DAO.PessoaDAO;
 import Models.Pessoa;
 import Models.Util;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.Scanner;
 
-public class Menu {
-    private PessoaDAO pessoaDAO = new PessoaDAO();
+public class Menus {
+    private final PessoaDAO pessoaDAO = new PessoaDAO();
     Scanner scan = new Scanner(System.in);
     public int menuLogin() {
         StringBuilder builder = new StringBuilder("");
@@ -83,5 +82,24 @@ public class Menu {
         }else {
             System.out.println("Falha no cadastro. Tente novamente!!");
         }
+    }
+
+    public int menuRedeSocial() {
+        StringBuilder builder = new StringBuilder("");
+
+        builder.append("==============================\n");
+        builder.append("REDE SOCIAL\n");
+        builder.append("==============================\n");
+        builder.append("\n1 - Ver posts");
+        builder.append("\n2 - Criar um novo post");
+        builder.append("\n3 - Buscar usuário");
+        builder.append("\n4 - Ver seguidores");
+        builder.append("\n5 - Chat");
+        builder.append("\n7 - Sair");
+        builder.append("\n\nQual a sua opção? R: ");
+
+        System.out.print(builder);
+
+        return Integer.parseInt(scan.nextLine());
     }
 }
