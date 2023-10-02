@@ -23,19 +23,24 @@ public class AvaliacaoFisicaDAO {
         return true;
     }
 
-    public void mostrarTodos() {
+    public String mostrarTodos() {
+        String builder = "";
         if(ehVazio()) {
-            System.out.println("Não existe avaliação física cadastrada.");
+            builder+= "\nNão existe avaliação física cadastrada.\n\n";
         } else {
-            StringBuilder builder = new StringBuilder();
-            for(AvaliacaoFisica avaliacoes: this.avaliacoes) {
-                if(avaliacoes != null) {
-                    //builder.append("Nome: ").append(pessoa.getNome()).append("\n");
-                    //Algoritmo de mostrar as avaliacoes fisicas
-                }
+            builder += "----------- ÚLTIMA AVALIAÇÃO FÍSICA -----------\n" +
+            avaliacoes[0].toString() + "\n" +
+            "------------------------------------------------\n" +
+            "\n---------- AVALIAÇÃO FÍSICA ANTERIOR ----------\n";
+
+            if (avaliacoes[1] == null){
+                builder += "SEM REGISTRO!\n";
+            } else {
+                builder += avaliacoes[1].toString() + "\n";
             }
-            System.out.println(builder);
+            builder += "------------------------------------------------\n\n";
         }
+        return builder;
     }
 
     private int proximaPosicaoLivre() {
@@ -44,4 +49,5 @@ public class AvaliacaoFisicaDAO {
         }
         return -1;
     }
+
 }
