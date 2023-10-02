@@ -1,30 +1,32 @@
 package Models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Post {
     protected long id;
 
     private static long serial;
-    private String pessoa;
+    private Pessoa pessoa;
     private String conteudoDaMensagem;
-    private Date dataCriacao;
-    private Date dataModificacao;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataModificacao;
 
     public Post(){
         serial++;
         this.id = serial;
+        this.setDataCriacao();
     }
 
     public long getId(){
         return this.id;
     }
 
-    public String getPessoa() {
+    public Pessoa getPessoa() {
         return pessoa;
     }
 
-    public void setPessoa(String pessoa) {
+    public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
     }
 
@@ -36,19 +38,19 @@ public class Post {
         this.conteudoDaMensagem = conteudoDaMensagem;
     }
 
-    public Date getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setDataCriacao() {
+        this.dataCriacao = Util.getDataAtual();
     }
 
-    public Date getDataModificacao() {
+    public LocalDateTime getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(Date dataModificacao) {
+    private void setDataModificacao(LocalDateTime dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
 }
