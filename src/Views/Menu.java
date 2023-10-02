@@ -100,7 +100,6 @@ public class Menu {
         builder.append("==============================\n");
         builder.append("AVALIAÇÃO FÍSICA\n");
         builder.append("==============================\n");
-        builder.append(Util.getPessoaLogada().getAvaliacaoFisicaDAO().mostrarTodos());
         builder.append("1 - Nova Avaliação Física\n");
         builder.append("2 - Voltar");
         builder.append("\n\nQual a sua opção? R: ");
