@@ -189,12 +189,7 @@ public class Menus {
         novaAvaliacao.calcularTMB();
         novaAvaliacao.calcularBodyFat();
         System.out.println(novaAvaliacao.toString());
-        boolean adicionado = Util.getPessoaLogada().getAvaliacaoFisicaDAO().adicionaAvaliacao(novaAvaliacao);
-        if (adicionado){
-            System.out.println("AVALIAÇÃO ADICIONADA COM SUCESSO!!");
-        } else {
-            System.out.println("OPS, ALGO DEU ERRADO!");
-        }
-
+        Util.getPessoaLogada().getAvaliacaoFisicaDAO().adicionaAvaliacao(novaAvaliacao);
+        System.out.println("AVALIAÇÃO ADICIONADA COM SUCESSO!!");
     }
 }

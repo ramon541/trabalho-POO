@@ -5,15 +5,10 @@ import Models.AvaliacaoFisica;
 public class AvaliacaoFisicaDAO {
     AvaliacaoFisica[] avaliacoes = new AvaliacaoFisica[2];
 
-    public boolean adicionaAvaliacao(AvaliacaoFisica avaliacao) {
-        int posicaoLivre = this.proximaPosicaoLivre();
-        if(posicaoLivre == -1) {
-            return false;
-        }
-
-        this.avaliacoes[posicaoLivre] = avaliacao;
-
-        return true;
+    public void adicionaAvaliacao(AvaliacaoFisica avaliacao) {
+        AvaliacaoFisica avaliacaoAntiga = avaliacoes[0];
+        avaliacoes[0] = avaliacao;
+        avaliacoes[1] = avaliacaoAntiga;
     }
 
     public boolean ehVazio() {
