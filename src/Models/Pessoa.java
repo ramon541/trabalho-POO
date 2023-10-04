@@ -98,7 +98,7 @@ public class Pessoa {
     }
 
     public AvaliacaoFisicaDAO getAvaliacaoFisicaDAO() {
-        return avaliacaoFisicaDAO;
+        return this.avaliacaoFisicaDAO;
     }
     @Override
     public boolean equals(Object pessoa) {

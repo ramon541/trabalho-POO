@@ -11,7 +11,7 @@ public class MenuPrincipalController {
                 opc = menu.menuPrincipal();
                 switch (opc) {
                     case 1:
-                        System.out.println("Menu Avaliação física");
+                        new AvaliacaoFisicaController(menu);
                         break;
 
                     case 2:
