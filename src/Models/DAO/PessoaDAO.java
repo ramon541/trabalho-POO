@@ -1,13 +1,12 @@
 package Models.DAO;
 
-import Models.Feed;
 import Models.Pessoa;
 import Models.Post;
 
 public class PessoaDAO {
     Pessoa[] pessoas = new Pessoa[10];
 
-    public PessoaDAO() {
+    public PessoaDAO(PostDAO postDAO) {
 
         Pessoa p1 = new Pessoa();
         p1.setNome("Admin");
@@ -23,11 +22,7 @@ public class PessoaDAO {
         post.setConteudoDaMensagem("Post Teste");
         post.setPessoa(p1);
 
-        PostDAO postDAO = new PostDAO();
         postDAO.adicionaPost(post);
-
-        Feed feed = new Feed();
-        feed.adicionaPost(post);
     }
 
     public boolean adicionaPessoa(Pessoa pessoa) {

@@ -1,10 +1,11 @@
 package Controllers;
 
+import Models.DAO.PostDAO;
 import Models.Util;
 import Views.Menus;
 
 public class MenuPrincipalController {
-    public MenuPrincipalController(Menus menu) {
+    public MenuPrincipalController(Menus menu, PostDAO postDAO) {
             int opc = 0;
             while (opc != 9) {
                 opc = menu.menuPrincipal();
@@ -18,7 +19,7 @@ public class MenuPrincipalController {
                         break;
 
                     case 3:
-                        new RedeSocialController(menu);
+                        new RedeSocialController(menu, postDAO);
                         break;
 
                     case 8:

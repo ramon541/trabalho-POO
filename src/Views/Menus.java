@@ -11,7 +11,8 @@ import Models.Util;
 import java.util.Scanner;
 
 public class Menus {
-    private final PessoaDAO pessoaDAO = new PessoaDAO();
+
+    public PessoaDAO pessoaDAO;
     Scanner scan = new Scanner(System.in);
     public int menuLogin() {
         StringBuilder builder = new StringBuilder("");
@@ -60,7 +61,7 @@ public class Menus {
         System.out.print("Senha: ");
         senha = scan.nextLine();
 
-        return pessoaDAO.buscaLogin(login, senha);
+        return getPessoaDAO().buscaLogin(login, senha);
     }
 
     public void registrar () {
@@ -76,7 +77,7 @@ public class Menus {
         System.out.print("Senha: ");
         novoUsuario.setSenha(scan.nextLine());
 
-        boolean adicionado = this.pessoaDAO.adicionaPessoa(novoUsuario);
+        boolean adicionado = getPessoaDAO().adicionaPessoa(novoUsuario);
         if (adicionado){
             System.out.println("Cadastro realizado com sucesso!!");
         }else {
@@ -101,5 +102,13 @@ public class Menus {
         System.out.print(builder);
 
         return Integer.parseInt(scan.nextLine());
+    }
+
+    public PessoaDAO getPessoaDAO() {
+        return pessoaDAO;
+    }
+
+    public void setPessoaDAO(PessoaDAO pessoaDAO) {
+        this.pessoaDAO = pessoaDAO;
     }
 }
