@@ -1,32 +1,38 @@
 package Controllers;
 
+import Models.DAO.PessoaDAO;
+import Models.DAO.PostDAO;
 import Models.Pessoa;
 import Models.Util;
 import Views.Menus;
 
 public class LoginController {
-
     Menus menu = new Menus();
+    PostDAO postDAO = new PostDAO();
     public LoginController() {
+
+        PessoaDAO pessoaDAO = new PessoaDAO(getPostDAO());
+        getMenu().setPessoaDAO(pessoaDAO);
+
         int opc;
         while (true) {
-            opc = menu.menuLogin();
+            opc = getMenu().menuLogin();
             switch (opc) {
                 case 1:
-                    Pessoa logado = menu.login();
+                    Pessoa logado = getMenu().login();
 
                     if (logado != null){
                         System.out.println("Login feito com sucesso!!");
                         Util.setPessoaLogada(logado);
 
-                        new MenuPrincipalController(menu);
+                        new MenuPrincipalController(getMenu(), getPostDAO());
                     } else {
                         System.out.println("Login Inválido. Tente novamente...");
                     }
                     break;
 
                 case 2:
-                    menu.registrar();
+                    getMenu().registrar();
                     break;
 
                 case 3:
@@ -44,4 +50,13 @@ public class LoginController {
     public static void main(String[] args) {
         new LoginController();
     }
+
+    public Menus getMenu() {
+        return menu;
+    }
+
+    public PostDAO getPostDAO() {
+        return postDAO;
+    }
+
 }
