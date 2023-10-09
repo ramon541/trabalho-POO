@@ -1,11 +1,14 @@
 package Controllers;
 
+import Models.DAO.MensagemDAO;
+import Models.DAO.PessoaDAO;
 import Models.DAO.PostDAO;
+import Models.DAO.SeguirDAO;
 import Models.Util;
 import Views.Menus;
 
 public class MenuPrincipalController {
-    public MenuPrincipalController(Menus menu, PostDAO postDAO) {
+    public MenuPrincipalController(Menus menu, PostDAO postDAO, SeguirDAO seguirDAO, PessoaDAO pessoaDAO, MensagemDAO mensagemDAO) {
             int opc = 0;
             while (opc != 9) {
                 opc = menu.menuPrincipal();
@@ -19,7 +22,7 @@ public class MenuPrincipalController {
                         break;
 
                     case 3:
-                        new RedeSocialController(menu, postDAO);
+                        new RedeSocialController(menu, postDAO, seguirDAO, pessoaDAO, mensagemDAO);
                         break;
 
                     case 8:

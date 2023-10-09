@@ -26,7 +26,7 @@ public class PostDAO {
         return -1;
     }
 
-    public void mostrarTodos() {
+    /*public void mostrarTodos() {
         if(ehVazio()) {
             System.out.println("Não existe nenhum post publicado.");
         } else {
@@ -40,6 +40,23 @@ public class PostDAO {
 
             System.out.println(builder);
         }
+    }*/
+
+    public void mostrarPostsUsuario() {
+        if(ehVazio()) {
+            System.out.println("Não existe nenhum post publicado.");
+        } else {
+            for(Post post : getPosts()) {
+                if(post.getPessoa().equals(Util.getPessoaLogada())) {
+                    StringBuilder builder = new StringBuilder();
+
+                    builder.append("Conteúdo: ").append(post.getConteudoDaMensagem()).append("\n");
+                    builder.append("Publicado por: ").append(post.getPessoa().getNome()).append("\n");
+
+                    System.out.println(builder);
+                }
+            }
+        }
     }
 
     public boolean ehVazio() {
@@ -48,5 +65,13 @@ public class PostDAO {
         }
 
         return true;
+    }
+
+    public Post[] getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Post[] posts) {
+        this.posts = posts;
     }
 }

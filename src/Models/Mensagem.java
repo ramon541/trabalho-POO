@@ -5,8 +5,8 @@ import java.util.Date;
 public class Mensagem {
     protected long id;
     private static long serial;
-    private String pessoaOrigem;
-    private String pessoaDestino;
+    private final Pessoa remetente;
+    private Pessoa destinatario;
     private String mensagem;
     private Date dataCriacao;
     private Date dataModificacao;
@@ -14,26 +14,24 @@ public class Mensagem {
     public Mensagem() {
         serial++;
         this.id = serial;
+
+        this.remetente = Util.getPessoaLogada();
     }
 
     public long getId() {
         return this.id;
     }
 
-    public String getPessoaOrigem() {
-        return pessoaOrigem;
+    public Pessoa getRemetente() {
+        return this.remetente;
     }
 
-    public void setPessoaOrigem(String pessoaOrigem) {
-        this.pessoaOrigem = pessoaOrigem;
+    public Pessoa getDestinatario() {
+        return this.destinatario;
     }
 
-    public String getPessoaDestino() {
-        return pessoaDestino;
-    }
-
-    public void setPessoaDestino(String pessoaDestino) {
-        this.pessoaDestino = pessoaDestino;
+    public void setDestinatario(Pessoa destinatario) {
+        this.destinatario = destinatario;
     }
 
     public String getMensagem() {

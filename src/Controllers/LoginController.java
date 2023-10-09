@@ -1,15 +1,21 @@
 package Controllers;
 
+import Models.DAO.MensagemDAO;
 import Models.DAO.PessoaDAO;
 import Models.DAO.PostDAO;
+import Models.DAO.SeguirDAO;
 import Models.Pessoa;
 import Models.Util;
 import Views.Menus;
 
 public class LoginController {
-    Menus menu = new Menus();
-    PostDAO postDAO = new PostDAO();
+    private final Menus menu = new Menus();
+    private final PostDAO postDAO = new PostDAO();
+    private final SeguirDAO seguirDAO = new SeguirDAO();
+
+    private final MensagemDAO mensagemDAO = new MensagemDAO();
     public LoginController() {
+
 
         PessoaDAO pessoaDAO = new PessoaDAO(getPostDAO());
         getMenu().setPessoaDAO(pessoaDAO);
@@ -25,7 +31,7 @@ public class LoginController {
                         System.out.println("Login feito com sucesso!!");
                         Util.setPessoaLogada(logado);
 
-                        new MenuPrincipalController(getMenu(), getPostDAO());
+                        new MenuPrincipalController(this.getMenu(), this.getPostDAO(), this.getSeguirDAO(), pessoaDAO, this.mensagemDAO);
                     } else {
                         System.out.println("Login Inválido. Tente novamente...");
                     }
@@ -59,4 +65,7 @@ public class LoginController {
         return postDAO;
     }
 
+    public SeguirDAO getSeguirDAO() {
+        return this.seguirDAO;
+    }
 }
