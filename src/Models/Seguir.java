@@ -1,53 +1,56 @@
 package Models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Seguir {
     protected long id;
     private static long serial;
-    private String pessoaOrigem;
-    private String pessoaSeguindo;
-    private Date dataCriacao;
-    private Date dataModificacao;
+    private Pessoa usuario;
+    private Pessoa seguindo;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataModificacao;
 
     public Seguir(){
         serial++;
         this.id = serial;
+
+        this.setUsuario();
+        this.setDataCriacao();
     }
 
     public long getId(){
         return this.id;
     }
-    public String getPessoaOrigem() {
-        return pessoaOrigem;
+    public Pessoa getUsuario() {
+        return this.usuario;
     }
 
-    public void setPessoaOrigem(String pessoaOrigem) {
-        this.pessoaOrigem = pessoaOrigem;
+    public void setUsuario() {
+        this.usuario = Util.getPessoaLogada();
     }
 
-    public String getPessoaSeguindo() {
-        return pessoaSeguindo;
+    public Pessoa getSeguindo() {
+        return this.seguindo;
     }
 
-    public void setPessoaSeguindo(String pessoaSeguindo) {
-        this.pessoaSeguindo = pessoaSeguindo;
+    public void setSeguindo(Pessoa seguindo) {
+        this.seguindo = seguindo;
     }
 
-    public Date getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setDataCriacao() {
+        this.dataCriacao = Util.getDataAtual();
     }
 
-    public Date getDataModificacao() {
+    public LocalDateTime getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(Date dataModificacao) {
-        this.dataModificacao = dataModificacao;
+    public void setDataModificacao() {
+        this.dataModificacao = Util.getDataAtual();;
     }
 
 }
