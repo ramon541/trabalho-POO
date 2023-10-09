@@ -30,8 +30,8 @@ public class MensagemDAO {
         builder = new StringBuilder("");
 
         for(Mensagem msg: this.mensagens) {
-            if(msg.getRemetente().equals(Util.getPessoaLogada()) && msg.getDestinatario().equals(usuarioBuscado) ||
-                    msg.getRemetente().equals(usuarioBuscado) && msg.getDestinatario().equals(Util.getPessoaLogada())
+            if(msg != null && msg.getRemetente().equals(Util.getPessoaLogada()) && msg.getDestinatario().equals(usuarioBuscado) ||
+                   msg != null && msg.getRemetente().equals(usuarioBuscado) && msg.getDestinatario().equals(Util.getPessoaLogada())
             ) {
                 builder.append("Usuário: ").append(msg.getRemetente().getNome()).append("\n");
                 builder.append("Mensagem: ").append(msg.getMensagem()).append("\n");

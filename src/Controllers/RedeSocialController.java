@@ -23,27 +23,10 @@ public class RedeSocialController {
                 opc = menu.menuRedeSocial();
                 switch (opc) {
                     case 1:
-
-                        for (Post post: postDAO.getPosts()) {
-                            if(post != null) {
-                                for (Seguir seguir: seguirDAO.getSeguindoList()) {
-                                    if(post.getPessoa().equals(seguir.getSeguindo())) {
-                                        builder = new StringBuilder("");
-
-                                        builder.append("Conteúdo: ").append(post.getConteudoDaMensagem()).append("\n");
-                                        builder.append("Publicado por: ").append(post.getPessoa().getNome()).append("\n");
-
-                                        System.out.println(builder);
-                                    }
-                                }
-                            }
-                        }
-
+                        //ver meus posts
+                        postDAO.mostrarPostsUsuario(Util.getPessoaLogada());
                         break;
                     case 2:
-                        postDAO.mostrarPostsUsuario();
-                        break;
-                    case 3:
                         Post post = new Post();
                         builder = new StringBuilder("");
                         builder.append("Conteudo do post: ");
@@ -55,7 +38,7 @@ public class RedeSocialController {
 
                         break;
 
-                    case 4:
+                    case 3:
                         System.out.println("Buscar usuário");
 
                         System.out.println("=====================\n");
@@ -71,16 +54,17 @@ public class RedeSocialController {
 
                             boolean ehSeguidor = seguirDAO.ehSeguidor(usuarioBuscado);
 
-                            new RedeSocialBuscarController(menu, usuarioBuscado, ehSeguidor, seguirDAO, mensagemDAO);
+                            new RedeSocialBuscarController(menu, usuarioBuscado, ehSeguidor, seguirDAO, mensagemDAO, postDAO);
                         }
 
                         break;
-                    case 5:
+                    case 4:
+                        //ver seguidores
                         seguirDAO.mostrarSeguidores();
 
                         break;
 
-                    case 6:
+                    case 5:
                         System.out.println("Saindo...");
 
                         break;

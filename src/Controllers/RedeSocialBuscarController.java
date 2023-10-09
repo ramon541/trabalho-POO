@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.DAO.MensagemDAO;
+import Models.DAO.PostDAO;
 import Models.DAO.SeguirDAO;
 import Models.Pessoa;
 import Views.Menus;
@@ -13,7 +14,7 @@ public class RedeSocialBuscarController {
 
     Scanner scan = new Scanner(System.in);
 
-    public RedeSocialBuscarController(Menus menu, Pessoa usuarioBuscado, boolean ehSeguidor, SeguirDAO seguirDAO, MensagemDAO mensagemDAO) {
+    public RedeSocialBuscarController(Menus menu, Pessoa usuarioBuscado, boolean ehSeguidor, SeguirDAO seguirDAO, MensagemDAO mensagemDAO, PostDAO postDAO) {
         int opc = 0;
         while (opc != 4) {
             opc = menu.menuRedeSocialBuscar(usuarioBuscado, ehSeguidor);
@@ -37,6 +38,10 @@ public class RedeSocialBuscarController {
 
                     break;
                 case 2:
+                    postDAO.mostrarPostsUsuario(usuarioBuscado);
+
+                    break;
+                case 3:
 
                     System.out.println("Digite a mensagem a ser enviada: ");
                     String msg = scan.nextLine();
@@ -49,11 +54,11 @@ public class RedeSocialBuscarController {
                     }
 
                     break;
-                case 3:
+                case 4:
                     mensagemDAO.verMensagens(usuarioBuscado);
 
                     break;
-                case 4:
+                case 5:
                     System.out.println("Saindo...");
                     break;
                 default:

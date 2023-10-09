@@ -18,6 +18,16 @@ public class PessoaDAO {
 
         this.adicionaPessoa(p1);
 
+        Pessoa p2 = new Pessoa();
+        p2.setNome("Fulana");
+        p2.setNascimento("05/05/2000");
+        p2.setSexo("Feminina");
+        p2.setLogin("fulana");
+        p2.setSenha("fulana");
+        p2.setTipoUsuario("comum");
+
+        this.adicionaPessoa(p2);
+
         Post post = new Post();
         post.setConteudoDaMensagem("Post Teste");
         post.setPessoa(p1);
