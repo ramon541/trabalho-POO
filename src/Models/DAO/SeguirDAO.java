@@ -43,13 +43,14 @@ public class SeguirDAO {
         if(ehVazio()) {
             System.out.println("Não há nenhum seguidor!");
         } else {
+            StringBuilder builder = new StringBuilder("");
+            builder.append("======================").append("\n");
+            builder.append("Seguidores ").append("\n");
+            builder.append("======================").append("\n");
+
             for (Seguir seguir: this.seguindoList) {
-                if(seguir.getUsuario().equals(Util.getPessoaLogada())) {
-                    StringBuilder builder = new StringBuilder("");
-                    builder.append("======================").append("\n");
-                    builder.append("Seguidores ").append("\n");
-                    builder.append("======================").append("\n");
-                    builder.append("Nome: ").append(seguir.getSeguindo().getNome()).append("\n");
+                if(seguir != null && seguir.getSeguindo().equals(Util.getPessoaLogada())) {
+                    builder.append("Nome: ").append(seguir.getUsuario().getNome()).append("\n");
                 }
             }
         }
@@ -57,7 +58,7 @@ public class SeguirDAO {
 
     public boolean ehSeguidor(Pessoa usuario) {
         for(Seguir seguir: this.seguindoList) {
-            if(seguir.getUsuario().equals(Util.getPessoaLogada()) && seguir.getSeguindo().equals(usuario)) {
+            if(seguir != null && seguir.getUsuario().equals(Util.getPessoaLogada()) && seguir.getSeguindo().equals(usuario)) {
                 return true;
             }
         }
@@ -67,7 +68,7 @@ public class SeguirDAO {
 
     public boolean deixarDeSeguir(Pessoa usuario) {
         for(int i = 0; i < this.seguindoList.length; i++) {
-            if(this.seguindoList[i].getUsuario().equals(Util.getPessoaLogada()) && this.seguindoList[i].getSeguindo().equals(usuario)) {
+            if(this.seguindoList[i] != null && this.seguindoList[i].getUsuario().equals(Util.getPessoaLogada()) && this.seguindoList[i].getSeguindo().equals(usuario)) {
                 this.seguindoList[i] = null;
                 return true;
             }

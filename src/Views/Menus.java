@@ -14,8 +14,10 @@ import java.util.Scanner;
 public class Menus {
     private PessoaDAO pessoaDAO;
     Scanner scan = new Scanner(System.in);
+
+    StringBuilder builder;
     public int menuLogin() {
-        StringBuilder builder = new StringBuilder("");
+        builder = new StringBuilder("");
 
         builder.append("==============================\n");
         builder.append("SEJA BEM VINDO AO MEU PROGRAMA\n");
@@ -31,7 +33,7 @@ public class Menus {
     }
 
     public int menuPrincipal() {
-        StringBuilder builder = new StringBuilder("");
+        builder = new StringBuilder("");
 
         builder.append("==============================\n");
         builder.append("SEJA BEM VINDO AO MEU PROGRAMA\n");
@@ -95,18 +97,16 @@ public class Menus {
     }
 
     public int menuRedeSocial() {
-        StringBuilder builder = new StringBuilder("");
+        builder = new StringBuilder("");
 
         builder.append("==============================\n");
         builder.append("REDE SOCIAL\n");
         builder.append("==============================\n");
-        builder.append("\n1 - Ver timeline");
-        builder.append("\n2 - Ver meus posts");
-        builder.append("\n3 - Criar um novo post");
-        builder.append("\n4 - Buscar usuário");
-        builder.append("\n5 - Ver seguidores");
-        builder.append("\n6 - Chat");
-        builder.append("\n7 - Sair");
+        builder.append("\n1 - Ver meus posts");
+        builder.append("\n2 - Criar um novo post");
+        builder.append("\n3 - Buscar usuário");
+        builder.append("\n4 - Ver seguidores");
+        builder.append("\n5 - Sair");
         builder.append("\n\nQual a sua opção? R: ");
 
         System.out.print(builder);
@@ -115,7 +115,7 @@ public class Menus {
     }
 
     public int menuRedeSocialBuscar(Pessoa usuario, boolean ehSeguidor) {
-        StringBuilder builder = new StringBuilder("");
+        builder = new StringBuilder("");
 
         builder.append("==============================\n");
         builder.append("USUÁRIO BUSCADO\n");
@@ -123,14 +123,15 @@ public class Menus {
         builder.append("==============================\n");
 
         if(ehSeguidor) {
-            builder.append("\n1 - Seguir");
-        } else {
             builder.append("\n1 - Deixar de seguir");
+        } else {
+            builder.append("\n1 - Seguir");
         }
 
-        builder.append("\n2 - Enviar mensagem");
-        builder.append("\n3 - Ver mensagens");
-        builder.append("\n4 - Sair");
+        builder.append("\n2 - Ver posts");
+        builder.append("\n3 - Enviar mensagem");
+        builder.append("\n4 - Ver mensagens");
+        builder.append("\n5 - Sair");
         builder.append("\n\nQual a sua opção? R: ");
 
         System.out.print(builder);
@@ -139,7 +140,7 @@ public class Menus {
     }
 
     public int avaliacaoFisica() {
-        StringBuilder builder = new StringBuilder("");
+        builder = new StringBuilder("");
 
         builder.append("==============================\n");
         builder.append("AVALIAÇÃO FÍSICA\n");

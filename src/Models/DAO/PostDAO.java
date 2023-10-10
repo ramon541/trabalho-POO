@@ -26,13 +26,14 @@ public class PostDAO {
         return -1;
     }
 
-    /*public void mostrarTodos() {
+    public void mostrarTodos() {
         if(ehVazio()) {
             System.out.println("Não existe nenhum post publicado.");
         } else {
             StringBuilder builder = new StringBuilder();
             for(Post post: this.posts) {
                 if(post != null) {
+                    builder.append("\n").append("=============================").append("\n");
                     builder.append("Conteúdo: ").append(post.getConteudoDaMensagem()).append("\n");
                     builder.append("Publicado por: ").append(post.getPessoa().getNome()).append("\n");
                 }
@@ -40,14 +41,14 @@ public class PostDAO {
 
             System.out.println(builder);
         }
-    }*/
+    }
 
-    public void mostrarPostsUsuario() {
+    public void mostrarPostsUsuario(Pessoa usuario) {
         if(ehVazio()) {
             System.out.println("Não existe nenhum post publicado.");
         } else {
             for(Post post : getPosts()) {
-                if(post.getPessoa().equals(Util.getPessoaLogada())) {
+                if(post != null && post.getPessoa().equals(usuario)) {
                     StringBuilder builder = new StringBuilder();
 
                     builder.append("Conteúdo: ").append(post.getConteudoDaMensagem()).append("\n");

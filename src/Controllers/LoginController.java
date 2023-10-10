@@ -5,6 +5,8 @@ import Models.DAO.PessoaDAO;
 import Models.DAO.PostDAO;
 import Models.DAO.SeguirDAO;
 import Models.Pessoa;
+import Models.Post;
+import Models.Seguir;
 import Models.Util;
 import Views.Menus;
 
@@ -13,7 +15,6 @@ public class LoginController {
     private final PostDAO postDAO = new PostDAO();
     private final SeguirDAO seguirDAO = new SeguirDAO();
 
-    private final MensagemDAO mensagemDAO = new MensagemDAO();
     public LoginController() {
 
 
@@ -31,7 +32,11 @@ public class LoginController {
                         System.out.println("Login feito com sucesso!!");
                         Util.setPessoaLogada(logado);
 
-                        new MenuPrincipalController(this.getMenu(), this.getPostDAO(), this.getSeguirDAO(), pessoaDAO, this.mensagemDAO);
+                        //mostrar timeline
+                        this.verTimeline();
+
+                        MensagemDAO mensagemDAO = new MensagemDAO();
+                        new MenuPrincipalController(this.getMenu(), this.getPostDAO(), this.getSeguirDAO(), pessoaDAO, mensagemDAO);
                     } else {
                         System.out.println("Login Inválido. Tente novamente...");
                     }
@@ -49,6 +54,25 @@ public class LoginController {
                 default:
                     System.out.println("\n\nOPÇÃO INVÁLIDA!!");
                     break;
+            }
+        }
+    }
+
+    public void verTimeline() {
+        StringBuilder builder = new StringBuilder("");
+
+        for (Post post: postDAO.getPosts()) {
+            if(post != null) {
+                for (Seguir seguir: seguirDAO.getSeguindoList()) {
+                    if(seguir != null && post.getPessoa().equals(seguir.getSeguindo())) {
+
+                        builder.append("\n").append("=============================").append("\n");
+                        builder.append("Conteúdo: ").append(post.getConteudoDaMensagem()).append("\n");
+                        builder.append("Publicado por: ").append(post.getPessoa().getNome()).append("\n");
+
+                        System.out.println(builder);
+                    }
+                }
             }
         }
     }
