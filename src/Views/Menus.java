@@ -36,7 +36,7 @@ public class Menus {
         builder.append("==============================\n");
         builder.append("SEJA BEM VINDO AO MEU PROGRAMA\n");
         builder.append("==============================\n");
-        builder.append("\n1 - Avaliação Física");
+        builder.append("\n1 - Nova Avaliação Física");
         builder.append("\n2 - Dieta");
         builder.append("\n3 - Rede Social");
         if (Util.getPessoaLogada().getTipoUsuario().equals("admin")){
@@ -113,84 +113,17 @@ public class Menus {
         return Integer.parseInt(scan.nextLine());
     }
 
-    public int avaliacaoFisica() {
+    public int dieta() {
         StringBuilder builder = new StringBuilder("");
 
         builder.append("==============================\n");
-        builder.append("AVALIAÇÃO FÍSICA\n");
+        builder.append("MENU DIETA\n");
         builder.append("==============================\n");
-        builder.append("1 - Nova Avaliação Física\n");
-        builder.append("2 - Voltar");
-        builder.append("\n\nQual a sua opção? R: ");
-
-        System.out.print(builder);
+        builder.append("1 - Registro de Dieta");
+        builder.append("2 - Minha Alimentação");
+        builder.append("3 - Voltar");
 
         return Integer.parseInt(scan.nextLine());
-    }
-
-    public void newAvaliacaoFisica () {
-        AvaliacaoFisica novaAvaliacao = new AvaliacaoFisica();
-
-        System.out.println("==============================");
-        System.out.println("NOVA AVALIAÇÃO FÍSICA");
-        System.out.println("==============================");
-        System.out.print("Qual o seu peso?(KG) R: ");
-        novaAvaliacao.setPeso(Double.parseDouble(scan.nextLine()));
-        System.out.print("Qual a sua altura?(cm) R: ");
-        novaAvaliacao.setAltura(Integer.parseInt(scan.nextLine()));
-        System.out.print("Qual a sua idade? R: ");
-        novaAvaliacao.setIdade(Integer.parseInt(scan.nextLine()));
-        System.out.print("Qual a medida do seu pescoço?(cm) R: ");
-        novaAvaliacao.setPescoco(Integer.parseInt(scan.nextLine()));
-        System.out.print("Qual a medida da sua cintura?(cm) R: ");
-        novaAvaliacao.setCintura(Integer.parseInt(scan.nextLine()));
-        if (novaAvaliacao.getPessoa().getSexo().equals("Feminino")){
-            System.out.print("Qual a medida do seu quadril?(cm) R: ");
-            novaAvaliacao.setQuadril(Integer.parseInt(scan.nextLine()));
-        }
-
-        System.out.print("""
-                Qual a sua taxa de atividade?
-                1 - Sedentário (pouco ou nenhum exercício)
-                2 - Levemente ativo (exercício leve 1 a 3 dias por semana)
-                3 - Moderadamente ativo (exercício moderado 6 a 7 dias por semana)
-                4 - Muito ativo (exercício intenso todos os dias ou exercício duas vezes ao dia)
-                5 - Extra ativo (exercício muito difícil, treinamento ou trabalho físico)
-                """);
-        System.out.print("R: ");
-        int opc = Integer.parseInt(scan.nextLine());
-        switch (opc) {
-            case 1:
-                novaAvaliacao.setFatorTaxaAtividade(1.2);
-                break;
-
-            case 2:
-                novaAvaliacao.setFatorTaxaAtividade(1.375);
-                break;
-
-            case 3:
-                novaAvaliacao.setFatorTaxaAtividade(1.55);
-                break;
-
-            case 4:
-                novaAvaliacao.setFatorTaxaAtividade(1.725);
-                break;
-
-            case 5:
-                novaAvaliacao.setFatorTaxaAtividade(1.9);
-                break;
-            default:
-                novaAvaliacao.setFatorTaxaAtividade(1.2);
-                System.out.println("OPÇÃO INVÁLIDA!! Taxa de atividade setada como 1 - Sedentário");
-                break;
-        }
-
-        novaAvaliacao.calcularIMC();
-        novaAvaliacao.calcularTMB();
-        novaAvaliacao.calcularBodyFat();
-        System.out.println(novaAvaliacao.toString());
-        Util.getPessoaLogada().getAvaliacaoFisicaDAO().adicionaAvaliacao(novaAvaliacao);
-        System.out.println("AVALIAÇÃO ADICIONADA COM SUCESSO!!");
     }
 
     public PessoaDAO getPessoaDAO() {

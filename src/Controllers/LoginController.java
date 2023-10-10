@@ -1,7 +1,9 @@
 package Controllers;
 
+import Models.DAO.AvaliacaoFisicaDAO;
 import Models.DAO.PessoaDAO;
 import Models.DAO.PostDAO;
+import Models.DAO.TipoDietaDAO;
 import Models.Pessoa;
 import Models.Util;
 import Views.Menus;
@@ -9,6 +11,8 @@ import Views.Menus;
 public class LoginController {
     Menus menu = new Menus();
     PostDAO postDAO = new PostDAO();
+    AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO();
+    TipoDietaDAO tipoDietaDAO = new TipoDietaDAO();
     public LoginController() {
 
         PessoaDAO pessoaDAO = new PessoaDAO(getPostDAO());
@@ -25,7 +29,7 @@ public class LoginController {
                         System.out.println("Login feito com sucesso!!");
                         Util.setPessoaLogada(logado);
 
-                        new MenuPrincipalController(getMenu(), getPostDAO());
+                        new MenuPrincipalController(getMenu(), getPostDAO(), getAvaliacaoFisicaDAO());
                     } else {
                         System.out.println("Login Inválido. Tente novamente...");
                     }
@@ -58,5 +62,7 @@ public class LoginController {
     public PostDAO getPostDAO() {
         return postDAO;
     }
+
+    public AvaliacaoFisicaDAO getAvaliacaoFisicaDAO() { return avaliacaoFisicaDAO; }
 
 }

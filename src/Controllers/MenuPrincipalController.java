@@ -1,21 +1,22 @@
 package Controllers;
 
+import Models.DAO.AvaliacaoFisicaDAO;
 import Models.DAO.PostDAO;
 import Models.Util;
 import Views.Menus;
 
 public class MenuPrincipalController {
-    public MenuPrincipalController(Menus menu, PostDAO postDAO) {
+    public MenuPrincipalController(Menus menu, PostDAO postDAO, AvaliacaoFisicaDAO avaliacaoFisicaDAO) {
             int opc = 0;
             while (opc != 9) {
                 opc = menu.menuPrincipal();
                 switch (opc) {
                     case 1:
-                        new AvaliacaoFisicaController(menu);
+                        new AvaliacaoFisicaController(avaliacaoFisicaDAO);
                         break;
 
                     case 2:
-                        System.out.println("Menu Dieta");
+                        new RegistroDietaController(menu);
                         break;
 
                     case 3:
