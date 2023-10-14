@@ -53,4 +53,14 @@ public class Seguir {
         this.dataModificacao = Util.getDataAtual();;
     }
 
+    @Override
+    public String toString() {
+        return "Seguir{" +
+                "id=" + id +
+                ", usuario=" + usuario +
+                ", seguindo=" + seguindo +
+                ", dataCriacao=" + dataCriacao +
+                ", dataModificacao=" + dataModificacao +
+                '}';
+    }
 }

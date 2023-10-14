@@ -2,12 +2,12 @@ package Models.DAO;
 
 import Models.Pessoa;
 import Models.Post;
+import Models.Seguir;
 
 public class PessoaDAO {
     Pessoa[] pessoas = new Pessoa[10];
 
     public PessoaDAO(PostDAO postDAO) {
-
         Pessoa p1 = new Pessoa();
         p1.setNome("Admin");
         p1.setNascimento("01/01/2000");
@@ -18,21 +18,11 @@ public class PessoaDAO {
 
         this.adicionaPessoa(p1);
 
-        Pessoa p2 = new Pessoa();
-        p2.setNome("Fulana");
-        p2.setNascimento("05/05/2000");
-        p2.setSexo("Feminina");
-        p2.setLogin("fulana");
-        p2.setSenha("fulana");
-        p2.setTipoUsuario("comum");
+        Post post1 = new Post();
+        post1.setConteudoDaMensagem("Post Teste");
+        post1.setPessoa(p1);
 
-        this.adicionaPessoa(p2);
-
-        Post post = new Post();
-        post.setConteudoDaMensagem("Post Teste");
-        post.setPessoa(p1);
-
-        postDAO.adicionaPost(post);
+        postDAO.adicionaPost(post1);
     }
 
     public boolean adicionaPessoa(Pessoa pessoa) {

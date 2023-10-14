@@ -2,6 +2,7 @@ package Models.DAO;
 
 import Models.Mensagem;
 import Models.Pessoa;
+import Models.Post;
 import Models.Util;
 
 public class MensagemDAO {
@@ -26,17 +27,39 @@ public class MensagemDAO {
     }
 
     public void verMensagens(Pessoa usuarioBuscado) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("=======================").append("\n");
+        builder.append("CHAT").append("\n");
+        builder.append("=======================").append("\n");
 
-        builder = new StringBuilder("");
+        if(this.ehVazio()) {
+            builder.append("Nenhuma mensagem foi enviada.");
+        } else {
+            for (Mensagem msg : this.mensagens) {
+                if (msg != null) {
+                    Pessoa remetente = msg.getRemetente();
+                    Pessoa destinatario = msg.getDestinatario();
 
-        for(Mensagem msg: this.mensagens) {
-            if(msg != null && msg.getRemetente().equals(Util.getPessoaLogada()) && msg.getDestinatario().equals(usuarioBuscado) ||
-                   msg != null && msg.getRemetente().equals(usuarioBuscado) && msg.getDestinatario().equals(Util.getPessoaLogada())
-            ) {
-                builder.append("Usuário: ").append(msg.getRemetente().getNome()).append("\n");
-                builder.append("Mensagem: ").append(msg.getMensagem()).append("\n");
+                    if ((remetente.equals(Util.getPessoaLogada()) && destinatario.equals(usuarioBuscado)) ||
+                            (remetente.equals(usuarioBuscado) && destinatario.equals(Util.getPessoaLogada()))) {
+
+                        builder.append("Usuário: ").append(remetente.getNome()).append("\n");
+                        builder.append("Mensagem: ").append(msg.getMensagem()).append("\n");
+                        builder.append("=============================").append("\n");
+                    }
+                }
             }
         }
+
+        System.out.println(builder);
+    }
+
+    public boolean ehVazio() {
+        for(Mensagem msg : this.mensagens) {
+            if(msg != null) return false;
+        }
+
+        return true;
     }
 
     private int proximaPosicaoLivre() {
