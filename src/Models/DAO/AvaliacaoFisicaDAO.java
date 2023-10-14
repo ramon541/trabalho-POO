@@ -1,10 +1,9 @@
 package Models.DAO;
 
 import Models.AvaliacaoFisica;
-import Models.Pessoa;
 
 public class AvaliacaoFisicaDAO {
-    AvaliacaoFisica[] avaliacoes = new AvaliacaoFisica[10];
+    AvaliacaoFisica[] avaliacoes = new AvaliacaoFisica[30];
 
     public boolean adicionaAvaliacao(AvaliacaoFisica avaliacao) {
         int posicaoLivre = this.proximaPosicaoLivre();
@@ -43,6 +42,19 @@ public class AvaliacaoFisicaDAO {
             if(avaliacoes[i] == null) return i;
         }
         return -1;
+    }
+
+    public AvaliacaoFisica[] procuraAvaliacoes(long id){
+        AvaliacaoFisica[] avaliacoesFisicasUser = new AvaliacaoFisica[2];
+        AvaliacaoFisica aux;
+        for (int i = 0; i < avaliacoes.length; i++){
+            if (avaliacoes[i].getPessoa().getId() == id){
+                aux = avaliacoesFisicasUser[0];
+                avaliacoesFisicasUser[0] = avaliacoes[i];
+                avaliacoesFisicasUser[1] = aux;
+            }
+        }
+        return avaliacoesFisicasUser;
     }
 
 }
