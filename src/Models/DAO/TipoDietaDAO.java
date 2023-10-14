@@ -1,6 +1,5 @@
 package Models.DAO;
 
-import Models.Pessoa;
 import Models.TipoDieta;
 
 public class TipoDietaDAO {

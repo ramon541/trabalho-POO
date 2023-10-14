@@ -17,7 +17,7 @@ public class AvaliacaoFisica {
     private int pescoco;
     private int cintura;
     private int quadril;
-    private final LocalDateTime dataCriacao;
+    private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
     private double imc;
     private double tmb;
@@ -28,7 +28,7 @@ public class AvaliacaoFisica {
     public AvaliacaoFisica() {
         serial++;
         this.id = serial;
-        this.dataCriacao = Util.getDataAtual();
+        setDataCriacao(Util.getDataAtual());
         this.pessoa = Util.getPessoaLogada();
     }
 
@@ -118,6 +118,7 @@ public class AvaliacaoFisica {
         this.tmb = tmb;
     }
 
+    public void setDataCriacao(LocalDateTime dataCriacao) { this.dataCriacao = dataCriacao; }
     public void setDataModificacao(LocalDateTime dataModificacao) { this.dataModificacao = dataModificacao; }
 
     public double getBodyFat() {
