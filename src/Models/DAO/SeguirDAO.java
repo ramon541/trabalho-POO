@@ -40,25 +40,37 @@ public class SeguirDAO {
     }
 
     public void mostrarSeguidores() {
+
+        StringBuilder builder = new StringBuilder();
+
         if(ehVazio()) {
-            System.out.println("Não há nenhum seguidor!");
+            builder.append("Não há ninguem seguindo ninguém!");
         } else {
-            StringBuilder builder = new StringBuilder("");
+
             builder.append("======================").append("\n");
             builder.append("Seguidores ").append("\n");
             builder.append("======================").append("\n");
 
-            for (Seguir seguir: this.seguindoList) {
-                if(seguir != null && seguir.getSeguindo().equals(Util.getPessoaLogada())) {
+            int countSeguidores = 0;
+
+            for (Seguir seguir : this.seguindoList) {
+                if (seguir != null && seguir.getSeguindo().equals(Util.getPessoaLogada())) {
                     builder.append("Nome: ").append(seguir.getUsuario().getNome()).append("\n");
+                    countSeguidores++;
                 }
             }
+
+            if(countSeguidores == 0) {
+                builder.append("Você não tem nenhum seguidor!");
+            }
         }
+
+        System.out.println(builder);
     }
 
     public boolean ehSeguidor(Pessoa usuario) {
         for(Seguir seguir: this.seguindoList) {
-            if(seguir != null && seguir.getUsuario().equals(Util.getPessoaLogada()) && seguir.getSeguindo().equals(usuario)) {
+            if(seguir != null && (seguir.getUsuario().equals(Util.getPessoaLogada()) && seguir.getSeguindo().equals(usuario))) {
                 return true;
             }
         }

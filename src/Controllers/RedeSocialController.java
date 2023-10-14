@@ -19,7 +19,7 @@ public class RedeSocialController {
 
     public RedeSocialController(Menus menu, PostDAO postDAO, SeguirDAO seguirDAO, PessoaDAO pessoaDAO, MensagemDAO mensagemDAO) {
             int opc = 0;
-            while (opc != 7) {
+            while (opc != 5) {
                 opc = menu.menuRedeSocial();
                 switch (opc) {
                     case 1:
@@ -39,12 +39,14 @@ public class RedeSocialController {
                         break;
 
                     case 3:
-                        System.out.println("Buscar usuário");
+                        builder = new StringBuilder("");
+                        builder.append("=====================").append("\n");
+                        builder.append("BUSCAR USUÁRIO").append("\n");
+                        builder.append("=====================").append("\n");
+                        builder.append("Digite o nome do usuário que deseja pesquisar: ");
 
-                        System.out.println("=====================\n");
-                        System.out.println("Buscar usuário\n");
-                        System.out.println("=====================\n");
-                        System.out.println("Digite o nome do usuário que deseja pesquisar: ");
+                        System.out.println(builder);
+
                         Pessoa usuarioBuscado = pessoaDAO.buscaPorNome(scan.nextLine());
 
                         if(usuarioBuscado == null) {
@@ -59,7 +61,6 @@ public class RedeSocialController {
 
                         break;
                     case 4:
-                        //ver seguidores
                         seguirDAO.mostrarSeguidores();
 
                         break;

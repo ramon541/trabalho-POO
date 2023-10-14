@@ -16,7 +16,7 @@ public class RedeSocialBuscarController {
 
     public RedeSocialBuscarController(Menus menu, Pessoa usuarioBuscado, boolean ehSeguidor, SeguirDAO seguirDAO, MensagemDAO mensagemDAO, PostDAO postDAO) {
         int opc = 0;
-        while (opc != 4) {
+        while (opc != 5) {
             opc = menu.menuRedeSocialBuscar(usuarioBuscado, ehSeguidor);
             switch (opc) {
                 case 1:
