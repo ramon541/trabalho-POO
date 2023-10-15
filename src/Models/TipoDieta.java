@@ -1,5 +1,6 @@
 package Models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class TipoDieta {
@@ -9,12 +10,13 @@ public class TipoDieta {
     private double carboidrato;
     private double proteina;
     private double gordura;
-    private Date dataCriacao;
-    private Date dataModificacao;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataModificacao;
 
     public TipoDieta(){
         serial++;
         this.id = serial;
+        setDataCriacao(Util.getDataAtual());
     }
 
     public long getId() {
@@ -53,19 +55,19 @@ public class TipoDieta {
         this.gordura = gordura;
     }
 
-    public Date getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public Date getDataModificacao() {
+    public LocalDateTime getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(Date dataModificacao) {
+    public void setDataModificacao(LocalDateTime dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
 }

@@ -1,20 +1,19 @@
 package Controllers;
 
-import Models.DAO.MensagemDAO;
-import Models.DAO.PessoaDAO;
-import Models.DAO.PostDAO;
-import Models.DAO.SeguirDAO;
+import Models.DAO.*;
 import Models.Util;
 import Views.Menus;
 
 public class MenuPrincipalController {
-    public MenuPrincipalController(Menus menu, PostDAO postDAO, SeguirDAO seguirDAO, PessoaDAO pessoaDAO, MensagemDAO mensagemDAO) {
+    public MenuPrincipalController(Menus menu, PostDAO postDAO, SeguirDAO seguirDAO, PessoaDAO pessoaDAO,
+                                   MensagemDAO mensagemDAO, AvaliacaoFisicaDAO avaliacaoFisicaDAO,
+                                   AlimentoDAO alimentoDAO) {
             int opc = 0;
             while (opc != 9) {
                 opc = menu.menuPrincipal();
                 switch (opc) {
                     case 1:
-                        new AvaliacaoFisicaController(menu);
+                        new AvaliacaoFisicaController(avaliacaoFisicaDAO);
                         break;
 
                     case 2:

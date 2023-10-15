@@ -3,39 +3,38 @@ package Models.DAO;
 import Models.AvaliacaoFisica;
 
 public class AvaliacaoFisicaDAO {
-    AvaliacaoFisica[] avaliacoes = new AvaliacaoFisica[2];
+    AvaliacaoFisica[] avaliacoes = new AvaliacaoFisica[30];
 
-    public void adicionaAvaliacao(AvaliacaoFisica avaliacao) {
-        AvaliacaoFisica avaliacaoAntiga = avaliacoes[0];
-        avaliacoes[0] = avaliacao;
-        avaliacoes[1] = avaliacaoAntiga;
+    public boolean adicionaAvaliacao(AvaliacaoFisica avaliacao) {
+        int posicaoLivre = this.proximaPosicaoLivre();
+        if(posicaoLivre == -1) {
+            return false;
+        }
+
+        this.avaliacoes[posicaoLivre] = avaliacao;
+
+        return true;
     }
 
     public boolean ehVazio() {
-        for(AvaliacaoFisica avaliacoes : this.avaliacoes) {
-            if(avaliacoes != null) return false;
+        for(AvaliacaoFisica avaliacao : this.avaliacoes) {
+            if(avaliacao != null) return false;
         }
         return true;
     }
 
-    public String mostrarTodos() {
-        String builder = "";
+    public void mostrarTodos() {
         if(ehVazio()) {
-            builder+= "\nNão existe avaliação física cadastrada.\n\n";
+            System.out.println("Não existe avaliações fisicas cadastras");
         } else {
-            builder += "----------- ÚLTIMA AVALIAÇÃO FÍSICA -----------\n" +
-            avaliacoes[0].toString() + "\n" +
-            "------------------------------------------------\n" +
-            "\n---------- AVALIAÇÃO FÍSICA ANTERIOR ----------\n";
-
-            if (avaliacoes[1] == null){
-                builder += "SEM REGISTRO!\n";
-            } else {
-                builder += avaliacoes[1].toString() + "\n";
+            String builder = "";
+            for(AvaliacaoFisica avaliacaoFisica: this.avaliacoes) {
+                if(avaliacaoFisica != null) {
+                    builder = avaliacaoFisica + "\n";
+                }
             }
-            builder += "------------------------------------------------\n\n";
+            System.out.println(builder);
         }
-        return builder;
     }
 
     private int proximaPosicaoLivre() {
@@ -43,6 +42,19 @@ public class AvaliacaoFisicaDAO {
             if(avaliacoes[i] == null) return i;
         }
         return -1;
+    }
+
+    public AvaliacaoFisica[] procuraAvaliacoes(long id){
+        AvaliacaoFisica[] avaliacoesFisicasUser = new AvaliacaoFisica[2];
+        AvaliacaoFisica aux;
+        for (int i = 0; i < avaliacoes.length; i++){
+            if (avaliacoes[i].getPessoa().getId() == id){
+                aux = avaliacoesFisicasUser[0];
+                avaliacoesFisicasUser[0] = avaliacoes[i];
+                avaliacoesFisicasUser[1] = aux;
+            }
+        }
+        return avaliacoesFisicasUser;
     }
 
 }

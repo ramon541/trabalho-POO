@@ -1,18 +1,19 @@
 package Models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Preferencia {
     protected long id;
     private static long serial;
     private String pessoa;
     private String alimento;
-    private Date dataCriacao;
-    private Date dataModificacao;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataModificacao;
 
     public Preferencia() {
         serial++;
         this.id = serial;
+        setDataCriacao(Util.getDataAtual());
     }
 
     public long getId() {
@@ -35,19 +36,19 @@ public class Preferencia {
         this.alimento = alimento;
     }
 
-    public Date getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public Date getDataModificacao() {
+    public LocalDateTime getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(Date dataModificacao) {
+    public void setDataModificacao(LocalDateTime dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
 }
