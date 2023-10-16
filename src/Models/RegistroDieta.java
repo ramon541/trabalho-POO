@@ -4,6 +4,7 @@
  */
 package Models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class RegistroDieta {
@@ -15,8 +16,8 @@ public class RegistroDieta {
     private String objetivo;
     private double calorias;
     private int nRefeicoes;
-    private Date dataCriacao;
-    private Date dataModificacao;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataModificacao;
 
     public RegistroDieta() {
         serial++;
@@ -75,19 +76,19 @@ public class RegistroDieta {
         this.nRefeicoes = nRefeicoes;
     }
 
-    public Date getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public Date getDataModificacao() {
+    public LocalDateTime getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(Date dataModificacao) {
+    public void setDataModificacao(LocalDateTime dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
 }

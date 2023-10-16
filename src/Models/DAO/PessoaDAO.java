@@ -2,7 +2,6 @@ package Models.DAO;
 
 import Models.Pessoa;
 import Models.Post;
-import Models.Seguir;
 
 public class PessoaDAO {
     Pessoa[] pessoas = new Pessoa[10];

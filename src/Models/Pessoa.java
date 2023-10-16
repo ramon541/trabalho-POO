@@ -1,7 +1,5 @@
 package Models;
 
-import Models.DAO.AvaliacaoFisicaDAO;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +16,6 @@ public class Pessoa {
     private String tipoUsuario;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
-    private final AvaliacaoFisicaDAO avaliacaoFisicaDAO;
 
     public Pessoa() {
         //Ações padrão para todos os usuários
@@ -26,7 +23,6 @@ public class Pessoa {
         this.id = serial;
         this.setTipoUsuario("comum");
         this.setDataCriacao();
-        this.avaliacaoFisicaDAO = new AvaliacaoFisicaDAO();
     }
 
     public long getId() {
@@ -95,10 +91,6 @@ public class Pessoa {
 
     public void setDataModificacao() {
         this.dataModificacao = Util.getDataAtual();
-    }
-
-    public AvaliacaoFisicaDAO getAvaliacaoFisicaDAO() {
-        return this.avaliacaoFisicaDAO;
     }
     @Override
     public boolean equals(Object pessoa) {

@@ -17,7 +17,7 @@ public class AvaliacaoFisica {
     private int pescoco;
     private int cintura;
     private int quadril;
-    private final LocalDateTime dataCriacao;
+    private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
     private double imc;
     private double tmb;
@@ -28,7 +28,7 @@ public class AvaliacaoFisica {
     public AvaliacaoFisica() {
         serial++;
         this.id = serial;
-        this.dataCriacao = Util.getDataAtual();
+        setDataCriacao(Util.getDataAtual());
         this.pessoa = Util.getPessoaLogada();
     }
 
@@ -118,6 +118,7 @@ public class AvaliacaoFisica {
         this.tmb = tmb;
     }
 
+    public void setDataCriacao(LocalDateTime dataCriacao) { this.dataCriacao = dataCriacao; }
     public void setDataModificacao(LocalDateTime dataModificacao) { this.dataModificacao = dataModificacao; }
 
     public double getBodyFat() {
@@ -159,20 +160,20 @@ public class AvaliacaoFisica {
     public String toString() {
         String builder =
                 "Peso: " + String.format("%.2f",this.peso) + " KG\n" +
-                "Altura: " + this.altura + " cm\n" +
-                "Idade: " + this.idade + " anos\n" +
-                "Pescoço: " + this.pescoco + " cm \n" +
-                "Cintura: " + this.cintura + " cm \n";
+                        "Altura: " + this.altura + " cm\n" +
+                        "Idade: " + this.idade + " anos\n" +
+                        "Pescoço: " + this.pescoco + " cm \n" +
+                        "Cintura: " + this.cintura + " cm \n";
         if (pessoa.getSexo().equals("Feminino")){
             builder += "Quadril: " + this.quadril + " cm \n";
         }
         builder +=
                 "IMC: " + String.format("%.2f",this.imc) + " kg/m²\n" +
-                "TMB: " + String.format("%.2f",this.tmb) + " calorias\n" +
-                "BF: " + String.format("%.2f",this.bodyFat) + " %\n" +
-                "Massa gorda: " + String.format("%.2f",this.massaGorda) + " kg\n" +
-                "Massa magra: " + String.format("%.2f",this.massaMagra) + " kg\n" +
-                "Avaliação feita em: " + this.dataCriacao;
+                        "TMB: " + String.format("%.2f",this.tmb) + " calorias\n" +
+                        "BF: " + String.format("%.2f",this.bodyFat) + " %\n" +
+                        "Massa gorda: " + String.format("%.2f",this.massaGorda) + " kg\n" +
+                        "Massa magra: " + String.format("%.2f",this.massaMagra) + " kg\n" +
+                        "Avaliação feita em: " + this.dataCriacao;
 
         return builder;
     }

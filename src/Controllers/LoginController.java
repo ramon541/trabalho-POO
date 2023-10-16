@@ -1,9 +1,6 @@
 package Controllers;
 
-import Models.DAO.MensagemDAO;
-import Models.DAO.PessoaDAO;
-import Models.DAO.PostDAO;
-import Models.DAO.SeguirDAO;
+import Models.DAO.*;
 import Models.Pessoa;
 import Models.Post;
 import Models.Seguir;
@@ -14,8 +11,9 @@ public class LoginController {
     private final Menus menu = new Menus();
     private final PostDAO postDAO = new PostDAO();
     private final SeguirDAO seguirDAO = new SeguirDAO();
-
     private final PessoaDAO pessoaDAO = new PessoaDAO(this.postDAO);
+    private final AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO();
+    private final AlimentoDAO alimentoDAO = new AlimentoDAO();
 
     public LoginController() {
         getMenu().setPessoaDAO(pessoaDAO);
@@ -38,7 +36,7 @@ public class LoginController {
                         this.verTimeline();
 
                         MensagemDAO mensagemDAO = new MensagemDAO();
-                        new MenuPrincipalController(this.getMenu(), this.getPostDAO(), this.getSeguirDAO(), pessoaDAO, mensagemDAO);
+                        new MenuPrincipalController(this.getMenu(), this.getPostDAO(), this.getSeguirDAO(), pessoaDAO, mensagemDAO, this.getAvaliacaoFisicaDAO(), this.getAlimentoDAO());
                     } else {
                         System.out.println("Login Inválido. Tente novamente...");
                     }
@@ -117,4 +115,6 @@ public class LoginController {
     public SeguirDAO getSeguirDAO() {
         return this.seguirDAO;
     }
+    public AvaliacaoFisicaDAO getAvaliacaoFisicaDAO() { return this.avaliacaoFisicaDAO; }
+    public AlimentoDAO getAlimentoDAO() { return alimentoDAO; }
 }
