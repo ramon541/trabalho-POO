@@ -89,10 +89,10 @@ public class AlimentoDAO {
         this.adicionaAlimento(a9);
 
         Alimento a10 = new Alimento();
-        a10.setNome("Arroz Branco (Cozido)");
-        a10.setCarboidratos(28.18);
-        a10.setProteinas(2.5);
-        a10.setGorduras(0.23);
+        a10.setNome("Suco de Laranja Natural");
+        a10.setCarboidratos(10.4);
+        a10.setProteinas(0.7);
+        a10.setGorduras(0.2);
         a10.setCalorias();
         a10.setPorcao(100.0);
         this.adicionaAlimento(a10);
