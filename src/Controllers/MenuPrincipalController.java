@@ -17,7 +17,12 @@ public class MenuPrincipalController {
                         break;
 
                     case 2:
-                        System.out.println("Menu Dieta");
+                        //Esse if verifica se o Usuário fez alguma avaliação física
+                        if (avaliacaoFisicaDAO.procuraUltimaAvaliacao(Util.getPessoaLogada().getId()) == null){
+                            System.out.println("Primeiro você deve fazer uma Avaliação Física!!");
+                        }else {
+                            new MenuMinhaDietaController(menu);
+                        }
                         break;
 
                     case 3:

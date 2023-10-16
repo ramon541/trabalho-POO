@@ -44,17 +44,17 @@ public class AvaliacaoFisicaDAO {
         return -1;
     }
 
-    public AvaliacaoFisica[] procuraAvaliacoes(long id){
-        AvaliacaoFisica[] avaliacoesFisicasUser = new AvaliacaoFisica[2];
-        AvaliacaoFisica aux;
-        for (int i = 0; i < avaliacoes.length; i++){
-            if (avaliacoes[i].getPessoa().getId() == id){
-                aux = avaliacoesFisicasUser[0];
-                avaliacoesFisicasUser[0] = avaliacoes[i];
-                avaliacoesFisicasUser[1] = aux;
+    public AvaliacaoFisica procuraUltimaAvaliacao(long id){
+        AvaliacaoFisica ultAvaliacao = null;
+        if (avaliacoes != null){
+            for (int i = avaliacoes.length-1; i >= 0; i--){
+                if (avaliacoes[i]!= null && avaliacoes[i].getPessoa().getId() == id){
+                    ultAvaliacao = avaliacoes[i];
+                    break;
+                }
             }
         }
-        return avaliacoesFisicasUser;
+        return ultAvaliacao;
     }
 
 }

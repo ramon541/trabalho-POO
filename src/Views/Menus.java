@@ -4,7 +4,7 @@
  */
 package Views;
 
-import Models.AvaliacaoFisica;
+
 import Models.DAO.PessoaDAO;
 import Models.Pessoa;
 import Models.Util;
@@ -39,7 +39,7 @@ public class Menus {
         builder.append("SEJA BEM VINDO AO MEU PROGRAMA\n");
         builder.append("==============================\n");
         builder.append("\n1 - Avaliação Física");
-        builder.append("\n2 - Dieta");
+        builder.append("\n2 - Minha Dieta");
         builder.append("\n3 - Rede Social");
         if (Util.getPessoaLogada().getTipoUsuario().equals("admin")){
             builder.append("\n8 - Painel Administrativo");
@@ -139,6 +139,19 @@ public class Menus {
         return Integer.parseInt(scan.nextLine());
     }
 
+    public int menuMinhaDieta(){
+        builder = new StringBuilder("");
+
+        builder.append("==============================\n");
+        builder.append("MINHA DIETA\n");
+        builder.append("==============================\n");
+        builder.append("\n1 - Nova Dieta;");
+        builder.append("\n2 - Alimentos Preferidos;");
+        builder.append("\n3 - Meu Diário Alimentar;");
+        builder.append("\n4 - Voltar;");
+
+        return Integer.parseInt(scan.nextLine());
+    }
     public PessoaDAO getPessoaDAO() {
         return pessoaDAO;
     }
