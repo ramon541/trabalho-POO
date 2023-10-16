@@ -40,8 +40,8 @@ public class Alimento {
         return proteinas;
     }
 
-    public void setProteínas(Double proteínas) {
-        this.proteinas = proteínas;
+    public void setProteinas(Double proteinas) {
+        this.proteinas = proteinas;
     }
 
     public Double getGorduras() {
