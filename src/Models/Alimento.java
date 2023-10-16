@@ -11,7 +11,6 @@ public class Alimento {
     private Double gorduras;
     private Double calorias;
     private Double porcao;
-    private String tipoUsuario;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
 
@@ -58,14 +57,6 @@ public class Alimento {
 
     public void setPorcao(Double porcao) {
         this.porcao = porcao;
-    }
-
-    public String getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
     }
 
     public LocalDateTime getDataCriacao() {
