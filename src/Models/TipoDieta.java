@@ -70,4 +70,15 @@ public class TipoDieta {
     public void setDataModificacao(LocalDateTime dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
+
+    public void setDietaAtleta (AvaliacaoFisica ultAvaliacaoUser) {
+        double prot = ultAvaliacaoUser.getPeso() * 0.2;
+        setProteina(prot/100);
+
+        double gord = ultAvaliacaoUser.getPeso() * 0.8;
+        setGordura(gord/100);
+
+        double carb = 100 - (gord + prot);
+        setCarboidrato(carb/100);
+    }
 }
