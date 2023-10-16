@@ -149,7 +149,8 @@ public class Menus {
         builder.append("\n2 - Alimentos Preferidos;");
         builder.append("\n3 - Meu Diário Alimentar;");
         builder.append("\n4 - Voltar;");
-
+        builder.append("\n\nQual a sua opção? R: ");
+        System.out.print(builder);
         return Integer.parseInt(scan.nextLine());
     }
     public PessoaDAO getPessoaDAO() {
