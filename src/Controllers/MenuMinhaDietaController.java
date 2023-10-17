@@ -1,16 +1,18 @@
 package Controllers;
 
+import Models.AvaliacaoFisica;
+import Models.DAO.TipoDietaDAO;
 import Views.Menus;
 
 public class MenuMinhaDietaController {
-    public MenuMinhaDietaController(Menus menu){
+    public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO){
         int opc = 0;
         while (opc != 4){
             opc = menu.menuMinhaDieta();
 
             switch (opc){
                 case 1:
-                    System.out.println("Nova dieta...");
+                    new NovaDietaController(tipoDietaDAO ,ultAvaliacao);
                     break;
 
                 case 2:
@@ -30,5 +32,10 @@ public class MenuMinhaDietaController {
                     break;
             }
         }
+    }
+
+    private boolean newDieta(AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO) {
+
+        return true;
     }
 }
