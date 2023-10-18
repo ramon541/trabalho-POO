@@ -1,5 +1,6 @@
 package Models.DAO;
 
+import Models.Dieta;
 import Models.TipoDieta;
 
 public class TipoDietaDAO {
@@ -47,5 +48,14 @@ public class TipoDietaDAO {
             if(tipoDietas[i] == null) return i;
         }
         return -1;
+    }
+
+    public TipoDieta procuraDieta(String nomeTipoDieta){
+        for (TipoDieta tipoDieta : this.tipoDietas) {
+            if (tipoDieta.getNome().equals(nomeTipoDieta)){
+                return tipoDieta;
+            }
+        }
+        return null;
     }
 }

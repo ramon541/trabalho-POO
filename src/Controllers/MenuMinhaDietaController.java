@@ -1,18 +1,22 @@
 package Controllers;
 
 import Models.AvaliacaoFisica;
+import Models.DAO.DietaDAO;
 import Models.DAO.TipoDietaDAO;
+import Models.Dieta;
 import Views.Menus;
 
 public class MenuMinhaDietaController {
-    public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO){
+    public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO){
         int opc = 0;
         while (opc != 4){
             opc = menu.menuMinhaDieta();
 
             switch (opc){
                 case 1:
-                    new NovaDietaController(tipoDietaDAO ,ultAvaliacao);
+                    boolean dietaAdicionada = this.newDieta(ultAvaliacao, tipoDietaDAO, dietaDAO);
+                    if (dietaAdicionada) System.out.println("Dieta adicionada com sucesso!!");
+                    else System.out.println("ERRO!!! Algo deu errado...");
                     break;
 
                 case 2:
@@ -34,7 +38,10 @@ public class MenuMinhaDietaController {
         }
     }
 
-    private boolean newDieta(AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO) {
+    private boolean newDieta(AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO) {
+        tipoDietaDAO.procuraDieta("Atleta").setDietaAtleta(ultAvaliacao); //Altera o TipoDeDieta Atleta para o peso do Usuário logado
+        Dieta novaDieta = new Dieta();
+
 
         return true;
     }
