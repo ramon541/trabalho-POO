@@ -8,7 +8,7 @@ public class Dieta {
     private Pessoa pessoa;
     private AvaliacaoFisica avaliacaoFisica;
     private TipoDieta tipoDieta;
-    private String objetivo;
+    private int objetivo;
     private double calorias;
     private int nRefeicoes;
     private LocalDateTime dataCriacao;
@@ -17,6 +17,7 @@ public class Dieta {
     public Dieta() {
         serial++;
         this.id = serial;
+        setDataCriacao(Util.getDataAtual());
     }
 
     public long getId(){
@@ -47,11 +48,11 @@ public class Dieta {
         this.tipoDieta = tipoDieta;
     }
 
-    public String getObjetivo() {
+    public int getObjetivo() {
         return objetivo;
     }
 
-    public void setObjetivo(String objetivo) {
+    public void setObjetivo(int objetivo) {
         this.objetivo = objetivo;
     }
 
@@ -86,4 +87,6 @@ public class Dieta {
     public void setDataModificacao(LocalDateTime dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
+
+
 }

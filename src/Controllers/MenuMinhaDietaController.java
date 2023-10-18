@@ -4,7 +4,11 @@ import Models.AvaliacaoFisica;
 import Models.DAO.DietaDAO;
 import Models.DAO.TipoDietaDAO;
 import Models.Dieta;
+import Models.TipoDieta;
+import Models.Util;
 import Views.Menus;
+
+import java.util.Scanner;
 
 public class MenuMinhaDietaController {
     public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO){
@@ -39,9 +43,32 @@ public class MenuMinhaDietaController {
     }
 
     private boolean newDieta(AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO) {
-        tipoDietaDAO.procuraDieta("Atleta").setDietaAtleta(ultAvaliacao); //Altera o TipoDeDieta Atleta para o peso do Usuário logado
-        Dieta novaDieta = new Dieta();
+//        tipoDietaDAO.procuraDieta("Atleta").setDietaAtleta(ultAvaliacao); //Altera o TipoDeDieta Atleta para o peso do Usuário logado
 
+        Dieta novaDieta = new Dieta();
+        Scanner scan = new Scanner(System.in);
+
+        novaDieta.setPessoa(Util.getPessoaLogada());
+        novaDieta.setAvaliacaoFisica(ultAvaliacao);
+
+        System.out.println("==============================");
+        System.out.println("NOVA DIETA");
+        System.out.println("==============================");
+        System.out.println(tipoDietaDAO.toString());
+        System.out.print("\nQual o tipo de dieta você deseja? R: ");
+        TipoDieta dietaSelecionada = tipoDietaDAO.procuraDieta(scan.nextLine());
+        if (dietaSelecionada != null) novaDieta.setTipoDieta(dietaSelecionada);
+        else return false;
+        System.out.println("""
+            1 - Diminuir o peso
+            2 - Manter o peso
+            3 - Aumentar o peso
+            """);
+        System.out.print("\nQual o seu objetivo? R:");
+        int opc = Integer.parseInt(scan.nextLine());
+        switch (opc){
+
+        }
 
         return true;
     }
