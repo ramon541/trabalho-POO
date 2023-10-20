@@ -14,6 +14,8 @@ public class LoginController {
     private final PessoaDAO pessoaDAO = new PessoaDAO(this.postDAO);
     private final AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO();
     private final AlimentoDAO alimentoDAO = new AlimentoDAO();
+    private final TipoDietaDAO tipoDietaDAO = new TipoDietaDAO();
+    private final DietaDAO dietaDAO = new DietaDAO();
 
     public LoginController() {
         getMenu().setPessoaDAO(pessoaDAO);
@@ -36,7 +38,9 @@ public class LoginController {
                         this.verTimeline();
 
                         MensagemDAO mensagemDAO = new MensagemDAO();
-                        new MenuPrincipalController(this.getMenu(), this.getPostDAO(), this.getSeguirDAO(), pessoaDAO, mensagemDAO, this.getAvaliacaoFisicaDAO(), this.getAlimentoDAO());
+                        new MenuPrincipalController(this.getMenu(), this.getPostDAO(), this.getSeguirDAO(),
+                                pessoaDAO, mensagemDAO, this.getAvaliacaoFisicaDAO(), this.getAlimentoDAO(),
+                                this.getTipoDietaDAO(), this.getDietaDAO());
                     } else {
                         System.out.println("Login Inválido. Tente novamente...");
                     }
@@ -59,7 +63,7 @@ public class LoginController {
     }
 
     public void verTimeline() {
-        StringBuilder builder = new StringBuilder("");
+        StringBuilder builder = new StringBuilder();
         builder.append("=======================").append("\n");
         builder.append("TIMELINE").append("\n");
         builder.append("=======================").append("\n");
@@ -117,4 +121,6 @@ public class LoginController {
     }
     public AvaliacaoFisicaDAO getAvaliacaoFisicaDAO() { return this.avaliacaoFisicaDAO; }
     public AlimentoDAO getAlimentoDAO() { return alimentoDAO; }
+    public TipoDietaDAO getTipoDietaDAO() { return tipoDietaDAO; }
+    public DietaDAO getDietaDAO() { return dietaDAO; }
 }

@@ -7,7 +7,7 @@ import Views.Menus;
 public class MenuPrincipalController {
     public MenuPrincipalController(Menus menu, PostDAO postDAO, SeguirDAO seguirDAO, PessoaDAO pessoaDAO,
                                    MensagemDAO mensagemDAO, AvaliacaoFisicaDAO avaliacaoFisicaDAO,
-                                   AlimentoDAO alimentoDAO) {
+                                   AlimentoDAO alimentoDAO, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO) {
             int opc = 0;
             while (opc != 9) {
                 opc = menu.menuPrincipal();
@@ -18,10 +18,10 @@ public class MenuPrincipalController {
 
                     case 2:
                         //Esse if verifica se o Usuário fez alguma avaliação física
-                        if (avaliacaoFisicaDAO.procuraUltimaAvaliacao(Util.getPessoaLogada().getId()) == null){
+                        if (avaliacaoFisicaDAO.procuraUltimaAvaliacao() == null){
                             System.out.println("Primeiro você deve fazer uma Avaliação Física!!");
                         }else {
-                            new MenuMinhaDietaController(menu);
+                            new MenuMinhaDietaController(menu, avaliacaoFisicaDAO.procuraUltimaAvaliacao(), tipoDietaDAO, dietaDAO);
                         }
                         break;
 

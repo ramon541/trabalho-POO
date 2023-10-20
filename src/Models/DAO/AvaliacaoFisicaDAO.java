@@ -1,6 +1,7 @@
 package Models.DAO;
 
 import Models.AvaliacaoFisica;
+import Models.Util;
 
 public class AvaliacaoFisicaDAO {
     AvaliacaoFisica[] avaliacoes = new AvaliacaoFisica[30];
@@ -44,11 +45,11 @@ public class AvaliacaoFisicaDAO {
         return -1;
     }
 
-    public AvaliacaoFisica procuraUltimaAvaliacao(long id){
+    public AvaliacaoFisica procuraUltimaAvaliacao(){
         AvaliacaoFisica ultAvaliacao = null;
-        if (avaliacoes != null){
+        if (!ehVazio()){
             for (int i = avaliacoes.length-1; i >= 0; i--){
-                if (avaliacoes[i]!= null && avaliacoes[i].getPessoa().getId() == id){
+                if (avaliacoes[i]!= null && avaliacoes[i].getPessoa().getId() == Util.getPessoaLogada().getId()){
                     ultAvaliacao = avaliacoes[i];
                     break;
                 }

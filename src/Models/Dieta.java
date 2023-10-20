@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-public class RegistroDieta {
+public class Dieta {
     protected long id;
     private static long serial;
     private Pessoa pessoa;
@@ -19,9 +14,10 @@ public class RegistroDieta {
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
 
-    public RegistroDieta() {
+    public Dieta() {
         serial++;
         this.id = serial;
+        setDataCriacao(Util.getDataAtual());
     }
 
     public long getId(){
@@ -90,5 +86,17 @@ public class RegistroDieta {
 
     public void setDataModificacao(LocalDateTime dataModificacao) {
         this.dataModificacao = dataModificacao;
+    }
+
+    public String toString(){
+        String builder = "";
+
+        builder += "\n===============" +
+                "\nTipo de Dieta: " + this.tipoDieta.getNome() +
+                "\nObjetivo: " + this.objetivo + " o peso"+
+                "\nN° de refeições: " + this.nRefeicoes +
+                "\n\nCalorias: " + this.calorias +
+                "\n===============\n";
+        return builder;
     }
 }

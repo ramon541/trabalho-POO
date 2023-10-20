@@ -1,5 +1,6 @@
 package Models.DAO;
 
+import Models.Dieta;
 import Models.TipoDieta;
 
 public class TipoDietaDAO {
@@ -26,12 +27,12 @@ public class TipoDietaDAO {
         d3.setGordura(0.70);
         this.adicionaTipoDieta(d3);
 
-        TipoDieta d4 = new TipoDieta();
-        d4.setNome("Atleta");
-        d4.setCarboidrato(0.0);
-        d4.setProteina(0.0);
-        d4.setGordura(0.0);
-        this.adicionaTipoDieta(d4);
+//        TipoDieta d4 = new TipoDieta();
+//        d4.setNome("Atleta");
+//        d4.setCarboidrato(0.0);
+//        d4.setProteina(0.0);
+//        d4.setGordura(0.0);
+//        this.adicionaTipoDieta(d4);
     }
     public boolean adicionaTipoDieta(TipoDieta tipoDieta) {
         int posicaoLivre = this.proximaPosicaoLivre();
@@ -47,5 +48,30 @@ public class TipoDietaDAO {
             if(tipoDietas[i] == null) return i;
         }
         return -1;
+    }
+
+    public TipoDieta procuraDieta(String nomeTipoDieta){
+        for (TipoDieta tipoDieta : this.tipoDietas) {
+            if (tipoDieta.getNome().equals(nomeTipoDieta)){
+                return tipoDieta;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        String builder = "-------------------\n";
+        for (int i = 0; i < tipoDietas.length; i++){
+            if (tipoDietas[i] != null){
+                builder+= "\nTipo: " + tipoDietas[i].getNome() + "\n";
+                builder+= "Carboidrato: " + tipoDietas[i].getCarboidrato()*100 + "%\n";
+                builder+= "Proteína: " + tipoDietas[i].getProteina()*100 + "%\n";
+                builder+= "Gordura: " + tipoDietas[i].getGordura()*100 + "%";
+            }
+        }
+
+        builder += "\n-------------------";
+        return builder;
     }
 }
