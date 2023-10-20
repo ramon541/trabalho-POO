@@ -47,7 +47,7 @@ public class AvaliacaoFisicaDAO {
 
     public AvaliacaoFisica procuraUltimaAvaliacao(){
         AvaliacaoFisica ultAvaliacao = null;
-        if (avaliacoes != null){
+        if (!ehVazio()){
             for (int i = avaliacoes.length-1; i >= 0; i--){
                 if (avaliacoes[i]!= null && avaliacoes[i].getPessoa().getId() == Util.getPessoaLogada().getId()){
                     ultAvaliacao = avaliacoes[i];

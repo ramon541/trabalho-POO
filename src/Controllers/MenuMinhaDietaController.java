@@ -55,21 +55,45 @@ public class MenuMinhaDietaController {
         System.out.println("NOVA DIETA");
         System.out.println("==============================");
         System.out.println(tipoDietaDAO.toString());
-        System.out.print("\nQual o tipo de dieta você deseja? R: ");
+        System.out.print("Qual o tipo de dieta você deseja? R: ");
         TipoDieta dietaSelecionada = tipoDietaDAO.procuraDieta(scan.nextLine());
         if (dietaSelecionada != null) novaDieta.setTipoDieta(dietaSelecionada);
         else return false;
-        System.out.println("""
+        System.out.print("""
+            
             1 - Diminuir o peso
             2 - Manter o peso
             3 - Aumentar o peso
             """);
-        System.out.print("\nQual o seu objetivo? R:");
+        System.out.print("Qual o seu objetivo? R: ");
         int opc = Integer.parseInt(scan.nextLine());
         switch (opc){
+            case 1:
+                novaDieta.setObjetivo("Diminuir");
+                novaDieta.setCalorias(ultAvaliacao.getTmb() - 350.0);
+                break;
 
+            case 2:
+                novaDieta.setObjetivo("Manter");
+                novaDieta.setCalorias(ultAvaliacao.getTmb());
+                break;
+
+            case 3:
+                novaDieta.setObjetivo("Aumentar");
+                novaDieta.setCalorias(ultAvaliacao.getTmb() + 350.0);
+                break;
+
+            default:
+                return false;
         }
 
-        return true;
+        System.out.print("\nQuantas refeições deseja fazer (1 a 5)? R: ");
+        opc = Integer.parseInt(scan.nextLine());
+        if (opc >= 1 && opc <= 5){
+            novaDieta.setnRefeicoes(opc);
+        }else return false;
+
+        System.out.print(novaDieta.toString());
+        return dietaDAO.adicionaDieta(novaDieta);
     }
 }

@@ -1,6 +1,8 @@
 package Models.DAO;
 
+import Models.AvaliacaoFisica;
 import Models.Dieta;
+import Models.Util;
 
 public class DietaDAO {
     Dieta[] dietas = new Dieta[10];
@@ -28,5 +30,18 @@ public class DietaDAO {
             if(dietas[i] == null) return i;
         }
         return -1;
+    }
+
+    public Dieta procuraUltimaDieta(){
+        Dieta ultDieta = null;
+        if (!ehVazio()){
+            for (int i = dietas.length-1; i >= 0; i--){
+                if (dietas[i]!= null && dietas[i].getPessoa().getId() == Util.getPessoaLogada().getId()){
+                    ultDieta = dietas[i];
+                    break;
+                }
+            }
+        }
+        return ultDieta;
     }
 }

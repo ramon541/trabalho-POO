@@ -64,14 +64,14 @@ public class TipoDietaDAO {
         String builder = "-------------------\n";
         for (int i = 0; i < tipoDietas.length; i++){
             if (tipoDietas[i] != null){
-                builder+= "Tipo: " + tipoDietas[i].getNome() + "\n";
+                builder+= "\nTipo: " + tipoDietas[i].getNome() + "\n";
                 builder+= "Carboidrato: " + tipoDietas[i].getCarboidrato()*100 + "%\n";
                 builder+= "Proteína: " + tipoDietas[i].getProteina()*100 + "%\n";
-                builder+= "Gordura: " + tipoDietas[i].getGordura()*100 + "%\n";
+                builder+= "Gordura: " + tipoDietas[i].getGordura()*100 + "%";
             }
         }
 
-        builder += "-------------------";
+        builder += "\n-------------------";
         return builder;
     }
 }

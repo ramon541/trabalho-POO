@@ -8,7 +8,7 @@ public class Dieta {
     private Pessoa pessoa;
     private AvaliacaoFisica avaliacaoFisica;
     private TipoDieta tipoDieta;
-    private int objetivo;
+    private String objetivo;
     private double calorias;
     private int nRefeicoes;
     private LocalDateTime dataCriacao;
@@ -48,11 +48,11 @@ public class Dieta {
         this.tipoDieta = tipoDieta;
     }
 
-    public int getObjetivo() {
+    public String getObjetivo() {
         return objetivo;
     }
 
-    public void setObjetivo(int objetivo) {
+    public void setObjetivo(String objetivo) {
         this.objetivo = objetivo;
     }
 
@@ -88,5 +88,15 @@ public class Dieta {
         this.dataModificacao = dataModificacao;
     }
 
+    public String toString(){
+        String builder = "";
 
+        builder += "\n===============" +
+                "\nTipo de Dieta: " + this.tipoDieta.getNome() +
+                "\nObjetivo: " + this.objetivo + " o peso"+
+                "\nN° de refeições: " + this.nRefeicoes +
+                "\n\nCalorias: " + this.calorias +
+                "\n===============\n";
+        return builder;
+    }
 }
