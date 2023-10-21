@@ -17,6 +17,8 @@ public class LoginController {
     private final TipoDietaDAO tipoDietaDAO = new TipoDietaDAO();
     private final DietaDAO dietaDAO = new DietaDAO();
 
+    private final PreferenciaDAO preferenciaDAO = new PreferenciaDAO();
+
     public LoginController() {
         getMenu().setPessoaDAO(pessoaDAO);
 
@@ -40,7 +42,7 @@ public class LoginController {
                         MensagemDAO mensagemDAO = new MensagemDAO();
                         new MenuPrincipalController(this.getMenu(), this.getPostDAO(), this.getSeguirDAO(),
                                 pessoaDAO, mensagemDAO, this.getAvaliacaoFisicaDAO(), this.getAlimentoDAO(),
-                                this.getTipoDietaDAO(), this.getDietaDAO());
+                                this.getTipoDietaDAO(), this.getDietaDAO(), this.getPreferenciaDAO());
                     } else {
                         System.out.println("Login Inválido. Tente novamente...");
                     }
@@ -123,4 +125,7 @@ public class LoginController {
     public AlimentoDAO getAlimentoDAO() { return alimentoDAO; }
     public TipoDietaDAO getTipoDietaDAO() { return tipoDietaDAO; }
     public DietaDAO getDietaDAO() { return dietaDAO; }
+    public PreferenciaDAO getPreferenciaDAO() {
+        return preferenciaDAO;
+    }
 }
