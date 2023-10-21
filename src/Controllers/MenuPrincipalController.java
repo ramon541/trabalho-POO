@@ -7,7 +7,7 @@ import Views.Menus;
 public class MenuPrincipalController {
     public MenuPrincipalController(Menus menu, PostDAO postDAO, SeguirDAO seguirDAO, PessoaDAO pessoaDAO,
                                    MensagemDAO mensagemDAO, AvaliacaoFisicaDAO avaliacaoFisicaDAO,
-                                   AlimentoDAO alimentoDAO, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO) {
+                                   AlimentoDAO alimentoDAO, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO, PreferenciaDAO preferenciaDAO) {
             int opc = 0;
             while (opc != 9) {
                 opc = menu.menuPrincipal();
@@ -21,7 +21,7 @@ public class MenuPrincipalController {
                         if (avaliacaoFisicaDAO.procuraUltimaAvaliacao() == null){
                             System.out.println("Primeiro você deve fazer uma Avaliação Física!!");
                         }else {
-                            new MenuMinhaDietaController(menu, avaliacaoFisicaDAO.procuraUltimaAvaliacao(), tipoDietaDAO, dietaDAO);
+                            new MenuMinhaDietaController(menu, avaliacaoFisicaDAO.procuraUltimaAvaliacao(), tipoDietaDAO, dietaDAO, alimentoDAO, preferenciaDAO);
                         }
                         break;
 

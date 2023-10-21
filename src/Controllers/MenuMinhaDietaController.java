@@ -1,7 +1,9 @@
 package Controllers;
 
 import Models.AvaliacaoFisica;
+import Models.DAO.AlimentoDAO;
 import Models.DAO.DietaDAO;
+import Models.DAO.PreferenciaDAO;
 import Models.DAO.TipoDietaDAO;
 import Models.Dieta;
 import Models.TipoDieta;
@@ -11,7 +13,7 @@ import Views.Menus;
 import java.util.Scanner;
 
 public class MenuMinhaDietaController {
-    public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO){
+    public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO){
         int opc = 0;
         while (opc != 4){
             opc = menu.menuMinhaDieta();
@@ -24,7 +26,7 @@ public class MenuMinhaDietaController {
                     break;
 
                 case 2:
-                    System.out.println("Opção onde o Usuário vê os alimentos preferídos dele, podendo adicionar e excluir alimentos da preferência");
+                    new AlimentoPreferenciaController(menu, alimentoDAO, preferenciaDAO);
                     break;
 
                 case 3:
