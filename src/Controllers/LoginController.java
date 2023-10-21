@@ -15,6 +15,8 @@ public class LoginController {
     private final AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO();
     private final AlimentoDAO alimentoDAO = new AlimentoDAO();
 
+    private final PreferenciaDAO preferenciaDAO = new PreferenciaDAO();
+
     public LoginController() {
         getMenu().setPessoaDAO(pessoaDAO);
 
@@ -36,7 +38,9 @@ public class LoginController {
                         this.verTimeline();
 
                         MensagemDAO mensagemDAO = new MensagemDAO();
-                        new MenuPrincipalController(this.getMenu(), this.getPostDAO(), this.getSeguirDAO(), pessoaDAO, mensagemDAO, this.getAvaliacaoFisicaDAO(), this.getAlimentoDAO());
+                        new MenuPrincipalController(this.getMenu(), this.getPostDAO(), this.getSeguirDAO(),
+                                pessoaDAO, mensagemDAO, this.getAvaliacaoFisicaDAO(), this.getAlimentoDAO(),
+                                this.getPreferenciaDAO());
                     } else {
                         System.out.println("Login Inválido. Tente novamente...");
                     }
@@ -117,4 +121,7 @@ public class LoginController {
     }
     public AvaliacaoFisicaDAO getAvaliacaoFisicaDAO() { return this.avaliacaoFisicaDAO; }
     public AlimentoDAO getAlimentoDAO() { return alimentoDAO; }
+    public PreferenciaDAO getPreferenciaDAO() {
+        return preferenciaDAO;
+    }
 }

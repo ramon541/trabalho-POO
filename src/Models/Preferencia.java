@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 public class Preferencia {
     protected long id;
     private static long serial;
-    private String pessoa;
-    private String alimento;
+    private Pessoa pessoa;
+    private Alimento alimento;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
 
@@ -20,19 +20,19 @@ public class Preferencia {
         return this.id;
     }
 
-    public String getPessoa() {
+    public Pessoa getPessoa() {
         return pessoa;
     }
 
-    public void setPessoa(String pessoa) {
+    public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
     }
 
-    public String getAlimento() {
+    public Alimento getAlimento() {
         return alimento;
     }
 
-    public void setAlimento(String alimento) {
+    public void setAlimento(Alimento alimento) {
         this.alimento = alimento;
     }
 
