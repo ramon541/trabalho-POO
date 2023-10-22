@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.Alimento;
 import Models.DAO.AlimentoDAO;
 import Models.DAO.PreferenciaDAO;
 import Views.Menus;
@@ -25,11 +26,18 @@ public class AlimentoPreferenciaController {
 
                 case 3:
                     System.out.print("Digite o nome do alimento que deseja adicionar aos preferidos: ");
-                    boolean preferenciaAdd = preferenciaDAO.adicionaPreferencia(scan.nextLine());
-                    if(preferenciaAdd) {
-                        System.out.println("Preferência adicionada.");
+                    Alimento alimento = alimentoDAO.buscaPorNome(scan.nextLine());
+
+                    if(alimento != null){
+                        boolean alimentoAdicionado = preferenciaDAO.adicionaPreferencia(alimento);
+
+                        if(alimentoAdicionado) {
+                            System.out.println("Alimento adicionado aos preferidos!");
+                        } else {
+                            System.out.println("Não foi possível adicionar o alimento aos preferidos!");
+                        }
                     } else {
-                        System.out.println("Não foi possível adicionar aos preferidos.");
+                        System.out.println("Não foi possível encontrar o alimento. Verifique se o nome foi digitado corretamente.");
                     }
                     break;
 

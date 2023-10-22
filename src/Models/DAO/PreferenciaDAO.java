@@ -1,5 +1,6 @@
 package Models.DAO;
 
+import Models.Alimento;
 import Models.Pessoa;
 import Models.Preferencia;
 import Models.Util;
@@ -7,22 +8,20 @@ import Models.Util;
 public class PreferenciaDAO {
     Preferencia[] preferencias = new Preferencia[10];
 
-    public boolean adicionaPreferencia(String nomeAlimento) {
+    public boolean adicionaPreferencia(Alimento alimento) {
 
         int posicaoLivre = this.proximaPosicaoLivre();
 
         if(posicaoLivre == -1) {
             return false;
-        }
+        } else {
+            Preferencia preferencia = new Preferencia();
+            preferencia.setPessoa(Util.getPessoaLogada());
+            preferencia.setAlimento(alimento);
 
-        Preferencia preferencia = this.buscaPorNomeAlimento(nomeAlimento);
-
-        if(preferencia != null) {
             this.preferencias[posicaoLivre] = preferencia;
             return true;
         }
-
-        return false;
     }
 
     public Preferencia buscaPorNomeAlimento(String nomeAlimento) {
@@ -82,9 +81,5 @@ public class PreferenciaDAO {
 
     public Preferencia[] getPreferencias() {
         return preferencias;
-    }
-
-    public void setPreferencias(Preferencia[] preferencias) {
-        this.preferencias = preferencias;
     }
 }

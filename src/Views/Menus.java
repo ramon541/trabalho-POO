@@ -165,6 +165,7 @@ public class Menus {
         builder.append("\n3 - Adicionar alimento;");
         builder.append("\n4 - Remover alimento;");
         builder.append("\n5 - Voltar;");
+        System.out.println(builder);
 
         return Integer.parseInt(scan.nextLine());
     }

@@ -143,6 +143,18 @@ public class AlimentoDAO {
         this.adicionaAlimento(a15);
     }
 
+    public Alimento buscaPorNome(String nomeAlimento) {
+        if (!this.ehVazio()) {
+            for (Alimento alimento : this.alimentos) {
+                if (alimento != null && alimento.getNome().equals(nomeAlimento)) {
+                    return alimento;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public boolean adicionaAlimento(Alimento alimento) {
         int posicaoLivre = this.proximaPosicaoLivre();
         if(posicaoLivre == -1) {

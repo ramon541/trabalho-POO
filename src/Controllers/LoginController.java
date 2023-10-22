@@ -11,13 +11,12 @@ public class LoginController {
     private final Menus menu = new Menus();
     private final PostDAO postDAO = new PostDAO();
     private final SeguirDAO seguirDAO = new SeguirDAO();
-    private final PessoaDAO pessoaDAO = new PessoaDAO(this.postDAO);
     private final AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO();
     private final AlimentoDAO alimentoDAO = new AlimentoDAO();
     private final TipoDietaDAO tipoDietaDAO = new TipoDietaDAO();
     private final DietaDAO dietaDAO = new DietaDAO();
-
     private final PreferenciaDAO preferenciaDAO = new PreferenciaDAO();
+    private final PessoaDAO pessoaDAO = new PessoaDAO(this.postDAO, this.preferenciaDAO, this.alimentoDAO);
 
     public LoginController() {
         getMenu().setPessoaDAO(pessoaDAO);
