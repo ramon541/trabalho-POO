@@ -1,12 +1,14 @@
 package Models.DAO;
 
+import Models.Alimento;
 import Models.Pessoa;
 import Models.Post;
+import Models.Preferencia;
 
 public class PessoaDAO {
     Pessoa[] pessoas = new Pessoa[10];
 
-    public PessoaDAO(PostDAO postDAO) {
+    public PessoaDAO(PostDAO postDAO, PreferenciaDAO preferenciaDAO, AlimentoDAO alimentoDAO) {
         Pessoa p1 = new Pessoa();
         p1.setNome("Admin");
         p1.setNascimento("01/01/2000");
@@ -22,6 +24,14 @@ public class PessoaDAO {
         post1.setPessoa(p1);
 
         postDAO.adicionaPost(post1);
+
+        Alimento patinhoFrito =  alimentoDAO.buscaPorNome("Patinho frito");
+
+        if(patinhoFrito != null) {
+            Preferencia preferencia = new Preferencia();
+            preferencia.setPessoa(p1);
+            preferencia.setAlimento(patinhoFrito);
+        }
     }
 
     public boolean adicionaPessoa(Pessoa pessoa) {
