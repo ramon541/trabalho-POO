@@ -61,17 +61,14 @@ public class TipoDietaDAO {
 
     @Override
     public String toString() {
-        String builder = "-------------------\n";
+        String builder = "-------------------";
         for (int i = 0; i < tipoDietas.length; i++){
             if (tipoDietas[i] != null){
-                builder+= "\nTipo: " + tipoDietas[i].getNome() + "\n";
-                builder+= "Carboidrato: " + tipoDietas[i].getCarboidrato()*100 + "%\n";
-                builder+= "Proteína: " + tipoDietas[i].getProteina()*100 + "%\n";
-                builder+= "Gordura: " + tipoDietas[i].getGordura()*100 + "%";
+                builder+= "\n" + tipoDietas[i].toString() + "\n";
             }
         }
 
-        builder += "\n-------------------";
+        builder += "-------------------";
         return builder;
     }
 }

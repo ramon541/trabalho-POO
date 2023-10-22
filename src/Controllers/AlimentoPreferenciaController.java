@@ -17,11 +17,11 @@ public class AlimentoPreferenciaController {
 
             switch (opc){
                 case 1:
-                    alimentoDAO.mostrarTodos();
+                    preferenciaDAO.mostrarPreferidos();
                     break;
 
                 case 2:
-                    preferenciaDAO.mostrarPreferidos();
+                    alimentoDAO.mostrarTodos();
                     break;
 
                 case 3:

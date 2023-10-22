@@ -95,7 +95,7 @@ public class Dieta {
                 "\nTipo de Dieta: " + this.tipoDieta.getNome() +
                 "\nObjetivo: " + this.objetivo + " o peso"+
                 "\nN° de refeições: " + this.nRefeicoes +
-                "\n\nCalorias: " + this.calorias +
+                "\n\nCalorias: " + String.format("%.2f",this.calorias) +
                 "\n===============\n";
         return builder;
     }

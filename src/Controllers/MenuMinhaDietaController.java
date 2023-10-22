@@ -88,12 +88,12 @@ public class MenuMinhaDietaController {
             default:
                 return false;
         }
-
-        System.out.print("\nQuantas refeições deseja fazer (1 a 5)? R: ");
-        opc = Integer.parseInt(scan.nextLine());
-        if (opc >= 1 && opc <= 5){
-            novaDieta.setnRefeicoes(opc);
-        }else return false;
+        novaDieta.setnRefeicoes(4);
+//        System.out.print("\nQuantas refeições deseja fazer (1 a 5)? R: ");
+//        opc = Integer.parseInt(scan.nextLine());
+//        if (opc >= 1 && opc <= 5){
+//            novaDieta.setnRefeicoes(opc);
+//        }else return false;
 
         System.out.print(novaDieta.toString());
         return dietaDAO.adicionaDieta(novaDieta);
