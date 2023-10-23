@@ -10,7 +10,9 @@ import Views.Menus;
 import java.util.Scanner;
 
 public class MenuMinhaDietaController {
-    public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO, RefeicaoDAO refeicaoDAO){
+    public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO,
+                                    DietaDAO dietaDAO, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO,
+                                    RefeicaoDAO refeicaoDAO){
         int opc = 0;
         while (opc != 4){
             opc = menu.menuMinhaDieta();
