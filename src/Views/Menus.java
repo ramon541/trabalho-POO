@@ -4,7 +4,6 @@
  */
 package Views;
 
-
 import Models.DAO.PessoaDAO;
 import Models.Pessoa;
 import Models.Util;
@@ -17,7 +16,7 @@ public class Menus {
 
     StringBuilder builder;
     public int menuLogin() {
-        builder = new StringBuilder("");
+        builder = new StringBuilder();
 
         builder.append("==============================\n");
         builder.append("SEJA BEM VINDO AO MEU PROGRAMA\n");
@@ -33,7 +32,7 @@ public class Menus {
     }
 
     public int menuPrincipal() {
-        builder = new StringBuilder("");
+        builder = new StringBuilder();
 
         builder.append("==============================\n");
         builder.append("SEJA BEM VINDO AO MEU PROGRAMA\n");
@@ -97,7 +96,7 @@ public class Menus {
     }
 
     public int menuRedeSocial() {
-        builder = new StringBuilder("");
+        builder = new StringBuilder();
 
         builder.append("==============================\n");
         builder.append("REDE SOCIAL\n");
@@ -115,7 +114,7 @@ public class Menus {
     }
 
     public int menuRedeSocialBuscar(Pessoa usuario, boolean ehSeguidor) {
-        builder = new StringBuilder("");
+        builder = new StringBuilder();
 
         builder.append("==============================\n");
         builder.append("USUÁRIO BUSCADO\n");
@@ -140,15 +139,29 @@ public class Menus {
     }
 
     public int menuMinhaDieta(){
-        builder = new StringBuilder("");
+        builder = new StringBuilder();
 
         builder.append("==============================\n");
         builder.append("MINHA DIETA\n");
         builder.append("==============================\n");
         builder.append("\n1 - Nova Dieta;");
         builder.append("\n2 - Alimentos Preferidos;");
-        builder.append("\n3 - Meu Diário Alimentar;");
+        builder.append("\n3 - Gerar refeições;");
         builder.append("\n4 - Voltar;");
+        builder.append("\n\nQual a sua opção? R: ");
+        System.out.print(builder);
+        return Integer.parseInt(scan.nextLine());
+    }
+
+    public int gerarRefeicoes(){
+        builder = new StringBuilder();
+
+        builder.append("==============================\n");
+        builder.append("GERAR REFEIÇÕES\n");
+        builder.append("==============================\n");
+        builder.append("\n1 - Gerar automaticamente;");
+        builder.append("\n2 - Gerar manualmente;");
+        builder.append("\n3 - Voltar;");
         builder.append("\n\nQual a sua opção? R: ");
         System.out.print(builder);
         return Integer.parseInt(scan.nextLine());

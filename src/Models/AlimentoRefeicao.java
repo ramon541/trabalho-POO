@@ -5,8 +5,8 @@ import java.util.Date;
 public class AlimentoRefeicao {
     protected long id;
     private static long serial;
-    private String refeicao;
-    private String alimento;
+    private Refeicao refeicao;
+    private Alimento alimento;
     private double porcao;
     private double proteina;
     private double gordura;
@@ -19,19 +19,19 @@ public class AlimentoRefeicao {
         this.id = serial;
     }
 
-    public String getRefeicao() {
+    public Refeicao getRefeicao() {
         return refeicao;
     }
 
-    public void setRefeicao(String refeicao) {
+    public void setRefeicao(Refeicao refeicao) {
         this.refeicao = refeicao;
     }
 
-    public String getAlimento() {
-        return alimento;
+    public Alimento getAlimento() {
+        return this.alimento;
     }
 
-    public void setAlimento(String alimento) {
+    public void setAlimento(Alimento alimento) {
         this.alimento = alimento;
     }
 
