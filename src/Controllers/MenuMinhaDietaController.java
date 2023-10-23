@@ -30,7 +30,7 @@ public class MenuMinhaDietaController {
                     break;
 
                 case 3:
-                    System.out.println("Opção onde o Usuário cria as refeições e adiciona os alimentos nas refeições");
+                    new GerarRefeicoesController(menu);
                     break;
 
                 case 4:
@@ -92,7 +92,7 @@ public class MenuMinhaDietaController {
         System.out.print("\nQuantas refeições deseja fazer (1 a 5)? R: ");
         opc = Integer.parseInt(scan.nextLine());
         if (opc >= 1 && opc <= 5){
-            novaDieta.setnRefeicoes(opc);
+            novaDieta.setNroRefeicoes(opc);
         }else return false;
 
         System.out.print(novaDieta.toString());

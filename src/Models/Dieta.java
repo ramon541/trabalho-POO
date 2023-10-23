@@ -10,7 +10,7 @@ public class Dieta {
     private TipoDieta tipoDieta;
     private String objetivo;
     private double calorias;
-    private int nRefeicoes;
+    private final int nroRefeicoes = 4;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
 
@@ -64,12 +64,8 @@ public class Dieta {
         this.calorias = calorias;
     }
 
-    public int getnRefeicoes() {
-        return nRefeicoes;
-    }
-
-    public void setnRefeicoes(int nRefeicoes) {
-        this.nRefeicoes = nRefeicoes;
+    public int getNroRefeicoes() {
+        return nroRefeicoes;
     }
 
     public LocalDateTime getDataCriacao() {
@@ -94,7 +90,7 @@ public class Dieta {
         builder += "\n===============" +
                 "\nTipo de Dieta: " + this.tipoDieta.getNome() +
                 "\nObjetivo: " + this.objetivo + " o peso"+
-                "\nN° de refeições: " + this.nRefeicoes +
+                "\nN° de refeições: " + this.nroRefeicoes +
                 "\n\nCalorias: " + this.calorias +
                 "\n===============\n";
         return builder;
