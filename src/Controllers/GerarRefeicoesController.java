@@ -16,7 +16,7 @@ public class GerarRefeicoesController {
                     break;
 
                 case 2:
-                    System.out.println("Gerar manualmente");
+                    new GerarRefeicaoManualController();
                     break;
 
                 case 3:
