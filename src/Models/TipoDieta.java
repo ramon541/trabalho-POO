@@ -71,7 +71,17 @@ public class TipoDieta {
         this.dataModificacao = dataModificacao;
     }
 
-//    public void setDietaAtleta (AvaliacaoFisica ultAvaliacaoUser) {
+    @Override
+    public String toString() {
+        String builder = "";
+        builder+= "Tipo: " + this.getNome() + "\n";
+        builder+= "Carboidrato: " + this.getCarboidrato()*100 + "%\n";
+        builder+= "Proteína: " + this.getProteina()*100 + "%\n";
+        builder+= "Gordura: " + this.getGordura()*100 + "%";
+        return builder;
+    }
+
+    //    public void setDietaAtleta (AvaliacaoFisica ultAvaliacaoUser) {
 //        double prot = ultAvaliacaoUser.getPeso() * 0.2;
 //        setProteina(prot/100);
 //

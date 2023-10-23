@@ -76,7 +76,21 @@ public class Alimento {
     }
 
     public Double getCalorias() { return this.calorias; }
+
     public void setCalorias(){
         this.calorias = 4*this.carboidratos + 4*this.proteinas + 9*this.gorduras;
+    }
+
+    @Override
+    public String toString() {
+        String builder = "";
+        builder +=
+                "\nNome: " + this.getNome() +
+                "\nCarboidratos: " + String.format("%.2f",this.getCarboidratos()) + " g" +
+                "\nProteínas: " + String.format("%.2f",this.getProteinas()) + " g" +
+                "\nGorduras: " + String.format("%.2f",this.getGorduras()) + " g" +
+                "\nCalorias: " + String.format("%.2f",this.getCalorias()) + " cal" +
+                "\nPorção: " + String.format("%.2f",this.getPorcao()) + " g";
+        return builder;
     }
 }

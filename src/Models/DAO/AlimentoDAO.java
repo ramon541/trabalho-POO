@@ -180,14 +180,9 @@ public class AlimentoDAO {
             String builder = "";
             for(Alimento alimento : this.alimentos) {
                 if(alimento != null) {
-                    builder += "\n===============" +
-                            "\nNome: " + alimento.getNome() +
-                            "\nCarboidratos: " + alimento.getCarboidratos() + " g" +
-                            "\nProteínas: " + alimento.getProteinas() + " g" +
-                            "\nGorduras: " + alimento.getGorduras() + " g" +
-                            "\nCalorias: " + alimento.getCalorias() + " cal" +
-                            "\nPorção: " + alimento.getPorcao() + " g" +
-                            "\n===============\n";
+                    builder += "\n---------------" +
+                            alimento.toString() +
+                            "\n---------------\n";
                 }
             }
             System.out.println(builder);

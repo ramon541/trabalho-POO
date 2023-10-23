@@ -1,10 +1,7 @@
 package Controllers;
 
 import Models.AvaliacaoFisica;
-import Models.DAO.AlimentoDAO;
-import Models.DAO.DietaDAO;
-import Models.DAO.PreferenciaDAO;
-import Models.DAO.TipoDietaDAO;
+import Models.DAO.*;
 import Models.Dieta;
 import Models.TipoDieta;
 import Models.Util;
@@ -13,7 +10,7 @@ import Views.Menus;
 import java.util.Scanner;
 
 public class MenuMinhaDietaController {
-    public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO){
+    public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO, RefeicaoDAO refeicaoDAO){
         int opc = 0;
         while (opc != 4){
             opc = menu.menuMinhaDieta();
@@ -88,12 +85,11 @@ public class MenuMinhaDietaController {
             default:
                 return false;
         }
-
-        System.out.print("\nQuantas refeições deseja fazer (1 a 5)? R: ");
-        opc = Integer.parseInt(scan.nextLine());
-        if (opc >= 1 && opc <= 5){
-            novaDieta.setNroRefeicoes(opc);
-        }else return false;
+//        System.out.print("\nQuantas refeições deseja fazer (1 a 5)? R: ");
+//        opc = Integer.parseInt(scan.nextLine());
+//        if (opc >= 1 && opc <= 5){
+//            novaDieta.setNroRefeicoes(opc);
+//        }else return false;
 
         System.out.print(novaDieta.toString());
         return dietaDAO.adicionaDieta(novaDieta);
