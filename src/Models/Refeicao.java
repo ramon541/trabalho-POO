@@ -85,4 +85,12 @@ public class Refeicao {
     public void setDataModificacao(LocalDateTime dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
+
+    public String toString(){
+        String build = "";
+        build += this.getNomeDaRefeicao() + "   ( " + "Carb.: " + String.format("%.2f",this.getCarboidrato()) +
+                " | " + "Prot.: " + String.format("%.2f",this.getProteina()) + " | " + "Gord.: " + String.format("%.2f",this.getGordura()) +
+                " | " + "Calorias: " + String.format("%.2f",this.getCalorias()) + ")";
+        return build;
+    }
 }
