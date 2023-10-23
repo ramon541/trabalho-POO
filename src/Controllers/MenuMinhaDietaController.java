@@ -1,10 +1,7 @@
 package Controllers;
 
 import Models.AvaliacaoFisica;
-import Models.DAO.AlimentoDAO;
-import Models.DAO.DietaDAO;
-import Models.DAO.PreferenciaDAO;
-import Models.DAO.TipoDietaDAO;
+import Models.DAO.*;
 import Models.Dieta;
 import Models.TipoDieta;
 import Models.Util;
@@ -13,7 +10,7 @@ import Views.Menus;
 import java.util.Scanner;
 
 public class MenuMinhaDietaController {
-    public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO){
+    public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO, RefeicaoDAO refeicaoDAO){
         int opc = 0;
         while (opc != 4){
             opc = menu.menuMinhaDieta();
