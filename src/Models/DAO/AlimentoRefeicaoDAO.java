@@ -71,25 +71,6 @@ public class AlimentoRefeicaoDAO {
         return -1;
     }
 
-    public boolean adicionaAlimentoDaRef(Alimento alimento, Alimento[] alimentos) {
-        int posicaoLivre = this.proximaPosicaoLivreDoAlimentoDaRef(alimentos);
-
-        if(posicaoLivre == -1) {
-            return false;
-        }
-
-        alimentos[posicaoLivre] = alimento;
-
-        return true;
-    }
-
-    private int proximaPosicaoLivreDoAlimentoDaRef(Alimento[] alimentos) {
-        for(int i = 0; i < alimentos.length; i++) {
-            if(alimentos[i] == null) return i;
-        }
-        return -1;
-    }
-
     public AlimentoRefeicao[] procuraAlimentoDaRefeicao (Refeicao refeicao){
         AlimentoRefeicao[] respAlimentoRef  = new AlimentoRefeicao[15];
         for (AlimentoRefeicao alimentoRef : this.alimentoRefeicaoList){
