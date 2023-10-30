@@ -6,16 +6,18 @@ import java.util.Random;
 
 public class AlimentoRefeicaoDAO {
 
-    AlimentoRefeicao[] alimentoRefeicaoList = new AlimentoRefeicao[20];
+    AlimentoRefeicao[] alimentoRefeicaoList = new AlimentoRefeicao[100];
 
-    public boolean adicionaAlimentoRefeicao(AlimentoRefeicao alimentoRefeicao) {
-        int posicaoLivre = this.proximaPosicaoLivre();
+    public AlimentoRefeicao[] getAlimentoRefeicaoList() { return alimentoRefeicaoList; }
+
+    public boolean adicionaAlimentoRefeicao(AlimentoRefeicao alimentoRefeicao, AlimentoRefeicao[] alimentoRefeicaoList) {
+        int posicaoLivre = this.proximaPosicaoLivre(alimentoRefeicaoList);
 
         if(posicaoLivre == -1) {
             return false;
         }
 
-        this.alimentoRefeicaoList[posicaoLivre] = alimentoRefeicao;
+        alimentoRefeicaoList[posicaoLivre] = alimentoRefeicao;
 
         return true;
     }
@@ -34,7 +36,7 @@ public class AlimentoRefeicaoDAO {
                 for (Preferencia alimentoPreferido : alimentosPreferidos) {
                     if (alimentoPreferido != null) {
                         AlimentoRefeicao newAlimentoRefeicao = this.createAlimentoRefeicao(alimentoPreferido.getAlimento(), refeicao);
-                        boolean alimentoAdicionado = this.adicionaAlimentoRefeicao(newAlimentoRefeicao);
+                        boolean alimentoAdicionado = this.adicionaAlimentoRefeicao(newAlimentoRefeicao, this.alimentoRefeicaoList);
                     } else {
                         break;
                     }
@@ -62,11 +64,40 @@ public class AlimentoRefeicaoDAO {
         return true;
     }
 
-    private int proximaPosicaoLivre() {
-        for(int i = 0; i < this.alimentoRefeicaoList.length; i++) {
+    private int proximaPosicaoLivre(AlimentoRefeicao[] alimentoRefeicaoList) {
+        for(int i = 0; i < alimentoRefeicaoList.length; i++) {
             if(alimentoRefeicaoList[i] == null) return i;
         }
         return -1;
     }
-    
+
+    public boolean adicionaAlimentoDaRef(Alimento alimento, Alimento[] alimentos) {
+        int posicaoLivre = this.proximaPosicaoLivreDoAlimentoDaRef(alimentos);
+
+        if(posicaoLivre == -1) {
+            return false;
+        }
+
+        alimentos[posicaoLivre] = alimento;
+
+        return true;
+    }
+
+    private int proximaPosicaoLivreDoAlimentoDaRef(Alimento[] alimentos) {
+        for(int i = 0; i < alimentos.length; i++) {
+            if(alimentos[i] == null) return i;
+        }
+        return -1;
+    }
+
+    public AlimentoRefeicao[] procuraAlimentoDaRefeicao (Refeicao refeicao){
+        AlimentoRefeicao[] respAlimentoRef  = new AlimentoRefeicao[15];
+        for (AlimentoRefeicao alimentoRef : this.alimentoRefeicaoList){
+            if (alimentoRef != null && alimentoRef.getRefeicao().getId() == refeicao.getId()){
+                adicionaAlimentoRefeicao(alimentoRef, respAlimentoRef);
+            }
+        }
+
+        return respAlimentoRef;
+    }
 }
