@@ -16,6 +16,11 @@ public class Refeicao {
     public Refeicao(){
         serial++;
         this.id = serial;
+
+        this.setCarboidrato(0);
+        this.setProteina(0);
+        this.setGordura(0);
+        this.setCalorias(0);
     }
 
     public long getId(){

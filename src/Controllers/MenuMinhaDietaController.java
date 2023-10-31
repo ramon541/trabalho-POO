@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class MenuMinhaDietaController {
     public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO,
                                     DietaDAO dietaDAO, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO,
-                                    RefeicaoDAO refeicaoDAO){
+                                    RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO){
         int opc = 0;
         while (opc != 4){
             opc = menu.menuMinhaDieta();
@@ -29,7 +29,10 @@ public class MenuMinhaDietaController {
                     break;
 
                 case 3:
-                    new GerarRefeicoesController(menu);
+                    if (dietaDAO.procuraUltimaDieta() != null) {
+                        new GerarRefeicoesController(menu, dietaDAO.procuraUltimaDieta(), alimentoDAO,
+                                preferenciaDAO, refeicaoDAO, alimentoRefeicaoDAO);
+                    }else System.out.println("ERRO!!! Primeiro você deve criar uma dieta");
                     break;
 
                 case 4:
