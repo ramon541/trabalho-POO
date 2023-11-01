@@ -40,6 +40,10 @@ public class GerarRefeicaoManualController {
 
         while(opc!=5){
             opc = this.gerarManualmente(r1, r2, r3, r4, alimentoRefeicaoDAO);
+            totGord=0.0;
+            totCarbs=0.0;
+            totProt=0.0;
+            totCals=0.0;
             switch (opc){
                 case 1:
                     criaAlimentoRefeicao(r1, alimentoDAO, alimentoRefeicaoDAO);
@@ -72,52 +76,16 @@ public class GerarRefeicaoManualController {
             "\n==============================";
 
             builder += "\n1 - Café da Manhã";
-            this.alimentosRefeicoes = alimentoRefeicaoDAO.procuraAlimentoDaRefeicao(r1);
-            for (AlimentoRefeicao alimentoDaRef : alimentosRefeicoes){
-                if (alimentoDaRef != null){
-                    builder += alimentoDaRef.toString();
-                    totGord += alimentoDaRef.getGordura();
-                    totCarbs += alimentoDaRef.getCarboidrato();
-                    totProt += alimentoDaRef.getProteina();
-                    totCals = alimentoDaRef.getCalorias();
-                }
-            }
+            builder += calculadora(r1, alimentoRefeicaoDAO);
 
             builder +="\n\n2 - Almoço";
-            this.alimentosRefeicoes = alimentoRefeicaoDAO.procuraAlimentoDaRefeicao(r2);
-            for (AlimentoRefeicao alimentoDaRef : alimentosRefeicoes){
-                if (alimentoDaRef != null){
-                    builder += alimentoDaRef.toString();
-                    totGord += alimentoDaRef.getGordura();
-                    totCarbs += alimentoDaRef.getCarboidrato();
-                    totProt += alimentoDaRef.getProteina();
-                    totCals = alimentoDaRef.getCalorias();
-                }
-            }
+            builder += calculadora(r2, alimentoRefeicaoDAO);
 
             builder += "\n\n3 - Café da Tarde";
-            this.alimentosRefeicoes = alimentoRefeicaoDAO.procuraAlimentoDaRefeicao(r3);
-            for (AlimentoRefeicao alimentoDaRef : alimentosRefeicoes){
-                if (alimentoDaRef != null){
-                    builder += alimentoDaRef.toString();
-                    totGord += alimentoDaRef.getGordura();
-                    totCarbs += alimentoDaRef.getCarboidrato();
-                    totProt += alimentoDaRef.getProteina();
-                    totCals = alimentoDaRef.getCalorias();
-                }
-            }
+            builder += calculadora(r3, alimentoRefeicaoDAO);
 
             builder += "\n\n4 - Jantar";
-            this.alimentosRefeicoes = alimentoRefeicaoDAO.procuraAlimentoDaRefeicao(r4);
-            for (AlimentoRefeicao alimentoDaRef : alimentosRefeicoes){
-                if (alimentoDaRef != null){
-                    builder += alimentoDaRef.toString();
-                    totGord += alimentoDaRef.getGordura();
-                    totCarbs += alimentoDaRef.getCarboidrato();
-                    totProt += alimentoDaRef.getProteina();
-                    totCals = alimentoDaRef.getCalorias();
-                }
-            }
+            builder += calculadora(r4, alimentoRefeicaoDAO);
 
             builder += "\n\n5 - Finalizar Alimentação" +
                 "\n\nTotal: " + "    " + "Gord: " + String.format("%.2f",totGord) + " g | " +
@@ -153,6 +121,23 @@ public class GerarRefeicaoManualController {
             if (adicionou)System.out.println("Alimento adicionado a refeição com sucesso!!!");
             else System.out.println("ERRO!!! Algo não funcionou corretamente...");
 
-        }else System.out.println("ERRO!!! Esse alimento não existe...");;
+        }else System.out.println("ERRO!!! Esse alimento não existe...");
+    }
+
+    private String calculadora(Refeicao refeicao, AlimentoRefeicaoDAO alimentoRefeicaoDAO){
+        String builder = "";
+        double gord=0.0,carbs=0.0,prot=0.0,cals=0.0;
+        this.alimentosRefeicoes = alimentoRefeicaoDAO.procuraAlimentoDaRefeicao(refeicao);
+        for (AlimentoRefeicao alimentoDaRef : alimentosRefeicoes){
+            if (alimentoDaRef != null){
+                builder += alimentoDaRef.toString();
+                totGord += alimentoDaRef.getGordura();
+                totCarbs += alimentoDaRef.getCarboidrato();
+                totProt += alimentoDaRef.getProteina();
+                totCals += alimentoDaRef.getCalorias();
+            }
+        }
+
+        return builder;
     }
 }
