@@ -132,12 +132,21 @@ public class GerarRefeicaoManualController {
             if (alimentoDaRef != null){
                 builder += alimentoDaRef.toString();
                 totGord += alimentoDaRef.getGordura();
+                gord += alimentoDaRef.getGordura();
                 totCarbs += alimentoDaRef.getCarboidrato();
+                carbs += alimentoDaRef.getCarboidrato();
                 totProt += alimentoDaRef.getProteina();
+                prot += alimentoDaRef.getProteina();
                 totCals += alimentoDaRef.getCalorias();
+                cals += alimentoDaRef.getCalorias();
             }
         }
 
+        builder += "\n\nTotal "+ refeicao.getNomeDaRefeicao() + ": " + "    " + "Gord: " + String.format("%.2f",gord) + " g | " +
+                "Carbs: " + String.format("%.2f",carbs) + " g | " +
+                "Prot: " + String.format("%.2f",prot) + " g | " +
+                "Cals: " + String.format("%.2f",cals) + " cal" +
+                "\n---------------------------------";
         return builder;
     }
 }

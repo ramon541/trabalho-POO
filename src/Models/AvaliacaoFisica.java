@@ -173,10 +173,70 @@ public class AvaliacaoFisica {
                         "BF: " + String.format("%.2f",this.bodyFat) + " %\n" +
                         "Massa gorda: " + String.format("%.2f",this.massaGorda) + " kg\n" +
                         "Massa magra: " + String.format("%.2f",this.massaMagra) + " kg\n" +
-                        "Avaliação feita em: " + this.dataCriacao;
+                        "O BF está: " + this.diagnosticoBodyFat();
 
         return builder;
     }
 
     //Relatórios *************************
+
+    public String diagnosticoBodyFat() {
+        String semResposta = "Não encontrado";
+        double gordCorp = this.bodyFat;
+
+        if (pessoa.getSexo().equals("Masculino")){
+            if (this.idade >= 20 && this.idade <= 29){
+                if (gordCorp < 11) return "Atleta";
+                if (gordCorp >= 11 && gordCorp <= 13) return "Bom";
+                if (gordCorp >= 14 && gordCorp <= 20) return "Normal";
+                if (gordCorp >= 21 && gordCorp <= 23) return "Elevado";
+                if (gordCorp > 23) return "Muito elevado";
+            } else if (this.idade >= 30 && this.idade <= 39){
+                if (gordCorp < 12) return "Atleta";
+                if (gordCorp >= 12 && gordCorp <= 14) return "Bom";
+                if (gordCorp >= 15 && gordCorp <= 21) return "Normal";
+                if (gordCorp >= 22 && gordCorp <= 24) return "Elevado";
+                if (gordCorp > 24) return "Muito elevado";
+            } else if (this.idade >= 40 && this.idade <= 49){
+                if (gordCorp < 14) return "Atleta";
+                if (gordCorp >= 14 && gordCorp <= 16) return "Bom";
+                if (gordCorp >= 17 && gordCorp <= 23) return "Normal";
+                if (gordCorp >= 24 && gordCorp <= 26) return "Elevado";
+                if (gordCorp > 26) return "Muito elevado";
+            } else if (this.idade >= 50 && this.idade <= 59){
+                if (gordCorp < 15) return "Atleta";
+                if (gordCorp >= 15 && gordCorp <= 17) return "Bom";
+                if (gordCorp >= 18 && gordCorp <= 24) return "Normal";
+                if (gordCorp >= 25 && gordCorp <= 27) return "Elevado";
+                if (gordCorp > 27) return "Muito elevado";
+            }
+        }else {
+            if (this.idade >= 20 && this.idade <= 29){
+                if (gordCorp < 16) return "Atleta";
+                if (gordCorp >= 16 && gordCorp <= 19) return "Bom";
+                if (gordCorp >= 20 && gordCorp <= 28) return "Normal";
+                if (gordCorp >= 29 && gordCorp <= 31) return "Elevado";
+                if (gordCorp > 31) return "Muito elevado";
+            } else if (this.idade >= 30 && this.idade <= 39){
+                if (gordCorp < 17) return "Atleta";
+                if (gordCorp >= 17 && gordCorp <= 20) return "Bom";
+                if (gordCorp >= 21 && gordCorp <= 29) return "Normal";
+                if (gordCorp >= 30 && gordCorp <= 32) return "Elevado";
+                if (gordCorp > 32) return "Muito elevado";
+            } else  if (this.idade >= 40 && this.idade <= 49){
+                if (gordCorp < 18) return "Atleta";
+                if (gordCorp >= 18 && gordCorp <= 21) return "Bom";
+                if (gordCorp >= 22 && gordCorp <= 30) return "Normal";
+                if (gordCorp >= 31 && gordCorp <= 33) return "Elevado";
+                if (gordCorp > 33) return "Muito elevado";
+            } else if (this.idade >= 50 && this.idade <= 59){
+                if (gordCorp < 19) return "Atleta";
+                if (gordCorp >= 19 && gordCorp <= 22) return "Bom";
+                if (gordCorp >= 23 && gordCorp <= 31) return "Normal";
+                if (gordCorp >= 32 && gordCorp <= 34) return "Elevado";
+                if (gordCorp > 34) return "Muito elevado";
+            }
+        }
+        return semResposta;
+    }
 }
