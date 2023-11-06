@@ -4,41 +4,7 @@ import Models.Alimento;
 import Models.Refeicao;
 
 public class RefeicaoDAO {
-    Refeicao[] refeicoes = new Refeicao[4];
-
-    public RefeicaoDAO() {
-        Refeicao r1 = new Refeicao();
-        r1.setNomeDaRefeicao("Café da Manhã");
-        r1.setCarboidrato(0);
-        r1.setProteina(0);
-        r1.setGordura(0);
-        r1.setCalorias(0);
-        this.adicionaRefeicao(r1);
-
-        Refeicao r2 = new Refeicao();
-        r2.setNomeDaRefeicao("Almoço");
-        r2.setCarboidrato(0);
-        r2.setProteina(0);
-        r2.setGordura(0);
-        r2.setCalorias(0);
-        this.adicionaRefeicao(r2);
-
-        Refeicao r3 = new Refeicao();
-        r3.setNomeDaRefeicao("Café da Tarde");
-        r3.setCarboidrato(0);
-        r3.setProteina(0);
-        r3.setGordura(0);
-        r3.setCalorias(0);
-        this.adicionaRefeicao(r3);
-
-        Refeicao r4 = new Refeicao();
-        r4.setNomeDaRefeicao("Jantar");
-        r4.setCarboidrato(0);
-        r4.setProteina(0);
-        r4.setGordura(0);
-        r4.setCalorias(0);
-        this.adicionaRefeicao(r4);
-    }
+    Refeicao[] refeicoes = new Refeicao[40];
 
     public Refeicao buscaPorNome(String nomeRefeicao) {
         if (!this.ehVazio()) {

@@ -10,6 +10,7 @@ public class AlimentoRefeicao {
     private double porcao;
     private double proteina;
     private double gordura;
+    private double carboidrato;
     private double calorias;
     private Date dataCriacao;
     private Date dataModificacao;
@@ -59,6 +60,14 @@ public class AlimentoRefeicao {
         this.gordura = gordura;
     }
 
+    public double getCarboidrato() {
+        return carboidrato;
+    }
+
+    public void setCarboidrato(double carboidrato) {
+        this.carboidrato = carboidrato;
+    }
+
     public double getCalorias() {
         return calorias;
     }
@@ -81,5 +90,17 @@ public class AlimentoRefeicao {
 
     public void setDataModificacao(Date dataModificacao) {
         this.dataModificacao = dataModificacao;
+    }
+
+    public String toString() {
+        String builder = "";
+        builder +=
+                "\n" + this.getAlimento().getNome() + "    " +
+                        "Gord: " + String.format("%.2f",this.getGordura()) + " g | " +
+                        "Carbs: " + String.format("%.2f",this.getCarboidrato()) + " g | " +
+                        "Prot: " + String.format("%.2f",this.getProteina()) + " g | " +
+                        "Cals: " + String.format("%.2f",this.getCalorias()) + " cal" +
+                        "\nPorção: " + String.format("%.2f",this.getPorcao()) + " g";
+        return builder;
     }
 }
