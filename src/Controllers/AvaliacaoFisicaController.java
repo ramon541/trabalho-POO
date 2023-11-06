@@ -3,15 +3,13 @@ package Controllers;
 import Models.AvaliacaoFisica;
 import Models.DAO.AvaliacaoFisicaDAO;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class AvaliacaoFisicaController {
     Scanner scan = new Scanner(System.in);
     public AvaliacaoFisicaController(AvaliacaoFisicaDAO avaliacaoFisicaDAO) {
-        newAvaliacaoFisica(avaliacaoFisicaDAO);
-    }
-
-    public void newAvaliacaoFisica (AvaliacaoFisicaDAO avaliacaoFisicaDAO) {
+        AvaliacaoFisica ultAvaliacao = avaliacaoFisicaDAO.procuraUltimaAvaliacao();
         AvaliacaoFisica novaAvaliacao = new AvaliacaoFisica();
 
         System.out.println("==============================");
@@ -71,10 +69,17 @@ public class AvaliacaoFisicaController {
         novaAvaliacao.calcularIMC();
         novaAvaliacao.calcularTMB();
         novaAvaliacao.calcularBodyFat();
+        System.out.println("\nRelatório:");
         System.out.println(novaAvaliacao);
+        if (ultAvaliacao != null){
+            System.out.println("\nRelatório anterior:");
+            System.out.println("Peso anterior: " + String.format("%.2f",ultAvaliacao.getPeso()) + "KG" +"\nBF anterior: "
+                    + String.format("%.2f",ultAvaliacao.getBodyFat()) + "%" + "\nO BF anterior estava: "
+                    + ultAvaliacao.diagnosticoBodyFat());
+        }
         boolean adiconado = avaliacaoFisicaDAO.adicionaAvaliacao(novaAvaliacao);
         if (adiconado){
-            System.out.println("Avaliação física adicionada com sucesso!!");
+            System.out.println("\nAvaliação física adicionada com sucesso!!");
         } else {
             System.out.println("Opsss... Não foi possível adicionar a Avalição Física.");
         }
