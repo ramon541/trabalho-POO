@@ -147,7 +147,8 @@ public class Menus {
         builder.append("\n1 - Nova Dieta;");
         builder.append("\n2 - Alimentos Preferidos;");
         builder.append("\n3 - Gerar refeições;");
-        builder.append("\n4 - Voltar;");
+        builder.append("\n4 - Mostrar refeições;");
+        builder.append("\n5 - Voltar;");
         builder.append("\n\nQual a sua opção? R: ");
         System.out.print(builder);
         return Integer.parseInt(scan.nextLine());

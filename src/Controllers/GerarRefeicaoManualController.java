@@ -39,7 +39,7 @@ public class GerarRefeicaoManualController {
         refeicaoDAO.adicionaRefeicao(r4);
 
         while(opc!=5){
-            opc = this.gerarManualmente(r1, r2, r3, r4, alimentoRefeicaoDAO);
+            opc = this.gerarManualmente(r1, r2, r3, r4, alimentoRefeicaoDAO, ultDieta);
             totGord=0.0;
             totCarbs=0.0;
             totProt=0.0;
@@ -68,7 +68,7 @@ public class GerarRefeicaoManualController {
         }
     }
 
-    private int gerarManualmente(Refeicao r1, Refeicao r2, Refeicao r3, Refeicao r4, AlimentoRefeicaoDAO alimentoRefeicaoDAO){
+    private int gerarManualmente(Refeicao r1, Refeicao r2, Refeicao r3, Refeicao r4, AlimentoRefeicaoDAO alimentoRefeicaoDAO, Dieta ultDieta){
         String builder = "";
         builder +=
             "==============================" +
@@ -88,14 +88,36 @@ public class GerarRefeicaoManualController {
             builder += calculadora(r4, alimentoRefeicaoDAO);
 
             builder += "\n\n5 - Finalizar Alimentação" +
-                "\n\nTotal: " + "    " + "Gord: " + String.format("%.2f",totGord) + " g | " +
+                "\n\nTotal: " + "\t" + "Gord: " + String.format("%.2f",totGord) + " g | " +
                 "Carbs: " + String.format("%.2f",totCarbs) + " g | " +
                 "Prot: " + String.format("%.2f",totProt) + " g | " +
-                "Cals: " + String.format("%.2f",totCals) + " cal"+
-                "\n\nDeseja adicionar alimentos a qual refeição? R: ";
+                "Cals: " + String.format("%.2f",totCals) + " cal";
+
+            builder += "\n\nPercentual dieta (" + ultDieta.getTipoDieta().getNome() + "): " + "\t" + "Gord: " + String.format("%.2f %%", ultDieta.getTipoDieta().getGordura() * 100) + " | " +
+                    "Carbs: " + String.format("%.2f %%", ultDieta.getTipoDieta().getCarboidrato() * 100) + " | " +
+                    "Prot: " + String.format("%.2f %%", ultDieta.getTipoDieta().getProteina() * 100);
+
+        builder += this.mostrarPercentuaisDosMacros(totGord, totCarbs, totProt);
+
+        builder += "\n\nDeseja adicionar alimentos a qual refeição? R: ";
+
         System.out.print(builder);
 
         return Integer.parseInt(scan.nextLine());
+    }
+
+    private String mostrarPercentuaisDosMacros(double totGord, double totCarbs, double totProt) {
+        double somaMacros = totGord + totCarbs + totProt;
+        double percGord = totGord == 0 ? 0 : (totGord / somaMacros);
+        double percCarbs = totCarbs == 0 ? 0 : (totCarbs / somaMacros);
+        double percProt = totProt == 0 ? 0 :(totProt / somaMacros);
+
+        String mostrarPercentuais = "";
+        mostrarPercentuais += "\n\nPercentual total atual: " + "\t" + "Gord: " + String.format("%.2f %%",percGord * 100) + " | " +
+                "Carbs: " + String.format("%.2f %%",percCarbs * 100) + " | " +
+                "Prot: " + String.format("%.2f %%",percProt * 100);
+
+        return mostrarPercentuais;
     }
 
     private void criaAlimentoRefeicao(Refeicao refeicao, AlimentoDAO alimentoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO){

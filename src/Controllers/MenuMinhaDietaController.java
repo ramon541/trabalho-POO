@@ -36,6 +36,14 @@ public class MenuMinhaDietaController {
                     break;
 
                 case 4:
+                    if (dietaDAO.procuraUltimaDieta() != null) {
+                        alimentoRefeicaoDAO.mostrarRefeicoesDietaUsuario(dietaDAO.procuraUltimaDieta());
+                    } else {
+                        System.out.printf("Não há nenhuma dieta cadastrada!");
+                    }
+                    break;
+
+                case 5:
                     System.out.println("Voltando...");
                     break;
 

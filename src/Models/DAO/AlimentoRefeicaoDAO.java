@@ -81,4 +81,22 @@ public class AlimentoRefeicaoDAO {
 
         return respAlimentoRef;
     }
+
+    public void mostrarRefeicoesDietaUsuario(Dieta ultDieta) {
+
+        StringBuilder builder = new StringBuilder();
+
+        if(ehVazio()) {
+            builder.append("Não há nenhuma refeição cadastrada!");
+        } else {
+            for(AlimentoRefeicao refeicao : this.alimentoRefeicaoList) {
+                if(refeicao != null && refeicao.getRefeicao().getDieta().equals(ultDieta)) {
+                    builder.append(refeicao.getRefeicao().toString()).append("\n");
+                    builder.append(refeicao.getAlimento().toString()).append("\n");
+                }
+            }
+        }
+
+        System.out.println(builder);
+    }
 }
