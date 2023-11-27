@@ -17,10 +17,20 @@ public class GerarRefeicaoManualController {
     double totGord=0.0, totCarbs=0.0, totProt=0.0, totCals=0.0;
     public GerarRefeicaoManualController(Dieta ultDieta, AlimentoDAO alimentoDAO, RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO){
         int opc = 0;
+
+        double limiteCarbo = 0;
+        double limiteProt = 0;
+        double limiteGord = 0;
+
+        limiteCarbo = ((ultDieta.getCalorias() / 4) * ultDieta.getTipoDieta().getCarboidrato()) / 4;
+        limiteProt = ((ultDieta.getCalorias() / 4) * ultDieta.getTipoDieta().getProteina()) / 4;
+        limiteGord = ((ultDieta.getCalorias() / 4) * ultDieta.getTipoDieta().getGordura()) / 9;
+
         //Cria as 4 refeições padrão
         Refeicao r1 = new Refeicao();
         r1.setNomeDaRefeicao("Café da Manhã");
         r1.setDieta(ultDieta);
+        this.setLimiteMacros(r1, limiteCarbo, limiteProt, limiteGord);
         refeicaoDAO.adicionaRefeicao(r1);
 
         Refeicao r2 = new Refeicao();
@@ -66,6 +76,12 @@ public class GerarRefeicaoManualController {
                     break;
             }
         }
+    }
+
+    private void setLimiteMacros(Refeicao refeicao, double limCarbo, double limPro, double limGord) {
+        refeicao.setLimiteCarboidratos(limCarbo);
+        refeicao.setLimiteProteinas(limPro);
+        refeicao.setLimiteGorduras(limGord);
     }
 
     private int gerarManualmente(Refeicao r1, Refeicao r2, Refeicao r3, Refeicao r4, AlimentoRefeicaoDAO alimentoRefeicaoDAO, Dieta ultDieta){
@@ -151,7 +167,7 @@ public class GerarRefeicaoManualController {
         double gord=0.0,carbs=0.0,prot=0.0,cals=0.0;
         this.alimentosRefeicoes = alimentoRefeicaoDAO.procuraAlimentoDaRefeicao(refeicao);
         for (AlimentoRefeicao alimentoDaRef : alimentosRefeicoes){
-            if (alimentoDaRef != null){
+            if (alimentoDaRef != null && cals <= refeicao.getLimiteCalorias()){
                 builder += alimentoDaRef.toString();
                 totGord += alimentoDaRef.getGordura();
                 gord += alimentoDaRef.getGordura();
