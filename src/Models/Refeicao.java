@@ -10,6 +10,10 @@ public class Refeicao {
     private double proteina;
     private double gordura;
     private double calorias;
+    public double limiteCalorias;
+    public double limiteGorduras;
+    public double limiteCarboidratos;
+    public double limiteProteinas;
     private String nomeDaRefeicao;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
@@ -89,6 +93,40 @@ public class Refeicao {
 
     public void setDataModificacao(LocalDateTime dataModificacao) {
         this.dataModificacao = dataModificacao;
+    }
+
+    public double getLimiteCalorias() {
+        return limiteCalorias;
+    }
+
+    public double getLimiteGorduras() {
+        return limiteGorduras;
+    }
+
+    public void setLimiteGorduras(double limiteGorduras) {
+        this.limiteGorduras = limiteGorduras;
+    }
+
+    public double getLimiteCarboidratos() {
+        return limiteCarboidratos;
+    }
+
+    public void setLimiteCarboidratos(double limiteCarboidratos) {
+        this.limiteCarboidratos = limiteCarboidratos;
+    }
+
+    public double getLimiteProteinas() {
+        return limiteProteinas;
+    }
+
+    public void setLimiteProteinas(double limiteProteinas) {
+        this.limiteProteinas = limiteProteinas;
+    }
+
+    public void setLimiteCalorias() {
+        if(this.calorias != 0) {
+            this.limiteCalorias = this.calorias / 4;
+        }
     }
 
     public String toString(){
