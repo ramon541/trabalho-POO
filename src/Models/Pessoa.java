@@ -14,20 +14,20 @@ public class Pessoa {
     private String login;
     private String senha;
     private String tipoUsuario;
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataModificacao;
+    private LocalDate dataCriacao;
+    private LocalDate dataModificacao;
 
     public Pessoa() {
         //Ações padrão para todos os usuários
         serial++;
         this.id = serial;
         this.setTipoUsuario("comum");
-        this.setDataCriacao();
     }
 
     public long getId() {
         return id;
     }
+    public void setId(long id) { this.id = id; }
     public String getNome() {
         return nome;
     }
@@ -77,20 +77,20 @@ public class Pessoa {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao() {
-        this.dataCriacao = Util.getDataAtual();
+    public void setDataCriacao(LocalDate DataCriacao) {
+        this.dataCriacao = DataCriacao;
     }
 
-    public LocalDateTime getDataModificacao() {
+    public LocalDate getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao() {
-        this.dataModificacao = Util.getDataAtual();
+    public void setDataModificacao(LocalDate DataModificacao) {
+        this.dataModificacao = DataModificacao;
     }
     @Override
     public boolean equals(Object pessoa) {
