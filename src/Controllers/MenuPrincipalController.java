@@ -4,11 +4,13 @@ import Models.DAO.*;
 import Models.Util;
 import Views.Menus;
 
+import java.sql.SQLException;
+
 public class MenuPrincipalController {
     public MenuPrincipalController(Menus menu, PostDAO postDAO, SeguirDAO seguirDAO, PessoaDAO pessoaDAO,
                                    MensagemDAO mensagemDAO, AvaliacaoFisicaDAO avaliacaoFisicaDAO,
                                    AlimentoDAO alimentoDAO, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO,
-                                   PreferenciaDAO preferenciaDAO, RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO) {
+                                   PreferenciaDAO preferenciaDAO, RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO) throws SQLException {
             int opc = 0;
             while (opc != 9) {
                 opc = menu.menuPrincipal();

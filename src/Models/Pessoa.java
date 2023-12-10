@@ -48,9 +48,8 @@ public class Pessoa {
         return nascimento;
     }
 
-    public void setNascimento(String nascimento) {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.nascimento = LocalDate.parse(nascimento, formato);
+    public void setNascimento(LocalDate nascimento) {
+        this.nascimento = nascimento;
     }
 
     public String getLogin() {
@@ -92,6 +91,27 @@ public class Pessoa {
     public void setDataModificacao(LocalDate DataModificacao) {
         this.dataModificacao = DataModificacao;
     }
+
+    @Override
+    public String toString() {
+        return "Pessoa{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", sexo='" + sexo + '\'' +
+                ", nascimento=" + nascimento +
+                ", login='" + login + '\'' +
+                ", senha='" + senha + '\'' +
+                ", tipoUsuario='" + tipoUsuario + '\'' +
+                ", dataCriacao=" + dataCriacao +
+                ", dataModificacao=" + dataModificacao +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, sexo, nascimento, login, senha, tipoUsuario, dataCriacao, dataModificacao);
+    }
+
     @Override
     public boolean equals(Object pessoa) {
         if(this == pessoa) return true;

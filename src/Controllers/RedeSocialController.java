@@ -10,6 +10,9 @@ import Models.Seguir;
 import Models.Util;
 import Views.Menus;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class RedeSocialController {
@@ -17,7 +20,7 @@ public class RedeSocialController {
     StringBuilder builder;
     Scanner scan = new Scanner(System.in);
 
-    public RedeSocialController(Menus menu, PostDAO postDAO, SeguirDAO seguirDAO, PessoaDAO pessoaDAO, MensagemDAO mensagemDAO) {
+    public RedeSocialController(Menus menu, PostDAO postDAO, SeguirDAO seguirDAO, PessoaDAO pessoaDAO, MensagemDAO mensagemDAO) throws SQLException {
             int opc = 0;
             while (opc != 5) {
                 opc = menu.menuRedeSocial();
@@ -41,22 +44,34 @@ public class RedeSocialController {
                     case 3:
                         builder = new StringBuilder("");
                         builder.append("=====================").append("\n");
+                        builder.append("LISTA DE USUÁRIOS").append("\n");
+                        builder.append("=====================").append("\n");
+
+                        List<Pessoa> usuarios = pessoaDAO.buscaTodos();
+
+                        for(Pessoa usuario : usuarios) {
+                            System.out.println(usuario.toString());
+                        }
+
+                        builder.append("=====================").append("\n");
                         builder.append("BUSCAR USUÁRIO").append("\n");
                         builder.append("=====================").append("\n");
-                        builder.append("Digite o nome do usuário que deseja pesquisar: ");
+
+                        builder.append("Digite o ID do usuário que deseja buscar: ");
 
                         System.out.println(builder);
 
-                        Pessoa usuarioBuscado = pessoaDAO.buscaPorNome(scan.nextLine());
+                        try {
+                            Pessoa usuarioBuscado = pessoaDAO.buscaPorID(Integer.parseInt(scan.nextLine()));
 
-                        if(usuarioBuscado == null) {
-                            System.out.println("Não existe nenhum usuário com esse nome.");
-                        } else {
                             System.out.println("Usuário enctrontrado!");
 
                             boolean ehSeguidor = seguirDAO.ehSeguidor(usuarioBuscado);
 
                             new RedeSocialBuscarController(menu, usuarioBuscado, ehSeguidor, seguirDAO, mensagemDAO, postDAO);
+
+                        } catch (ArithmeticException e) {
+                            throw new RuntimeException("Erro ao buscar o usuário, digite um id válido.");
                         }
 
                         break;

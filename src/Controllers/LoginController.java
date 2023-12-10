@@ -7,6 +7,8 @@ import Models.Seguir;
 import Models.Util;
 import Views.Menus;
 
+import java.sql.SQLException;
+
 public class LoginController {
     private final Menus menu = new Menus();
     private final PostDAO postDAO = new PostDAO();
@@ -20,7 +22,7 @@ public class LoginController {
     private final RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
     private final AlimentoRefeicaoDAO alimentoRefeicaoDAO = new AlimentoRefeicaoDAO();
 
-    public LoginController() {
+    public LoginController() throws SQLException {
         getMenu().setPessoaDAO(pessoaDAO);
 
         int opc;
@@ -29,6 +31,8 @@ public class LoginController {
             switch (opc) {
                 case 1:
                     Pessoa logado = getMenu().login();
+
+                    System.out.println(logado.toString());
 
                     if (logado != null){
                         System.out.println("Login feito com sucesso!!");
@@ -89,13 +93,12 @@ public class LoginController {
     public void criacaoNovosUsuariosTeste() {
         Pessoa p2 = new Pessoa();
         p2.setNome("Fulana");
-        p2.setNascimento("05/05/2000");
         p2.setSexo("Feminina");
         p2.setLogin("fulana");
         p2.setSenha("fulana");
         p2.setTipoUsuario("comum");
 
-        this.pessoaDAO.adicionaPessoa(p2);
+        //this.pessoaDAO.adicionaPessoa(p2);
 
         Post post2 = new Post();
         post2.setConteudoDaMensagem("Post Teste");
@@ -107,7 +110,7 @@ public class LoginController {
         this.seguirDAO.seguirPessoa(p2);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         new LoginController();
     }
 

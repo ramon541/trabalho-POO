@@ -8,7 +8,10 @@ import Models.DAO.PessoaDAO;
 import Models.Pessoa;
 import Models.Util;
 
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
 
 public class Menus {
     private PessoaDAO pessoaDAO;
@@ -65,7 +68,7 @@ public class Menus {
         return getPessoaDAO().buscaLogin(login, senha);
     }
 
-    public void registrar () {
+    public void registrar () throws SQLException {
         Pessoa novoUsuario = new Pessoa();
 
         System.out.println("==============================");
@@ -75,11 +78,18 @@ public class Menus {
         System.out.print("Nome: ");
         novoUsuario.setNome(scan.nextLine());
 
-        System.out.print("Sexo [Masculino] ou [Feminino]: ");
+        System.out.print("Sexo [M] ou [F]: ");
         novoUsuario.setSexo(scan.nextLine());
 
         System.out.print("Data de nascimento (dd/mm/aaaa): ");
-        novoUsuario.setNascimento(scan.nextLine());
+        String dataNascimentoStr = scan.nextLine();
+
+        // Convertendo a string para o formato desejado
+        DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatoSaida = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dataNascimento = LocalDate.parse(dataNascimentoStr, formatoEntrada);
+        String dataNascimentoFormatada = dataNascimento.format(formatoSaida);
+        novoUsuario.setNascimento(LocalDate.parse(dataNascimentoFormatada));
 
         System.out.print("Login: ");
         novoUsuario.setLogin(scan.nextLine());
@@ -87,12 +97,7 @@ public class Menus {
         System.out.print("Senha: ");
         novoUsuario.setSenha(scan.nextLine());
 
-        boolean adicionado = getPessoaDAO().adicionaPessoa(novoUsuario);
-        if (adicionado){
-            System.out.println("Cadastro realizado com sucesso!!");
-        }else {
-            System.out.println("Falha no cadastro. Tente novamente!!");
-        }
+        getPessoaDAO().adicionaPessoa(novoUsuario);
     }
 
     public int menuRedeSocial() {
