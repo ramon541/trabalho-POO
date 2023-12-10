@@ -59,7 +59,7 @@ public class Post {
         return "\nPost " + id + ":\n" +
                 "Publicado por " + pessoa.getNome() + "\n" +
                 "Conteudo: '" + conteudoPost + "'\n" +
-                "Criado em:" + dataCriacao + "\n" +
-                "Atualizado em:" + dataModificacao + "\n";
+                "Criado em: " + dataCriacao + "\n" +
+                "Atualizado em: " + dataModificacao + "\n";
     }
 }

@@ -7,20 +7,22 @@ import Models.TipoDieta;
 import Models.Util;
 import Views.Menus;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuMinhaDietaController {
     public MenuMinhaDietaController(Menus menu, AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO,
                                     DietaDAO dietaDAO, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO,
-                                    RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO){
+                                    RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO) throws SQLException {
         int opc = 0;
-        while (opc != 4){
+        while (opc != 5){
             opc = menu.menuMinhaDieta();
 
             switch (opc){
                 case 1:
-                    boolean dietaAdicionada = this.newDieta(ultAvaliacao, tipoDietaDAO, dietaDAO);
-                    if (dietaAdicionada) System.out.println("Dieta adicionada com sucesso!!");
+                    long dietaAdicionada = this.newDieta(ultAvaliacao, tipoDietaDAO, dietaDAO);
+                    if (dietaAdicionada != 0) System.out.println("Dieta adicionada com sucesso!!");
                     else System.out.println("ERRO!!! Algo deu errado...");
                     break;
 
@@ -54,7 +56,7 @@ public class MenuMinhaDietaController {
         }
     }
 
-    private boolean newDieta(AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO) {
+    private long newDieta(AvaliacaoFisica ultAvaliacao, TipoDietaDAO tipoDietaDAO, DietaDAO dietaDAO) throws SQLException {
 //        tipoDietaDAO.procuraDieta("Atleta").setDietaAtleta(ultAvaliacao); //Altera o TipoDeDieta Atleta para o peso do Usuário logado
 
         Dieta novaDieta = new Dieta();
@@ -66,11 +68,14 @@ public class MenuMinhaDietaController {
         System.out.println("==============================");
         System.out.println("NOVA DIETA");
         System.out.println("==============================");
-        System.out.println(tipoDietaDAO.toString());
-        System.out.print("Qual o tipo de dieta você deseja? R: ");
-        TipoDieta dietaSelecionada = tipoDietaDAO.procuraDieta(scan.nextLine());
+        List<TipoDieta> tiposDieta = tipoDietaDAO.buscaTiposDieta();
+        for(TipoDieta tipo : tiposDieta) {
+            System.out.println(tipo.toString());
+        }
+        System.out.print("Qual o tipo de dieta você deseja, selecione o ID: R: ");
+        TipoDieta dietaSelecionada = tipoDietaDAO.buscaTipoDietaPorId(Integer.parseInt(scan.nextLine()));
         if (dietaSelecionada != null) novaDieta.setTipoDieta(dietaSelecionada);
-        else return false;
+        else return 0;
         System.out.print("""
             
             1 - Diminuir o peso
@@ -81,30 +86,25 @@ public class MenuMinhaDietaController {
         int opc = Integer.parseInt(scan.nextLine());
         switch (opc){
             case 1:
-                novaDieta.setObjetivo("Diminuir");
+                novaDieta.setObjetivo("Diminuir o peso");
                 novaDieta.setCalorias(ultAvaliacao.getTmb() - 350.0);
                 break;
 
             case 2:
-                novaDieta.setObjetivo("Manter");
+                novaDieta.setObjetivo("Manter o peso");
                 novaDieta.setCalorias(ultAvaliacao.getTmb());
                 break;
 
             case 3:
-                novaDieta.setObjetivo("Aumentar");
+                novaDieta.setObjetivo("Aumentar o peso");
                 novaDieta.setCalorias(ultAvaliacao.getTmb() + 350.0);
                 break;
 
             default:
-                return false;
+                return 0;
         }
-//        System.out.print("\nQuantas refeições deseja fazer (1 a 5)? R: ");
-//        opc = Integer.parseInt(scan.nextLine());
-//        if (opc >= 1 && opc <= 5){
-//            novaDieta.setNroRefeicoes(opc);
-//        }else return false;
 
-        System.out.print(novaDieta.toString());
-        return dietaDAO.adicionaDieta(novaDieta);
+        System.out.print(novaDieta);
+        return dietaDAO.insereDieta(novaDieta);
     }
 }

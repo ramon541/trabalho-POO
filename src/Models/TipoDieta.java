@@ -1,22 +1,23 @@
 package Models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class TipoDieta {
     protected long id;
-    private static long serial;
     private String nome;
     private double carboidrato;
     private double proteina;
     private double gordura;
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataModificacao;
+    private LocalDate dataCriacao;
+    private LocalDate dataModificacao;
 
     public TipoDieta(){
-        serial++;
-        this.id = serial;
-        setDataCriacao(Util.getDataAtual());
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getId() {
@@ -55,29 +56,26 @@ public class TipoDieta {
         this.gordura = gordura;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) {
+    public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDateTime getDataModificacao() {
+    public LocalDate getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(LocalDateTime dataModificacao) {
+    public void setDataModificacao(LocalDate dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
 
     @Override
     public String toString() {
-        String builder = "";
-        builder+= "Tipo: " + this.getNome() + "\n";
-        builder+= "Carboidrato: " + this.getCarboidrato()*100 + "%\n";
-        builder+= "Proteína: " + this.getProteina()*100 + "%\n";
-        builder+= "Gordura: " + this.getGordura()*100 + "%";
+        String builder = "ID: " +  this.getId();
+        builder+= " - Tipo: " + this.getNome() + "\n";
         return builder;
     }
 

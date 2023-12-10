@@ -14,12 +14,12 @@ import java.util.List;
 public class LoginController {
     private final Menus menu = new Menus();
     private final SeguirDAO seguirDAO = new SeguirDAO();
-    private final AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO();
     private final AlimentoDAO alimentoDAO = new AlimentoDAO();
     private final TipoDietaDAO tipoDietaDAO = new TipoDietaDAO();
     private final DietaDAO dietaDAO = new DietaDAO();
     private final PreferenciaDAO preferenciaDAO = new PreferenciaDAO();
-    private final PessoaDAO pessoaDAO = new PessoaDAO(this.postDAO, this.preferenciaDAO, this.alimentoDAO);
+    private final PessoaDAO pessoaDAO = new PessoaDAO();
+    private final AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO(this.pessoaDAO);
     private final PostDAO postDAO = new PostDAO(this.pessoaDAO);
     private final RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
     private final AlimentoRefeicaoDAO alimentoRefeicaoDAO = new AlimentoRefeicaoDAO();
@@ -46,7 +46,7 @@ public class LoginController {
                                 pessoaDAO, mensagemDAO, this.getAvaliacaoFisicaDAO(), this.getAlimentoDAO(),
                                 this.getTipoDietaDAO(), this.getDietaDAO(), this.getPreferenciaDAO(), this.getRefeicaoDAO(), this.getAlimentoRefeicaoDAO());
                     } else {
-                        System.out.println("Login Inválido. Tente novamente...");
+                        System.out.println("Login ou Senha Inválidos. Tente novamente...");
                     }
                     break;
 

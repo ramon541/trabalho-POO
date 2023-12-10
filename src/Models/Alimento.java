@@ -1,22 +1,28 @@
 package Models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Alimento {
     protected long id;
-    private static long serial;
     private String nome;
     private Double carboidratos;
     private Double proteinas;
     private Double gorduras;
     private Double calorias;
     private Double porcao;
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataModificacao;
+    private LocalDate dataCriacao;
+    private LocalDate dataModificacao;
 
     public Alimento(){
-        serial++;
-        this.id = serial;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -59,26 +65,26 @@ public class Alimento {
         this.porcao = porcao;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) {
+    public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDateTime getDataModificacao() {
+    public LocalDate getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(LocalDateTime dataModificacao) {
+    public void setDataModificacao(LocalDate dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
 
     public Double getCalorias() { return this.calorias; }
 
-    public void setCalorias(){
-        this.calorias = 4*this.carboidratos + 4*this.proteinas + 9*this.gorduras;
+    public void setCalorias(double calorias){
+        this.calorias = calorias;
     }
 
     @Override

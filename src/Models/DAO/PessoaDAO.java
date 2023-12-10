@@ -15,10 +15,6 @@ import java.sql.Connection;
 
 public class PessoaDAO {
 
-    public PessoaDAO(PostDAO postDAO, PreferenciaDAO preferenciaDAO, AlimentoDAO alimentoDAO) {
-
-    }
-
     private PreparedStatement criaConsulta(Connection con, String login, String senha) throws SQLException {
         String sql = "select * from pessoa where login = ? and senha = ?";
         PreparedStatement ps = con.prepareStatement(sql);

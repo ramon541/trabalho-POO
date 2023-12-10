@@ -1,8 +1,8 @@
 package Models.DAO;
 
-import Models.AvaliacaoFisica;
-import Models.Dieta;
-import Models.Util;
+import Models.*;
+
+import java.sql.*;
 
 public class DietaDAO {
     Dieta[] dietas = new Dieta[10];
@@ -16,6 +16,31 @@ public class DietaDAO {
         this.dietas[posicaoLivre] = dieta;
 
         return true;
+    }
+
+    public long insereDieta(Dieta d) {
+        String sql = "insert into dieta(pessoa, avaliacaoFisica, tipoDieta, objetivo, calorias) values (?,?,?,?,?)";
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, String.valueOf(d.getPessoa().getId()));
+            stmt.setString(2, String.valueOf(d.getAvaliacaoFisica().getId()));
+            stmt.setString(3, String.valueOf(d.getTipoDieta().getId()));
+            stmt.setString(4, d.getObjetivo());
+            stmt.setString(5, String.valueOf(d.getCalorias()));
+            stmt.execute();
+
+            //retorna o id do objeto inserido
+            ResultSet rs=stmt.getGeneratedKeys();
+            int retorno=0;
+            if(rs.next()){
+                retorno = rs.getInt(1);
+            }
+            System.out.println("O id inserido foi: " + retorno);
+            System.out.println("Gravado!");
+            return retorno;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean ehVazio() {
