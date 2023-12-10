@@ -1,0 +1,137 @@
+CREATE TABLE `Pessoa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50),
+  `sexo` varchar(1),
+  `dataNascimento` datetime,
+  `login` varchar(30),
+  `senha` varchar(30),
+  `dataCriacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataAtualizacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pessoa` int(11) NOT NULL,
+  `conteudoPost` varchar(255),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`pessoa`) REFERENCES `Pessoa`(`id`)
+);
+
+CREATE TABLE `Alimento` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50),
+  `carboidratos` float,
+  `proteinas` float,
+  `gorduras` float,
+  `calorias` float,
+  `porcao` float,
+  `dataCriacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataAtualizacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Preferencia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pessoa` int(11) NOT NULL,
+  `alimento` int(11) NOT NULL,
+  `dataCriacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataAtualizacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`pessoa`) REFERENCES `Pessoa`(`id`),
+  FOREIGN KEY (`alimento`) REFERENCES `Alimento`(`id`)
+);
+
+CREATE TABLE `AvaliacaoFisica` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pessoa` int(11),
+  `taxaAtividade` float,
+  `peso` float,
+  `altura` float,
+  `idade` int,
+  `pescoco` int,
+  `cintura` int,
+  `quadril` int,
+  `imc` float,
+  `tmb` float,
+  `bodyFat` float,
+  `massaGorda` float,
+  `massaMagra` float,
+  `dataCriacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataModificacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`pessoa`) REFERENCES `Pessoa`(`id`)
+);
+
+CREATE TABLE `TipoDieta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255),
+  `carboidrato` float,
+  `proteina` float,
+  `gordura` float,
+  `dataCriacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataAtualizacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Dieta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pessoa` int(11) NOT NULL,
+  `avaliacaoFisica` int(11) NOT NULL,
+  `tipoDieta` int(11),
+  `objetivo` varchar(255),
+  `calorias` float,
+  `dataCriacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataAtualizacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`tipoDieta`) REFERENCES `TipoDieta`(`id`),
+  FOREIGN KEY (`pessoa`) REFERENCES `Pessoa`(`id`),
+  FOREIGN KEY (`avaliacaoFisica`) REFERENCES `AvaliacaoFisica`(`id`)
+);
+
+CREATE TABLE `Refeicao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nomeRefeicao` varchar(50),
+  `dieta` int(11),
+  `carboidratos` float,
+  `proteinas` float,
+  `gorduras` float,
+  `calorias` float,
+  `dataCriacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataAtualizacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`dieta`) REFERENCES `Dieta`(`id`)
+);
+
+CREATE TABLE `AlimentoRefeicao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `alimento` int(11) NOT NULL,
+  `refeicao` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`refeicao`) REFERENCES `Refeicao`(`id`),
+  FOREIGN KEY (`alimento`) REFERENCES `Alimento`(`id`)
+);
+
+CREATE TABLE `Seguir` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pessoa` int(11) NOT NULL,
+  `seguindo` int(11) NOT NULL,
+  `dataCriacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataAtualizacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`pessoa`) REFERENCES `Pessoa`(`id`),
+  FOREIGN KEY (`seguindo`) REFERENCES `Pessoa`(`id`)
+);
+
+CREATE TABLE `Mensagem` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `remetente` int(11) NOT NULL,
+  `destinatario` int(11) NOT NULL,
+  `mensagem` varchar(255),
+  `dataCriacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataAtualizacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`destinatario`) REFERENCES `Pessoa`(`id`),
+  FOREIGN KEY (`remetente`) REFERENCES `Pessoa`(`id`)
+);
+

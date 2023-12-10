@@ -1,4 +1,4 @@
-package Models.DAO;
+package Models;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,12 +8,16 @@ import java.util.Properties;
 public class ConnectionFactory {
 
     final String user = "root";
-    final String password = "Ra084011@123";
+    //final String password = "Ra084011@123";
+    final String password = "Alv180198";
     final String dbName = "trab_poo";
 
 
     public Connection getConnection() {
         try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
             Properties properties = new Properties();
             properties.setProperty("user", user);
             properties.setProperty("password", password);
@@ -25,7 +29,7 @@ public class ConnectionFactory {
             String con = "jdbc:mysql://localhost/" + dbName;
             return DriverManager.getConnection(con, properties);
 
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
