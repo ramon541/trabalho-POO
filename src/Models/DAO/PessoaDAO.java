@@ -15,10 +15,6 @@ import java.sql.Connection;
 
 public class PessoaDAO {
 
-    public PessoaDAO(PostDAO postDAO, PreferenciaDAO preferenciaDAO, AlimentoDAO alimentoDAO) {
-
-    }
-
     private PreparedStatement criaConsulta(Connection con, String login, String senha) throws SQLException {
         String sql = "select * from pessoa where login = ? and senha = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -95,9 +91,12 @@ public class PessoaDAO {
                 elemento.setId(rs.getLong("id"));
                 elemento.setNome(rs.getString("nome"));
                 elemento.setSexo(rs.getString("sexo"));
-                elemento.setNascimento(LocalDate.parse(rs.getString("dataNascimento")));
                 elemento.setLogin(rs.getString("login"));
                 elemento.setSenha(rs.getString("senha"));
+
+                java.sql.Date dataNasc = rs.getDate("dataNascimento");
+                LocalDate dataCriacaoDate = dataNasc.toLocalDate();
+                elemento.setNascimento(dataCriacaoDate);
 
                 java.sql.Date currentDate = rs.getDate("dataCriacao");
                 LocalDate dataCriacao = currentDate.toLocalDate();
@@ -133,9 +132,12 @@ public class PessoaDAO {
                 elemento.setId(rs.getLong("id"));
                 elemento.setNome(rs.getString("nome"));
                 elemento.setSexo(rs.getString("sexo"));
-                elemento.setNascimento(LocalDate.parse(rs.getString("dataNascimento")));
                 elemento.setLogin(rs.getString("login"));
                 elemento.setSenha(rs.getString("senha"));
+
+                java.sql.Date dataNasc = rs.getDate("dataNascimento");
+                LocalDate dataCriacaoDate = dataNasc.toLocalDate();
+                elemento.setNascimento(dataCriacaoDate);
 
                 java.sql.Date currentDate = rs.getDate("dataCriacao");
                 LocalDate dataCriacao = currentDate.toLocalDate();

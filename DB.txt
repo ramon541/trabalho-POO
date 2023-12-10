@@ -14,6 +14,8 @@ CREATE TABLE `Post` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pessoa` int(11) NOT NULL,
   `conteudoPost` varchar(255),
+  `dataCriacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataAtualizacao` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`pessoa`) REFERENCES `Pessoa`(`id`)
 );

@@ -43,9 +43,6 @@ public class Menus {
         builder.append("\n1 - Avaliação Física");
         builder.append("\n2 - Minha Dieta");
         builder.append("\n3 - Rede Social");
-        if (Util.getPessoaLogada().getTipoUsuario().equals("admin")){
-            builder.append("\n8 - Painel Administrativo");
-        }
         builder.append("\n9 - Logout;");
         builder.append("\n\nQual a sua opção? R: ");
 

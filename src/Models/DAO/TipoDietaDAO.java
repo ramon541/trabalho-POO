@@ -1,74 +1,87 @@
 package Models.DAO;
 
+import Models.ConnectionFactory;
 import Models.Dieta;
+import Models.Pessoa;
 import Models.TipoDieta;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TipoDietaDAO {
-    TipoDieta[] tipoDietas = new TipoDieta[8];
     public TipoDietaDAO() {
-        TipoDieta d1 = new TipoDieta();
-        d1.setNome("Equilibrada");
-        d1.setCarboidrato(0.4);
-        d1.setProteina(0.3);
-        d1.setGordura(0.3);
-        this.adicionaTipoDieta(d1);
-
-        TipoDieta d2 = new TipoDieta();
-        d2.setNome("Low Carb");
-        d2.setCarboidrato(0.3);
-        d2.setProteina(0.5);
-        d2.setGordura(0.2);
-        this.adicionaTipoDieta(d2);
-
-        TipoDieta d3 = new TipoDieta();
-        d3.setNome("Cetogênica");
-        d3.setCarboidrato(0.15);
-        d3.setProteina(0.15);
-        d3.setGordura(0.70);
-        this.adicionaTipoDieta(d3);
-
-//        TipoDieta d4 = new TipoDieta();
-//        d4.setNome("Atleta");
-//        d4.setCarboidrato(0.0);
-//        d4.setProteina(0.0);
-//        d4.setGordura(0.0);
-//        this.adicionaTipoDieta(d4);
     }
-    public boolean adicionaTipoDieta(TipoDieta tipoDieta) {
-        int posicaoLivre = this.proximaPosicaoLivre();
-        if(posicaoLivre == -1) {
-            return false;
+
+    public List<TipoDieta> buscaTiposDieta() throws SQLException {
+        String sql = "select * from tipodieta";
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            List<TipoDieta> tiposDieta = new ArrayList<TipoDieta>();
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                // criando o objeto
+                TipoDieta tipoDieta = new TipoDieta();
+                tipoDieta.setId(rs.getLong("id"));
+                tipoDieta.setNome(rs.getString("nome"));
+                tipoDieta.setCarboidrato(Double.parseDouble(rs.getString("carboidrato")));
+                tipoDieta.setProteina(Double.parseDouble(rs.getString("proteina")));
+                tipoDieta.setGordura(Double.parseDouble(rs.getString("gordura")));
+
+                java.sql.Date currentDate = rs.getDate("dataCriacao");
+                LocalDate dataCriacao = currentDate.toLocalDate();
+                tipoDieta.setDataCriacao(dataCriacao);
+
+                java.sql.Date currentDateMod = rs.getDate("dataAtualizacao");
+                LocalDate dataMod = currentDateMod.toLocalDate();
+                tipoDieta.setDataModificacao(dataMod);
+
+                tiposDieta.add(tipoDieta);
+            }
+            rs.close();
+            stmt.close();
+            return tiposDieta;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        this.tipoDietas[posicaoLivre] = tipoDieta;
-        return true;
     }
 
-    private int proximaPosicaoLivre() {
-        for(int i = 0; i < this.tipoDietas.length; i++) {
-            if(tipoDietas[i] == null) return i;
-        }
-        return -1;
+    private PreparedStatement createPreparedStatement(Connection con, long id) throws SQLException {
+        String sql = "select * from tipodieta where id = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setLong(1, id);
+        return ps;
     }
 
-    public TipoDieta procuraDieta(String nomeTipoDieta){
-        for (TipoDieta tipoDieta : this.tipoDietas) {
-            if (tipoDieta.getNome().equals(nomeTipoDieta)){
+    public TipoDieta buscaTipoDietaPorId(long code) {
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement ps = createPreparedStatement(connection, code);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                TipoDieta tipoDieta = new TipoDieta();
+                tipoDieta.setId(rs.getLong("id"));
+                tipoDieta.setNome(rs.getString("nome"));
+                tipoDieta.setCarboidrato(Double.parseDouble(rs.getString("carboidrato")));
+                tipoDieta.setProteina(Double.parseDouble(rs.getString("proteina")));
+                tipoDieta.setGordura(Double.parseDouble(rs.getString("gordura")));
+
+                java.sql.Date currentDate = rs.getDate("dataCriacao");
+                LocalDate dataCriacao = currentDate.toLocalDate();
+                tipoDieta.setDataCriacao(dataCriacao);
+
+                java.sql.Date currentDateMod = rs.getDate("dataAtualizacao");
+                LocalDate dataMod = currentDateMod.toLocalDate();
+                tipoDieta.setDataModificacao(dataMod);
+
                 return tipoDieta;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return null;
-    }
-
-    @Override
-    public String toString() {
-        String builder = "-------------------";
-        for (int i = 0; i < tipoDietas.length; i++){
-            if (tipoDietas[i] != null){
-                builder+= "\n" + tipoDietas[i].toString() + "\n";
-            }
-        }
-
-        builder += "-------------------";
-        return builder;
     }
 }

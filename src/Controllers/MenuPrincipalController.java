@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.AvaliacaoFisica;
 import Models.DAO.*;
 import Models.Util;
 import Views.Menus;
@@ -21,23 +22,18 @@ public class MenuPrincipalController {
 
                     case 2:
                         //Esse if verifica se o Usuário fez alguma avaliação física
-                        if (avaliacaoFisicaDAO.procuraUltimaAvaliacao() == null){
+
+                        AvaliacaoFisica ultAvaliacao = avaliacaoFisicaDAO.buscaUltimaAvaliacao(Util.getPessoaLogada().getId());
+
+                        if (ultAvaliacao == null){
                             System.out.println("Primeiro você deve fazer uma Avaliação Física!!");
                         }else {
-                            new MenuMinhaDietaController(menu, avaliacaoFisicaDAO.procuraUltimaAvaliacao(), tipoDietaDAO, dietaDAO, alimentoDAO, preferenciaDAO, refeicaoDAO, alimentoRefeicaoDAO);
+                            new MenuMinhaDietaController(menu, ultAvaliacao, tipoDietaDAO, dietaDAO, alimentoDAO, preferenciaDAO, refeicaoDAO, alimentoRefeicaoDAO);
                         }
                         break;
 
                     case 3:
                         new RedeSocialController(menu, postDAO, seguirDAO, pessoaDAO, mensagemDAO);
-                        break;
-
-                    case 8:
-                        if (Util.getPessoaLogada().getTipoUsuario().equals("admin")){
-                            //Menu painel admin
-                        } else {
-                            System.out.println("\n\nOPÇÃO INVÁLIDA!!");
-                        }
                         break;
 
                     case 9:

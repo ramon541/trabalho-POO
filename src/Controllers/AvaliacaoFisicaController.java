@@ -2,6 +2,7 @@ package Controllers;
 
 import Models.AvaliacaoFisica;
 import Models.DAO.AvaliacaoFisicaDAO;
+import Models.Util;
 
 import java.sql.SQLOutput;
 import java.util.Scanner;
@@ -9,7 +10,7 @@ import java.util.Scanner;
 public class AvaliacaoFisicaController {
     Scanner scan = new Scanner(System.in);
     public AvaliacaoFisicaController(AvaliacaoFisicaDAO avaliacaoFisicaDAO) {
-        AvaliacaoFisica ultAvaliacao = avaliacaoFisicaDAO.procuraUltimaAvaliacao();
+        AvaliacaoFisica ultAvaliacao = avaliacaoFisicaDAO.buscaUltimaAvaliacao(Util.getPessoaLogada().getId());
         AvaliacaoFisica novaAvaliacao = new AvaliacaoFisica();
 
         System.out.println("==============================");
@@ -25,7 +26,7 @@ public class AvaliacaoFisicaController {
         novaAvaliacao.setPescoco(Integer.parseInt(scan.nextLine()));
         System.out.print("Qual a medida da sua cintura?(cm) R: ");
         novaAvaliacao.setCintura(Integer.parseInt(scan.nextLine()));
-        if (novaAvaliacao.getPessoa().getSexo().equals("Feminino")){
+        if (novaAvaliacao.getPessoa().getSexo().equals("F")){
             System.out.print("Qual a medida do seu quadril?(cm) R: ");
             novaAvaliacao.setQuadril(Integer.parseInt(scan.nextLine()));
         }
@@ -77,8 +78,10 @@ public class AvaliacaoFisicaController {
                     + String.format("%.2f",ultAvaliacao.getBodyFat()) + "%" + "\nO BF anterior estava: "
                     + ultAvaliacao.diagnosticoBodyFat());
         }
-        boolean adiconado = avaliacaoFisicaDAO.adicionaAvaliacao(novaAvaliacao);
-        if (adiconado){
+
+        long idAvaliacaoFisica = avaliacaoFisicaDAO.adicionaAvaliacao(novaAvaliacao);
+
+        if (idAvaliacaoFisica != 0){
             System.out.println("\nAvaliação física adicionada com sucesso!!");
         } else {
             System.out.println("Opsss... Não foi possível adicionar a Avalição Física.");

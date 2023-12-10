@@ -4,12 +4,13 @@
  */
 package Models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class AvaliacaoFisica {
     protected long id;
     private static long serial;
-    private final Pessoa pessoa;
+    private Pessoa pessoa;
     private double fatorTaxaAtividade;
     private double peso;
     private double altura;
@@ -17,8 +18,8 @@ public class AvaliacaoFisica {
     private int pescoco;
     private int cintura;
     private int quadril;
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataModificacao;
+    private LocalDate dataCriacao;
+    private LocalDate dataModificacao;
     private double imc;
     private double tmb;
     private double bodyFat;
@@ -26,10 +27,11 @@ public class AvaliacaoFisica {
     private double massaMagra;
 
     public AvaliacaoFisica() {
-        serial++;
-        this.id = serial;
-        setDataCriacao(Util.getDataAtual());
         this.pessoa = Util.getPessoaLogada();
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getId() {
@@ -37,6 +39,10 @@ public class AvaliacaoFisica {
     }
 
     public Pessoa getPessoa() { return this.pessoa; }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
 
     public double getFatorTaxaAtividade() {
         return fatorTaxaAtividade;
@@ -94,11 +100,11 @@ public class AvaliacaoFisica {
         this.quadril = quadril;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
 
-    public LocalDateTime getDataModificacao() {
+    public LocalDate getDataModificacao() {
         return dataModificacao;
     }
 
@@ -118,8 +124,8 @@ public class AvaliacaoFisica {
         this.tmb = tmb;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) { this.dataCriacao = dataCriacao; }
-    public void setDataModificacao(LocalDateTime dataModificacao) { this.dataModificacao = dataModificacao; }
+    public void setDataCriacao(LocalDate dataCriacao) { this.dataCriacao = dataCriacao; }
+    public void setDataModificacao(LocalDate dataModificacao) { this.dataModificacao = dataModificacao; }
 
     public double getBodyFat() {
         return bodyFat;
@@ -131,6 +137,19 @@ public class AvaliacaoFisica {
     public double getMassaMagra() {
         return massaMagra;
     }
+
+    public void setBodyFat(double bodyFat) {
+        this.bodyFat = bodyFat;
+    }
+
+    public void setMassaGorda(double massaGorda) {
+        this.massaGorda = massaGorda;
+    }
+
+    public void setMassaMagra(double massaMagra) {
+        this.massaMagra = massaMagra;
+    }
+
     //Métodos *************************
 
     public void calcularIMC(){
