@@ -1,21 +1,21 @@
 package Models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Post {
     protected long id;
-
     private static long serial;
     private Pessoa pessoa;
-    private String conteudoDaMensagem;
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataModificacao;
+    private String conteudoPost;
+    private LocalDate dataCriacao;
+    private LocalDate dataModificacao;
 
     public Post(){
-        serial++;
-        this.id = serial;
-        this.setDataCriacao();
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getId(){
@@ -30,27 +30,36 @@ public class Post {
         this.pessoa = pessoa;
     }
 
-    public String getConteudoDaMensagem() {
-        return conteudoDaMensagem;
+    public String getConteudoPost() {
+        return conteudoPost;
     }
 
-    public void setConteudoDaMensagem(String conteudoDaMensagem) {
-        this.conteudoDaMensagem = conteudoDaMensagem;
+    public void setConteudoPost(String conteudoPost) {
+        this.conteudoPost = conteudoPost;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao() {
-        this.dataCriacao = Util.getDataAtual();
+    public void setDataCriacao(LocalDate dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
-    public LocalDateTime getDataModificacao() {
+    public LocalDate getDataModificacao() {
         return dataModificacao;
     }
 
-    private void setDataModificacao(LocalDateTime dataModificacao) {
+    public void setDataModificacao(LocalDate dataModificacao) {
         this.dataModificacao = dataModificacao;
+    }
+
+    @Override
+    public String toString() {
+        return "\nPost " + id + ":\n" +
+                "Publicado por " + pessoa.getNome() + "\n" +
+                "Conteudo: '" + conteudoPost + "'\n" +
+                "Criado em:" + dataCriacao + "\n" +
+                "Atualizado em:" + dataModificacao + "\n";
     }
 }

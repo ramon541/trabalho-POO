@@ -13,15 +13,10 @@ public class Pessoa {
     private LocalDate nascimento;
     private String login;
     private String senha;
-    private String tipoUsuario;
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
     public Pessoa() {
-        //Ações padrão para todos os usuários
-        serial++;
-        this.id = serial;
-        this.setTipoUsuario("comum");
     }
 
     public long getId() {
@@ -68,14 +63,6 @@ public class Pessoa {
         this.senha = senha;
     }
 
-    public String getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
-    }
-
     public LocalDate getDataCriacao() {
         return dataCriacao;
     }
@@ -101,7 +88,6 @@ public class Pessoa {
                 ", nascimento=" + nascimento +
                 ", login='" + login + '\'' +
                 ", senha='" + senha + '\'' +
-                ", tipoUsuario='" + tipoUsuario + '\'' +
                 ", dataCriacao=" + dataCriacao +
                 ", dataModificacao=" + dataModificacao +
                 '}';
@@ -109,7 +95,7 @@ public class Pessoa {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, sexo, nascimento, login, senha, tipoUsuario, dataCriacao, dataModificacao);
+        return Objects.hash(id, nome, sexo, nascimento, login, senha, dataCriacao, dataModificacao);
     }
 
     @Override

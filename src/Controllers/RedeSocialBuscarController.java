@@ -38,7 +38,7 @@ public class RedeSocialBuscarController {
 
                     break;
                 case 2:
-                    postDAO.mostrarPostsUsuario(usuarioBuscado);
+                    //postDAO.mostrarPostsUsuario(usuarioBuscado);
 
                     break;
                 case 3:

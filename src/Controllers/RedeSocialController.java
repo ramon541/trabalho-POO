@@ -6,12 +6,10 @@ import Models.DAO.PostDAO;
 import Models.DAO.SeguirDAO;
 import Models.Pessoa;
 import Models.Post;
-import Models.Seguir;
 import Models.Util;
 import Views.Menus;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,7 +25,7 @@ public class RedeSocialController {
                 switch (opc) {
                     case 1:
                         //ver meus posts
-                        postDAO.mostrarPostsUsuario(Util.getPessoaLogada());
+                        //postDAO.mostrarPostsUsuario(Util.getPessoaLogada());
                         break;
                     case 2:
                         Post post = new Post();
@@ -35,8 +33,8 @@ public class RedeSocialController {
                         builder.append("Conteudo do post: ");
                         System.out.println(builder);
 
-                        post.setConteudoDaMensagem(scan.nextLine());
-                        post.setPessoa(Util.getPessoaLogada());
+                        post.setConteudoPost(scan.nextLine());
+                        //post.setPessoa(Util.getPessoaLogada());
                         postDAO.adicionaPost(post);
 
                         break;

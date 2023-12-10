@@ -32,14 +32,6 @@ public class MenuPrincipalController {
                         new RedeSocialController(menu, postDAO, seguirDAO, pessoaDAO, mensagemDAO);
                         break;
 
-                    case 8:
-                        if (Util.getPessoaLogada().getTipoUsuario().equals("admin")){
-                            //Menu painel admin
-                        } else {
-                            System.out.println("\n\nOPÇÃO INVÁLIDA!!");
-                        }
-                        break;
-
                     case 9:
                         System.out.println("Logout...");
                         Util.setPessoaLogada(null);

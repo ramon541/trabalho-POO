@@ -95,9 +95,12 @@ public class PessoaDAO {
                 elemento.setId(rs.getLong("id"));
                 elemento.setNome(rs.getString("nome"));
                 elemento.setSexo(rs.getString("sexo"));
-                elemento.setNascimento(LocalDate.parse(rs.getString("dataNascimento")));
                 elemento.setLogin(rs.getString("login"));
                 elemento.setSenha(rs.getString("senha"));
+
+                java.sql.Date dataNasc = rs.getDate("dataNascimento");
+                LocalDate dataCriacaoDate = dataNasc.toLocalDate();
+                elemento.setNascimento(dataCriacaoDate);
 
                 java.sql.Date currentDate = rs.getDate("dataCriacao");
                 LocalDate dataCriacao = currentDate.toLocalDate();
@@ -133,9 +136,12 @@ public class PessoaDAO {
                 elemento.setId(rs.getLong("id"));
                 elemento.setNome(rs.getString("nome"));
                 elemento.setSexo(rs.getString("sexo"));
-                elemento.setNascimento(LocalDate.parse(rs.getString("dataNascimento")));
                 elemento.setLogin(rs.getString("login"));
                 elemento.setSenha(rs.getString("senha"));
+
+                java.sql.Date dataNasc = rs.getDate("dataNascimento");
+                LocalDate dataCriacaoDate = dataNasc.toLocalDate();
+                elemento.setNascimento(dataCriacaoDate);
 
                 java.sql.Date currentDate = rs.getDate("dataCriacao");
                 LocalDate dataCriacao = currentDate.toLocalDate();
