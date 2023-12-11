@@ -1,56 +1,64 @@
 package Models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Seguir {
     protected long id;
-    private static long serial;
     private Pessoa usuario;
     private Pessoa seguindo;
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataModificacao;
+    private boolean estaSeguindo;
+    private LocalDate dataCriacao;
+    private LocalDate dataModificacao;
 
     public Seguir(){
-        serial++;
-        this.id = serial;
-
-        this.setUsuario();
-        this.setDataCriacao();
     }
 
     public long getId(){
         return this.id;
     }
-    public Pessoa getUsuario() {
-        return this.usuario;
+
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setUsuario() {
-        this.usuario = Util.getPessoaLogada();
-    }
-
-    public Pessoa getSeguindo() {
-        return this.seguindo;
+    public void setUsuario(Pessoa usuario) {
+        this.usuario = usuario;
     }
 
     public void setSeguindo(Pessoa seguindo) {
         this.seguindo = seguindo;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public boolean isEstaSeguindo() {
+        return estaSeguindo;
+    }
+
+    public void setEstaSeguindo(boolean estaSeguindo) {
+        this.estaSeguindo = estaSeguindo;
+    }
+
+    public Pessoa getUsuario() {
+        return this.usuario;
+    }
+
+    public Pessoa getSeguindo() {
+        return this.seguindo;
+    }
+
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao() {
-        this.dataCriacao = Util.getDataAtual();
+    public void setDataCriacao(LocalDate dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
-    public LocalDateTime getDataModificacao() {
+    public LocalDate getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao() {
-        this.dataModificacao = Util.getDataAtual();;
+    public void setDataModificacao(LocalDate dataModificacao) {
+        this.dataModificacao = dataModificacao;;
     }
 
     @Override

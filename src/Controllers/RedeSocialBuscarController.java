@@ -4,8 +4,11 @@ import Models.DAO.MensagemDAO;
 import Models.DAO.PostDAO;
 import Models.DAO.SeguirDAO;
 import Models.Pessoa;
+import Models.Post;
+import Models.Util;
 import Views.Menus;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class RedeSocialBuscarController {
@@ -23,13 +26,16 @@ public class RedeSocialBuscarController {
                     builder = new StringBuilder("");
 
                     if(ehSeguidor) {
-                        if(seguirDAO.deixarDeSeguir(usuarioBuscado)) {
+                        if(seguirDAO.deixarDeSeguir(Util.getPessoaLogada().getId(), usuarioBuscado.getId())) {
                             builder.append("Deixando de seguir...");
                         } else {
                             builder.append("Não foi possível deixar de seguir!");
                         }
                     } else {
-                        if(seguirDAO.seguirPessoa(usuarioBuscado)) {
+
+                        long idSeguindo = seguirDAO.seguirPessoa(usuarioBuscado);
+
+                        if(idSeguindo != 0) {
                             builder.append("Seguindo ").append(usuarioBuscado.getNome());
                         } else {
                             builder.append("Não foi possível seguir o usuário.");
@@ -38,7 +44,15 @@ public class RedeSocialBuscarController {
 
                     break;
                 case 2:
-                    //postDAO.mostrarPostsUsuario(usuarioBuscado);
+                    List<Post> posts = postDAO.buscarPostPorIdUsuario(usuarioBuscado.getId());
+
+                    if(posts.size() != 0) {
+                        for(Post p : posts) {
+                            System.out.println(p.toString());
+                        }
+                    } else {
+                        System.out.println("O usuário não tem nenhum post publicado!");
+                    }
 
                     break;
                 case 3:

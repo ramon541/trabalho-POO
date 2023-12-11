@@ -14,39 +14,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlimentoDAO {
-    Alimento[] alimentos = new Alimento[25];
 
     public AlimentoDAO() {
     }
 
-    public Alimento buscaPorNome(String nomeAlimento) {
-        if (!this.ehVazio()) {
-            for (Alimento alimento : this.alimentos) {
-                if (alimento != null && alimento.getNome().equals(nomeAlimento)) {
-                    return alimento;
-                }
+    private PreparedStatement createPreparedStatement(Connection con, long id) throws SQLException {
+        String sql = "select * from alimento where id = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setLong(1, id);
+        return ps;
+    }
+
+    public Alimento buscaPorID(long code) {
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement ps = createPreparedStatement(connection, code);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Alimento alimento = new Alimento();
+                alimento.setId(rs.getLong("id"));
+                alimento.setNome(rs.getString("nome"));
+                alimento.setCarboidratos(Double.parseDouble(rs.getString("carboidratos")));
+                alimento.setProteinas(Double.parseDouble(rs.getString("proteinas")));
+                alimento.setGorduras(Double.parseDouble(rs.getString("gorduras")));
+                alimento.setCalorias(Double.parseDouble(rs.getString("calorias")));
+                alimento.setPorcao(Double.parseDouble(rs.getString("porcao")));
+
+                java.sql.Date currentDate = rs.getDate("dataCriacao");
+                LocalDate dataCriacao = currentDate.toLocalDate();
+                alimento.setDataCriacao(dataCriacao);
+
+                java.sql.Date currentDateMod = rs.getDate("dataAtualizacao");
+                LocalDate dataMod = currentDateMod.toLocalDate();
+                alimento.setDataModificacao(dataMod);
+
+                return alimento;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
         return null;
-    }
-
-    public boolean adicionaAlimento(Alimento alimento) {
-        int posicaoLivre = this.proximaPosicaoLivre();
-        if(posicaoLivre == -1) {
-            return false;
-        }
-
-        this.alimentos[posicaoLivre] = alimento;
-
-        return true;
-    }
-
-    public boolean ehVazio() {
-        for(Alimento alimento : this.alimentos) {
-            if(alimento != null) return false;
-        }
-        return true;
     }
 
     public List<Alimento> buscaTodosAlimentos() throws SQLException {
@@ -84,10 +90,4 @@ public class AlimentoDAO {
         }
     }
 
-    private int proximaPosicaoLivre() {
-        for(int i = 0; i < this.alimentos.length; i++) {
-            if(alimentos[i] == null) return i;
-        }
-        return -1;
-    }
 }

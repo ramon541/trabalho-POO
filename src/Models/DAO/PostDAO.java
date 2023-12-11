@@ -4,16 +4,12 @@ import Models.ConnectionFactory;
 import Models.Pessoa;
 import Models.Post;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PostDAO {
-    Post[] posts = new Post[10];
 
     PessoaDAO pessoaDAO;
 
@@ -21,23 +17,26 @@ public class PostDAO {
         this.pessoaDAO = pessoaDAO;
     }
 
-    public boolean adicionaPost(Post post) {
-        int posicaoLivre = this.proximaPosicaoLivre();
-        if(posicaoLivre == -1) {
-            return false;
+    public long adicionaPost(Post p) {
+        String sql = "insert into post(pessoa, conteudoPost) values (?,?)";
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, String.valueOf(p.getPessoa().getId()));
+            stmt.setString(2, p.getConteudoPost());
+            stmt.execute();
+
+            //retorna o id do objeto inserido
+            ResultSet rs=stmt.getGeneratedKeys();
+            int retorno=0;
+            if(rs.next()){
+                retorno = rs.getInt(1);
+            }
+            System.out.println("O id inserido foi: " + retorno);
+            System.out.println("Gravado!");
+            return retorno;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        this.posts[posicaoLivre] = post;
-
-        return true;
-    }
-
-    private int proximaPosicaoLivre() {
-        for(int i = 0; i < this.posts.length; i++) {
-            if(posts[i] == null) return i;
-        }
-
-        return -1;
     }
 
     public List<Post> buscaTodos() throws SQLException {
@@ -72,41 +71,43 @@ public class PostDAO {
         }
     }
 
-    /*public void mostrarPostsUsuario(Pessoa usuario) {
-        StringBuilder builder = new StringBuilder();
+    private PreparedStatement createPreparedStatement(Connection con, long id) throws SQLException {
+        String sql = "select * from post where pessoa = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setLong(1, id);
+        return ps;
+    }
 
-        builder.append("=======================").append("\n");
-        builder.append("POSTS").append("\n");
-        builder.append("=======================").append("\n");
+    public List<Post> buscarPostPorIdUsuario(long code) {
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement ps = createPreparedStatement(connection, code);
+             ResultSet rs = ps.executeQuery()) {
+            List<Post> posts = new ArrayList<>();
+            while (rs.next()) {
+                Post post = new Post();
+                post.setId(rs.getLong("id"));
+                long idUsuario = Long.parseLong(rs.getString("pessoa"));
+                post.setPessoa(pessoaDAO.buscaPorID(idUsuario));
+                post.setConteudoPost(rs.getString("conteudoPost"));
 
-        if(ehVazio()) {
-            builder.append("Não existe nenhum post publicado.");
-        } else {
-            for(Post post : getPosts()) {
-                if(post != null && post.getPessoa().equals(usuario)) {
-                    builder.append("Conteúdo: ").append(post.getConteudoPost()).append("\n");
-                    builder.append("Publicado por: ").append(post.getPessoa().getNome()).append("\n");
-                    builder.append("=============================").append("\n");
-                }
+                java.sql.Date currentDate = rs.getDate("dataCriacao");
+                LocalDate dataCriacao = currentDate.toLocalDate();
+                post.setDataCriacao(dataCriacao);
+
+                java.sql.Date currentDateMod = rs.getDate("dataAtualizacao");
+                LocalDate dataMod = currentDateMod.toLocalDate();
+                post.setDataModificacao(dataMod);
+
+                posts.add(post);
             }
+            rs.close();
+            ps.close();
+
+            return posts;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        System.out.println(builder);
-    }*/
-
-    public boolean ehVazio() {
-        for(Post post : this.posts) {
-            if(post != null) return false;
-        }
-
-        return true;
     }
 
-    public Post[] getPosts() {
-        return posts;
-    }
-
-    public void setPosts(Post[] posts) {
-        this.posts = posts;
-    }
 }

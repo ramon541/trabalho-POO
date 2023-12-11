@@ -9,13 +9,15 @@ import Models.DAO.RefeicaoDAO;
 import Models.Dieta;
 import Models.Refeicao;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class GerarRefeicaoManualController {
     Scanner scan = new Scanner(System.in);
     AlimentoRefeicao[] alimentosRefeicoes;
     double totGord=0.0, totCarbs=0.0, totProt=0.0, totCals=0.0, limiteCarbo = 0.0, limiteProt = 0.0, limiteGord = 0.0, limiteCals = 0.0;
-    public GerarRefeicaoManualController(Dieta ultDieta, AlimentoDAO alimentoDAO, RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO){
+    public GerarRefeicaoManualController(Dieta ultDieta, AlimentoDAO alimentoDAO, RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO) throws SQLException {
         int opc = 0;
 
         this.limiteCarbo = ((ultDieta.getCalorias() / 4) * ultDieta.getTipoDieta().getCarboidrato()) / 4;
@@ -126,12 +128,17 @@ public class GerarRefeicaoManualController {
         return mostrarPercentuais;
     }
 
-    private void criaAlimentoRefeicao(Refeicao refeicao, AlimentoDAO alimentoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO){
-        alimentoDAO.mostrarTodos();
-        System.out.print("\nQual alimento você quer adicionar a/ao " + refeicao.getNomeDaRefeicao() + "? R: ");
-        Alimento alimento = alimentoDAO.buscaPorNome(scan.nextLine());
-        if (alimento != null){
+    private void criaAlimentoRefeicao(Refeicao refeicao, AlimentoDAO alimentoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO) throws SQLException {
+        List<Alimento> alimentos =  alimentoDAO.buscaTodosAlimentos();
+
+        for(Alimento alimento : alimentos) {
             System.out.println(alimento.toString());
+        }
+
+        System.out.print("\nQual alimento você quer adicionar a/ao " + refeicao.getNomeDaRefeicao() + "? Insira o ID do alimento. R: ");
+        Alimento alimento = alimentoDAO.buscaPorID(Integer.parseInt(scan.nextLine()));
+        if (alimento != null){
+            System.out.println(alimento);
             AlimentoRefeicao novoAlimentoRefeicao = new AlimentoRefeicao();
             System.out.print("Quantas porções deseja? (Ex.: 1 || 1.5 || 2 || 2.3) R: ");
             double porcao = Double.parseDouble(scan.nextLine());
