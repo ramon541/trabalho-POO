@@ -1,11 +1,9 @@
 package Controllers;
 
+import Models.*;
 import Models.DAO.MensagemDAO;
 import Models.DAO.PostDAO;
 import Models.DAO.SeguirDAO;
-import Models.Pessoa;
-import Models.Post;
-import Models.Util;
 import Views.Menus;
 
 import java.util.List;
@@ -17,7 +15,7 @@ public class RedeSocialBuscarController {
 
     Scanner scan = new Scanner(System.in);
 
-    public RedeSocialBuscarController(Menus menu, Pessoa usuarioBuscado, boolean ehSeguidor, SeguirDAO seguirDAO, MensagemDAO mensagemDAO, PostDAO postDAO) {
+    public RedeSocialBuscarController(Menus menu, Pessoa usuarioBuscado, boolean ehSeguidor, SeguirDAO seguirDAO, MensagemDAO mensagemDAO, PostDAO postDAO, Seguir seguir) {
         int opc = 0;
         while (opc != 5) {
             opc = menu.menuRedeSocialBuscar(usuarioBuscado, ehSeguidor);
@@ -26,21 +24,41 @@ public class RedeSocialBuscarController {
                     builder = new StringBuilder("");
 
                     if(ehSeguidor) {
-                        if(seguirDAO.deixarDeSeguir(Util.getPessoaLogada().getId(), usuarioBuscado.getId())) {
+                        if(seguirDAO.updateSeguir(seguir.getId(), 0)) {
                             builder.append("Deixando de seguir...");
+                            ehSeguidor = false;
                         } else {
                             builder.append("Não foi possível deixar de seguir!");
                         }
                     } else {
 
-                        long idSeguindo = seguirDAO.seguirPessoa(usuarioBuscado);
+                        long idSeguindo;
 
-                        if(idSeguindo != 0) {
-                            builder.append("Seguindo ").append(usuarioBuscado.getNome());
+                        if(seguir == null) {
+                            idSeguindo = seguirDAO.seguirPessoa(usuarioBuscado);
+
+                            if(idSeguindo != 0) {
+                                builder.append("Seguindo ").append(usuarioBuscado.getNome());
+                                ehSeguidor = true;
+                            } else {
+                                builder.append("Não foi possível seguir o usuário.");
+                            }
+
                         } else {
-                            builder.append("Não foi possível seguir o usuário.");
+                            boolean agoraSegue = seguirDAO.updateSeguir(seguir.getId(), 1);
+
+                            if(agoraSegue) {
+                                builder.append("Seguindo ").append(usuarioBuscado.getNome());
+                                ehSeguidor = true;
+                            } else {
+                                builder.append("Não foi possível seguir o usuário.");
+                            }
                         }
+
+
                     }
+
+                    System.out.println(builder);
 
                     break;
                 case 2:
@@ -59,9 +77,10 @@ public class RedeSocialBuscarController {
 
                     System.out.println("Digite a mensagem a ser enviada: ");
                     String msg = scan.nextLine();
-                    boolean msgEnviada = mensagemDAO.enviarMensagem(usuarioBuscado, msg);
 
-                    if(msgEnviada) {
+                    long msgEnviada = mensagemDAO.enviarMensagem(Util.getPessoaLogada(), usuarioBuscado, msg);
+
+                    if(msgEnviada != 0) {
                         System.out.println("Mensagem enviada!");
                     } else {
                         System.out.println("Não foi possível enviar a mensagem!");
@@ -69,7 +88,23 @@ public class RedeSocialBuscarController {
 
                     break;
                 case 4:
-                    mensagemDAO.verMensagens(usuarioBuscado);
+
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("=======================").append("\n");
+                    builder.append("CHAT").append("\n");
+                    builder.append("=======================").append("\n");
+                    System.out.println(builder);
+
+                    List<Mensagem> mensagens = mensagemDAO.buscaMensagens(Util.getPessoaLogada(), usuarioBuscado);
+
+                    if(mensagens.size() != 0) {
+                        for(Mensagem mensagem : mensagens) {
+                            System.out.println("\n" + mensagem.getRemetente().getNome() + " :");
+                            System.out.println(mensagem.getMensagem());
+                        }
+                    } else {
+                        System.out.println("Não há nenhuma mensagem.");
+                    }
 
                     break;
                 case 5:

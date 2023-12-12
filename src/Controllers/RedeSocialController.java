@@ -26,7 +26,16 @@ public class RedeSocialController {
                 switch (opc) {
                     case 1:
                         //ver meus posts
-                        postDAO.buscarPostPorIdUsuario(Util.getPessoaLogada().getId());
+                        List<Post> meusPosts = postDAO.buscarPostPorIdUsuario(Util.getPessoaLogada().getId());
+
+                        if(meusPosts.size() != 0) {
+                            for(Post p : meusPosts) {
+                                System.out.println(p.toString());
+                            }
+                        }else {
+                            System.out.println("Você não publicou nada ainda.");
+                        }
+
                         break;
                     case 2:
                         Post post = new Post();
@@ -72,17 +81,16 @@ public class RedeSocialController {
                             if(usuarioBuscado != null) {
                                 System.out.println("Usuário enctrontrado!");
 
-                                Seguir seguir = seguirDAO.buscaSeguir(usuarioBuscado.getId(), Util.getPessoaLogada().getId());
+                                Seguir seguir = seguirDAO.buscaSeguir(Util.getPessoaLogada().getId(), usuarioBuscado.getId());
+
+                                boolean ehSeguidor = false;
 
                                 if(seguir != null) {
-
-                                    boolean ehSeguidor = seguir.isEstaSeguindo();
-
-                                    new RedeSocialBuscarController(menu, usuarioBuscado, ehSeguidor, seguirDAO, mensagemDAO, postDAO);
-
-                                } else {
-                                    System.out.println("O usuário não te segue e nem você segue esse usuário!");
+                                    System.out.println("seguir" + seguir.toString());
+                                    ehSeguidor = seguir.isEstaSeguindo() == 1;
                                 }
+
+                                new RedeSocialBuscarController(menu, usuarioBuscado, ehSeguidor, seguirDAO, mensagemDAO, postDAO, seguir);
 
                             } else {
                                 System.out.println("Não foi possível buscar esse usuário!");

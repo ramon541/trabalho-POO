@@ -65,7 +65,7 @@ public class SeguirDAO {
                 Pessoa pessoaSeguindo = this.pessoaDAO.buscaPorID(idPessoaSeguindo);
                 seguir.setSeguindo(pessoaSeguindo);
 
-                seguir.setEstaSeguindo(Boolean.parseBoolean(rs.getString("estaSeguindo")));
+                seguir.setEstaSeguindo(Integer.parseInt(rs.getString("estaSeguindo")));
 
                 java.sql.Date currentDate = rs.getDate("dataCriacao");
                 LocalDate dataCriacao = currentDate.toLocalDate();
@@ -85,12 +85,12 @@ public class SeguirDAO {
     }
 
 
-    public boolean deixarDeSeguir(long idUsuario, long idSeguindo) {
-        String sql = "update seguir set estaSeguindo = 0 where pessoa = ? and seguindo = ?";
+    public boolean updateSeguir(long idSeguir, int seguir) {
+        String sql = "update seguir set estaSeguindo = ? where id = ?";
         try (Connection connection = new ConnectionFactory().getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setLong(1, idUsuario);
-            stmt.setLong(2, idSeguindo);
+            stmt.setLong(1, seguir);
+            stmt.setLong(2, idSeguir);
             stmt.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -121,7 +121,7 @@ public class SeguirDAO {
                 long seguindoId = Long.parseLong(rs.getString("seguindo"));
                 seguir.setSeguindo(this.pessoaDAO.buscaPorID(seguindoId));
 
-                seguir.setEstaSeguindo(Boolean.parseBoolean(rs.getString("estaSeguindo")));
+                seguir.setEstaSeguindo(Integer.parseInt(rs.getString("estaSeguindo")));
 
                 java.sql.Date currentDate = rs.getDate("dataCriacao");
                 LocalDate dataCriacao = currentDate.toLocalDate();
@@ -138,5 +138,47 @@ public class SeguirDAO {
         }
 
         return null;
+    }
+
+    private PreparedStatement setPreparedStatement(Connection con, long id) throws SQLException {
+        String sql = "select * from seguir where pessoa = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setLong(1, id);
+        return ps;
+    }
+
+    public List<Pessoa> buscarPessoasSeguindo(long code) {
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement ps = setPreparedStatement(connection, code);
+             ResultSet rs = ps.executeQuery()) {
+            List<Pessoa> seguindoList = new ArrayList<>();
+            while (rs.next()) {
+                Seguir seguir = new Seguir();
+                seguir.setId(rs.getLong("id"));
+                long idPessoa = Long.parseLong(rs.getString("pessoa"));
+                seguir.setUsuario(this.pessoaDAO.buscaPorID(idPessoa));
+
+                long idPessoaSeguindo = Long.parseLong(rs.getString("seguindo"));
+                Pessoa pessoaSeguindo = this.pessoaDAO.buscaPorID(idPessoaSeguindo);
+                seguir.setSeguindo(pessoaSeguindo);
+                seguindoList.add(pessoaSeguindo);
+
+                seguir.setEstaSeguindo(Integer.parseInt(rs.getString("estaSeguindo")));
+
+                java.sql.Date currentDate = rs.getDate("dataCriacao");
+                LocalDate dataCriacao = currentDate.toLocalDate();
+                seguir.setDataCriacao(dataCriacao);
+
+                java.sql.Date currentDateMod = rs.getDate("dataAtualizacao");
+                LocalDate dataMod = currentDateMod.toLocalDate();
+                seguir.setDataModificacao(dataMod);
+            }
+            rs.close();
+            ps.close();
+            return seguindoList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

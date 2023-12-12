@@ -6,7 +6,7 @@ public class Seguir {
     protected long id;
     private Pessoa usuario;
     private Pessoa seguindo;
-    private boolean estaSeguindo;
+    private int estaSeguindo;
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
@@ -29,11 +29,11 @@ public class Seguir {
         this.seguindo = seguindo;
     }
 
-    public boolean isEstaSeguindo() {
+    public int isEstaSeguindo() {
         return estaSeguindo;
     }
 
-    public void setEstaSeguindo(boolean estaSeguindo) {
+    public void setEstaSeguindo(int estaSeguindo) {
         this.estaSeguindo = estaSeguindo;
     }
 
@@ -67,6 +67,7 @@ public class Seguir {
                 "id=" + id +
                 ", usuario=" + usuario +
                 ", seguindo=" + seguindo +
+                ", estaSeguindo" + estaSeguindo +
                 ", dataCriacao=" + dataCriacao +
                 ", dataModificacao=" + dataModificacao +
                 '}';
