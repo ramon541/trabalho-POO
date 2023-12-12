@@ -8,9 +8,10 @@ import Models.Dieta;
 import Views.Menus;
 
 import java.awt.*;
+import java.sql.SQLException;
 
 public class GerarRefeicoesController {
-    public GerarRefeicoesController(Menus menu, Dieta ultDieta, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO, RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO) {
+    public GerarRefeicoesController(Menus menu, Dieta ultDieta, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO, RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO) throws SQLException {
         int opc = 0;
         while (opc != 3) {
             opc = menu.gerarRefeicoes();

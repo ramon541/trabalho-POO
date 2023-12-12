@@ -5,12 +5,13 @@ import Models.DAO.AlimentoDAO;
 import Models.DAO.PreferenciaDAO;
 import Views.Menus;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AlimentoPreferenciaController {
 
     Scanner scan = new Scanner(System.in);
-    public AlimentoPreferenciaController(Menus menu, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO){
+    public AlimentoPreferenciaController(Menus menu, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO) throws SQLException {
         int opc = 0;
         while (opc != 5){
             opc = menu.alimentoPreferencia();
@@ -21,12 +22,12 @@ public class AlimentoPreferenciaController {
                     break;
 
                 case 2:
-                    alimentoDAO.mostrarTodos();
+                    System.out.println(alimentoDAO.buscaTodosAlimentos());
                     break;
 
                 case 3:
                     System.out.print("Digite o nome do alimento que deseja adicionar aos preferidos: ");
-                    Alimento alimento = alimentoDAO.buscaPorNome(scan.nextLine());
+                    Alimento alimento = alimentoDAO.buscaAlimentoPorId(Long.parseLong(scan.nextLine()));
 
                     if(alimento != null){
                         boolean alimentoAdicionado = preferenciaDAO.adicionaPreferencia(alimento);

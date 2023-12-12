@@ -1,28 +1,24 @@
 package Models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Dieta {
     protected long id;
-    private static long serial;
     private Pessoa pessoa;
     private AvaliacaoFisica avaliacaoFisica;
     private TipoDieta tipoDieta;
     private String objetivo;
     private double calorias;
     private final int nroRefeicoes = 4;
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataModificacao;
+    private LocalDate dataCriacao;
+    private LocalDate dataModificacao;
 
-    public Dieta() {
-        serial++;
-        this.id = serial;
-        setDataCriacao(Util.getDataAtual());
-    }
 
     public long getId(){
         return this.id;
     }
+
+    public void setId(long id) { this.id = id; }
 
     public Pessoa getPessoa() {
         return pessoa;
@@ -68,19 +64,19 @@ public class Dieta {
         return nroRefeicoes;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) {
+    public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDateTime getDataModificacao() {
+    public LocalDate getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(LocalDateTime dataModificacao) {
+    public void setDataModificacao(LocalDate dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
 

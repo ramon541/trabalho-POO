@@ -31,15 +31,15 @@ public class MenuMinhaDietaController {
                     break;
 
                 case 3:
-                    if (dietaDAO.procuraUltimaDieta() != null) {
-                        new GerarRefeicoesController(menu, dietaDAO.procuraUltimaDieta(), alimentoDAO,
+                    if (dietaDAO.buscaUltimaDieta(Util.getPessoaLogada().getId()) != null) {
+                        new GerarRefeicoesController(menu, dietaDAO.buscaUltimaDieta(Util.getPessoaLogada().getId()), alimentoDAO,
                                 preferenciaDAO, refeicaoDAO, alimentoRefeicaoDAO);
                     }else System.out.println("ERRO!!! Primeiro você deve criar uma dieta");
                     break;
 
                 case 4:
-                    if (dietaDAO.procuraUltimaDieta() != null) {
-                        alimentoRefeicaoDAO.mostrarRefeicoesDietaUsuario(dietaDAO.procuraUltimaDieta());
+                    if (dietaDAO.buscaUltimaDieta(Util.getPessoaLogada().getId()) != null) {
+                        alimentoRefeicaoDAO.mostrarRefeicoesDietaUsuario(dietaDAO.buscaUltimaDieta(Util.getPessoaLogada().getId()));
                     } else {
                         System.out.printf("Não há nenhuma dieta cadastrada!");
                     }

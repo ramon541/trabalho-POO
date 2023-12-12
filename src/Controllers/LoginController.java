@@ -14,12 +14,12 @@ import java.util.List;
 public class LoginController {
     private final Menus menu = new Menus();
     private final SeguirDAO seguirDAO = new SeguirDAO();
+    private final PessoaDAO pessoaDAO = new PessoaDAO();
     private final AlimentoDAO alimentoDAO = new AlimentoDAO();
     private final TipoDietaDAO tipoDietaDAO = new TipoDietaDAO();
-    private final DietaDAO dietaDAO = new DietaDAO();
     private final PreferenciaDAO preferenciaDAO = new PreferenciaDAO();
-    private final PessoaDAO pessoaDAO = new PessoaDAO();
     private final AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO(this.pessoaDAO);
+    private final DietaDAO dietaDAO = new DietaDAO(this.pessoaDAO, this.avaliacaoFisicaDAO, this.tipoDietaDAO);
     private final PostDAO postDAO = new PostDAO(this.pessoaDAO);
     private final RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
     private final AlimentoRefeicaoDAO alimentoRefeicaoDAO = new AlimentoRefeicaoDAO();

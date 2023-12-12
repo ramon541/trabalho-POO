@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TipoDietaDAO {
-    public TipoDietaDAO() {
-    }
 
     public List<TipoDieta> buscaTiposDieta() throws SQLException {
         String sql = "select * from tipodieta";
