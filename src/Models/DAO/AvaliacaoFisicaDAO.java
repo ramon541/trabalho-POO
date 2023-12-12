@@ -49,7 +49,7 @@ public class AvaliacaoFisicaDAO {
         }
     }
 
-    private PreparedStatement createPreparedStatement(Connection con, long id) throws SQLException {
+    private PreparedStatement createPreparedStatementLast(Connection con, long id) throws SQLException {
         String sql = "select * from avaliacaofisica where id = ? order by id desc limit 1";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setLong(1, id);
@@ -58,7 +58,51 @@ public class AvaliacaoFisicaDAO {
 
     public AvaliacaoFisica buscaUltimaAvaliacao(long idUsuario) {
         try (Connection connection = new ConnectionFactory().getConnection();
-             PreparedStatement ps = createPreparedStatement(connection, idUsuario);
+             PreparedStatement ps = createPreparedStatementLast(connection, idUsuario);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica();
+                avaliacaoFisica.setId(rs.getLong("id"));
+                long pessoaId = Long.parseLong(rs.getString("pessoa"));
+                avaliacaoFisica.setPessoa(pessoaDAO.buscaPorID(pessoaId));
+                avaliacaoFisica.setFatorTaxaAtividade(Double.parseDouble(rs.getString("taxaAtividade")));
+                avaliacaoFisica.setPeso(Double.parseDouble(rs.getString("peso")));
+                avaliacaoFisica.setAltura(Double.parseDouble(rs.getString("altura")));
+                avaliacaoFisica.setIdade(Integer.parseInt(rs.getString("idade")));
+                avaliacaoFisica.setPescoco(Integer.parseInt(rs.getString("pescoco")));
+                avaliacaoFisica.setCintura(Integer.parseInt(rs.getString("cintura")));
+                avaliacaoFisica.setQuadril(Integer.parseInt(rs.getString("quadril")));
+                avaliacaoFisica.setImc(Double.parseDouble(rs.getString("imc")));
+                avaliacaoFisica.setTmb(Double.parseDouble(rs.getString("tmb")));
+                avaliacaoFisica.setBodyFat(Double.parseDouble(rs.getString("bodyFat")));
+                avaliacaoFisica.setMassaGorda(Double.parseDouble(rs.getString("massaGorda")));
+                avaliacaoFisica.setMassaMagra(Double.parseDouble(rs.getString("massaMagra")));
+
+                java.sql.Date currentDate = rs.getDate("dataCriacao");
+                LocalDate dataCriacao = currentDate.toLocalDate();
+                avaliacaoFisica.setDataCriacao(dataCriacao);
+
+                java.sql.Date currentDateMod = rs.getDate("dataModificacao");
+                LocalDate dataMod = currentDateMod.toLocalDate();
+                avaliacaoFisica.setDataModificacao(dataMod);
+
+                return avaliacaoFisica;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Não foi possível buscar a última avaliação física!" + e);
+        }
+        return null;
+    }
+
+    private PreparedStatement createPreparedStatement(Connection con, long id) throws SQLException {
+        String sql = "select * from avaliacaofisica where id = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setLong(1, id);
+        return ps;
+    }
+    public AvaliacaoFisica buscaAvaliacao(long idAvaliacao) {
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement ps = createPreparedStatement(connection, idAvaliacao);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica();

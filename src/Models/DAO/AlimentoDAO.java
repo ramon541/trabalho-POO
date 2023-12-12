@@ -1,9 +1,6 @@
 package Models.DAO;
 
-import Models.Alimento;
-import Models.AvaliacaoFisica;
-import Models.ConnectionFactory;
-import Models.Pessoa;
+import Models.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,10 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlimentoDAO {
-
-    public AlimentoDAO() {
-    }
-
     private PreparedStatement createPreparedStatement(Connection con, long id) throws SQLException {
         String sql = "select * from alimento where id = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -25,7 +18,7 @@ public class AlimentoDAO {
         return ps;
     }
 
-    public Alimento buscaPorID(long code) {
+    public Alimento buscaAlimentoPorId(long code) {
         try (Connection connection = new ConnectionFactory().getConnection();
              PreparedStatement ps = createPreparedStatement(connection, code);
              ResultSet rs = ps.executeQuery()) {
@@ -54,6 +47,7 @@ public class AlimentoDAO {
         }
         return null;
     }
+
 
     public List<Alimento> buscaTodosAlimentos() throws SQLException {
         String sql = "select * from alimento";
