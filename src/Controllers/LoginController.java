@@ -22,7 +22,7 @@ public class LoginController {
     private final DietaDAO dietaDAO = new DietaDAO(this.pessoaDAO, this.avaliacaoFisicaDAO, this.tipoDietaDAO);
     private final SeguirDAO seguirDAO = new SeguirDAO(this.pessoaDAO);
     private final PostDAO postDAO = new PostDAO(this.pessoaDAO);
-    private final RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
+    private final RefeicaoDAO refeicaoDAO = new RefeicaoDAO(this.dietaDAO);
     private final AlimentoRefeicaoDAO alimentoRefeicaoDAO = new AlimentoRefeicaoDAO();
 
     public LoginController() throws SQLException {

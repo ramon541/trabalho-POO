@@ -49,11 +49,11 @@ public class AlimentoDAO {
     }
 
 
-    public List<Alimento> buscaTodosAlimentos() throws SQLException {
+    public List<Alimento> buscaTodosAlimentos() {
         String sql = "select * from alimento";
         try (Connection connection = new ConnectionFactory().getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            List<Alimento> alimentos = new ArrayList<Alimento>();
+            List<Alimento> alimentos = new ArrayList<>();
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 // criando o objeto

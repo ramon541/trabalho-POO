@@ -214,7 +214,13 @@ public class GerarRefeicaoManualController {
             refeicao.setProteina(prot);
             refeicao.setGordura(gord);
             refeicao.setCalorias(cals);
-            refeicaoDAO.adicionaRefeicao(refeicao);
+            refeicao.setId(refeicaoDAO.adicionaRefeicao(refeicao));
+            for (AlimentoRefeicao alimentoDaRef : alimentosRefeicoes){
+                if (alimentoDaRef != null){
+                    alimentoDaRef.setRefeicao(refeicao);
+                    alimentoRefeicaoDAO.adicionaAlimentoRefeicaoDB(alimentoDaRef);
+                }
+            }
         }
     }
 }
