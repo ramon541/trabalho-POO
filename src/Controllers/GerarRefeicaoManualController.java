@@ -9,13 +9,16 @@ import Models.DAO.RefeicaoDAO;
 import Models.Dieta;
 import Models.Refeicao;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class GerarRefeicaoManualController {
     Scanner scan = new Scanner(System.in);
     AlimentoRefeicao[] alimentosRefeicoes;
     double totGord=0.0, totCarbs=0.0, totProt=0.0, totCals=0.0, limiteCarbo = 0.0, limiteProt = 0.0, limiteGord = 0.0, limiteCals = 0.0;
-    public GerarRefeicaoManualController(Dieta ultDieta, AlimentoDAO alimentoDAO, RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO){
+    public GerarRefeicaoManualController(Dieta ultDieta, AlimentoDAO alimentoDAO, RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO) throws SQLException{
         int opc = 0;
 
         this.limiteCarbo = ((ultDieta.getCalorias() / 4) * ultDieta.getTipoDieta().getCarboidrato()) / 4;
@@ -23,26 +26,28 @@ public class GerarRefeicaoManualController {
         this.limiteGord = ((ultDieta.getCalorias() / 4) * ultDieta.getTipoDieta().getGordura()) / 9;
         this.limiteCals = ultDieta.getCalorias() / 4;
 
+        List<Refeicao> refeicoes = new ArrayList<>();
+
         //Cria as 4 refeições padrão
         Refeicao r1 = new Refeicao();
         r1.setNomeDaRefeicao("Café da Manhã");
         r1.setDieta(ultDieta);
-        refeicaoDAO.adicionaRefeicao(r1);
+//        refeicaoDAO.adicionaRefeicao(r1);
 
         Refeicao r2 = new Refeicao();
         r2.setNomeDaRefeicao("Almoço");
         r2.setDieta(ultDieta);
-        refeicaoDAO.adicionaRefeicao(r2);
+//        refeicaoDAO.adicionaRefeicao(r2);
 
         Refeicao r3 = new Refeicao();
         r3.setNomeDaRefeicao("Café da Tarde");
         r3.setDieta(ultDieta);
-        refeicaoDAO.adicionaRefeicao(r3);
+//        refeicaoDAO.adicionaRefeicao(r3);
 
         Refeicao r4 = new Refeicao();
         r4.setNomeDaRefeicao("Jantar");
         r4.setDieta(ultDieta);
-        refeicaoDAO.adicionaRefeicao(r4);
+//        refeicaoDAO.adicionaRefeicao(r4);
 
         while(opc!=5){
             opc = this.gerarManualmente(r1, r2, r3, r4, alimentoRefeicaoDAO, ultDieta);
@@ -65,6 +70,14 @@ public class GerarRefeicaoManualController {
 
                 case 4:
                     criaAlimentoRefeicao(r4, alimentoDAO, alimentoRefeicaoDAO);
+                    break;
+
+                case 5:
+                    refeicoes.add(r1);
+                    refeicoes.add(r2);
+                    refeicoes.add(r3);
+                    refeicoes.add(r4);
+                    adicionaBanco(refeicoes, alimentoDAO, refeicaoDAO, alimentoRefeicaoDAO);
                     break;
 
                 default:
@@ -126,10 +139,13 @@ public class GerarRefeicaoManualController {
         return mostrarPercentuais;
     }
 
-    private void criaAlimentoRefeicao(Refeicao refeicao, AlimentoDAO alimentoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO){
-        alimentoDAO.mostrarTodos();
+    private void criaAlimentoRefeicao(Refeicao refeicao, AlimentoDAO alimentoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO) throws SQLException {
+        List<Alimento> alimentos = alimentoDAO.buscaTodosAlimentos();
+        for (Alimento alimento : alimentos){
+            System.out.println(alimento.toString());
+        }
         System.out.print("\nQual alimento você quer adicionar a/ao " + refeicao.getNomeDaRefeicao() + "? R: ");
-        Alimento alimento = alimentoDAO.buscaPorNome(scan.nextLine());
+        Alimento alimento = alimentoDAO.buscaAlimentoPorId(Long.parseLong(scan.nextLine()));
         if (alimento != null){
             System.out.println(alimento.toString());
             AlimentoRefeicao novoAlimentoRefeicao = new AlimentoRefeicao();
@@ -180,5 +196,25 @@ public class GerarRefeicaoManualController {
                 "Cals: " + String.format("%.2f",cals) + " cal" +
                 "\n---------------------------------";
         return builder;
+    }
+
+    private void adicionaBanco(List<Refeicao> refeicoes, AlimentoDAO alimentoDAO, RefeicaoDAO refeicaoDAO, AlimentoRefeicaoDAO alimentoRefeicaoDAO) throws SQLException{
+        for (Refeicao refeicao : refeicoes){
+            double gord=0.0,carbs=0.0,prot=0.0,cals=0.0;
+            this.alimentosRefeicoes = alimentoRefeicaoDAO.procuraAlimentoDaRefeicao(refeicao);
+            for (AlimentoRefeicao alimentoDaRef : alimentosRefeicoes){
+                if (alimentoDaRef != null){
+                    gord += alimentoDaRef.getGordura();
+                    carbs += alimentoDaRef.getCarboidrato();
+                    prot += alimentoDaRef.getProteina();
+                    cals += alimentoDaRef.getCalorias();
+                }
+            }
+            refeicao.setCarboidrato(carbs);
+            refeicao.setProteina(prot);
+            refeicao.setGordura(gord);
+            refeicao.setCalorias(cals);
+            refeicaoDAO.adicionaRefeicao(refeicao);
+        }
     }
 }

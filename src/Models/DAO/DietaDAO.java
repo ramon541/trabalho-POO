@@ -3,19 +3,18 @@ package Models.DAO;
 import Models.*;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class DietaDAO {
-    Dieta[] dietas = new Dieta[10];
 
-    public boolean adicionaDieta(Dieta dieta) {
-        int posicaoLivre = this.proximaPosicaoLivre();
-        if(posicaoLivre == -1) {
-            return false;
-        }
+    final PessoaDAO pessoaDAO;
+    final AvaliacaoFisicaDAO avaliacaoFisicaDAO;
+    final TipoDietaDAO tipoDietaDAO;
 
-        this.dietas[posicaoLivre] = dieta;
-
-        return true;
+    public DietaDAO(PessoaDAO pessoaDAO, AvaliacaoFisicaDAO avaliacaoFisicaDAO, TipoDietaDAO tipoDietaDAO) {
+        this.pessoaDAO = pessoaDAO;
+        this.avaliacaoFisicaDAO = avaliacaoFisicaDAO;
+        this.tipoDietaDAO = tipoDietaDAO;
     }
 
     public long insereDieta(Dieta d) {
@@ -43,30 +42,40 @@ public class DietaDAO {
         }
     }
 
-    public boolean ehVazio() {
-        for(Dieta dieta : this.dietas) {
-            if(dieta != null) return false;
-        }
-        return true;
+    private PreparedStatement createPreparedStatement(Connection con, long id) throws SQLException {
+        String sql = "select * from dieta where id = ? order by id desc limit 1";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setLong(1, id);
+        return ps;
     }
 
-    private int proximaPosicaoLivre() {
-        for(int i = 0; i < this.dietas.length; i++) {
-            if(dietas[i] == null) return i;
-        }
-        return -1;
-    }
+    public Dieta buscaUltimaDieta(long idUsuario) {
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement ps = createPreparedStatement(connection, idUsuario);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Dieta dieta = new Dieta();
+                dieta.setId(rs.getLong("id"));
+                long pessoaId = Long.parseLong(rs.getString("pessoa"));
+                dieta.setPessoa(pessoaDAO.buscaPorID(pessoaId));
+                dieta.setAvaliacaoFisica(avaliacaoFisicaDAO.buscaAvaliacao(Long.parseLong(rs.getString("avaliacaoFisica"))));
+                dieta.setTipoDieta(tipoDietaDAO.buscaTipoDietaPorId(Long.parseLong(rs.getString("tipoDieta"))));
+                dieta.setObjetivo(rs.getString("objetivo"));
+                dieta.setCalorias(Double.parseDouble(rs.getString("calorias")));
 
-    public Dieta procuraUltimaDieta(){
-        Dieta ultDieta = null;
-        if (!ehVazio()){
-            for (int i = dietas.length-1; i >= 0; i--){
-                if (dietas[i]!= null && dietas[i].getPessoa().getId() == Util.getPessoaLogada().getId()){
-                    ultDieta = dietas[i];
-                    break;
-                }
+                java.sql.Date currentDate = rs.getDate("dataCriacao");
+                LocalDate dataCriacao = currentDate.toLocalDate();
+                dieta.setDataCriacao(dataCriacao);
+
+                java.sql.Date currentDateMod = rs.getDate("dataAtualizacao");
+                LocalDate dataMod = currentDateMod.toLocalDate();
+                dieta.setDataModificacao(dataMod);
+
+                return dieta;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException("Não foi possível buscar a última dieta!" + e);
         }
-        return ultDieta;
+        return null;
     }
 }

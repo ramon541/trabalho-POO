@@ -1,61 +1,43 @@
 package Models.DAO;
 
-import Models.Alimento;
-import Models.Refeicao;
+import Models.*;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import java.sql.Connection;
+
 
 public class RefeicaoDAO {
-    Refeicao[] refeicoes = new Refeicao[40];
+    public long adicionaRefeicao(Refeicao refeicao) {
+        String sql = "insert into refeicao(nomeRefeicao, dieta, carboidratos, proteinas, gorduras, calorias) values (?,?,?,?,?,?)";
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, refeicao.getNomeDaRefeicao());
+            stmt.setString(2, String.valueOf(refeicao.getDieta().getId()));
+            stmt.setString(3, String.valueOf(refeicao.getCarboidrato()));
+            stmt.setString(4, String.valueOf(refeicao.getProteina()));
+            stmt.setString(5, String.valueOf(refeicao.getGordura()));
+            stmt.setString(6, String.valueOf(refeicao.getCalorias()));
+            stmt.execute();
 
-    public Refeicao buscaPorNome(String nomeRefeicao) {
-        if (!this.ehVazio()) {
-            for (Refeicao refeicao : this.refeicoes) {
-                if (refeicao != null && refeicao.getNomeDaRefeicao().equals(nomeRefeicao)) {
-                    return refeicao;
-                }
+            //retorna o id do objeto inserido
+            ResultSet rs=stmt.getGeneratedKeys();
+            int retorno=0;
+            if(rs.next()){
+                retorno = rs.getInt(1);
             }
+            System.out.println("O id inserido foi: " + retorno);
+            System.out.println("Gravado!");
+            return retorno;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        return null;
-    }
-
-    public boolean adicionaRefeicao(Refeicao refeicao) {
-        int posicaoLivre = this.proximaPosicaoLivre();
-        if(posicaoLivre == -1) {
-            return false;
-        }
-
-        this.refeicoes[posicaoLivre] = refeicao;
-
-        return true;
-    }
-
-    public boolean ehVazio() {
-        for(Refeicao refeicao : this.refeicoes) {
-            if(refeicao != null) return false;
-        }
-        return true;
-    }
-
-    public void mostrarTodos() {
-        if(ehVazio()) {
-            System.out.println("Não existe refeições cadastradas");
-        } else {
-            String builder = "";
-            for(Refeicao refeicao : this.refeicoes) {
-                if(refeicao != null) {
-                    builder += "\n--------------------------------------\n" +
-                            refeicao.toString() +
-                            "\n--------------------------------------";
-                }
-            }
-            System.out.println(builder);
-        }
-    }
-
-    private int proximaPosicaoLivre() {
-        for(int i = 0; i < this.refeicoes.length; i++) {
-            if(refeicoes[i] == null) return i;
-        }
-        return -1;
     }
 }

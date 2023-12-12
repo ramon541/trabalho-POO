@@ -91,6 +91,7 @@ public class Alimento {
     public String toString() {
         String builder = "";
         builder +=
+                "\nID: " + this.getId() +
                 "\nNome: " + this.getNome() +
                 "\nCarboidratos: " + String.format("%.2f",this.getCarboidratos()) + " g" +
                 "\nProteínas: " + String.format("%.2f",this.getProteinas()) + " g" +
