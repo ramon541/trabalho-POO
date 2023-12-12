@@ -13,13 +13,14 @@ import java.util.List;
 
 public class LoginController {
     private final Menus menu = new Menus();
-    private final SeguirDAO seguirDAO = new SeguirDAO();
-    private final PessoaDAO pessoaDAO = new PessoaDAO();
+
     private final AlimentoDAO alimentoDAO = new AlimentoDAO();
     private final TipoDietaDAO tipoDietaDAO = new TipoDietaDAO();
     private final PreferenciaDAO preferenciaDAO = new PreferenciaDAO();
+    private final PessoaDAO pessoaDAO = new PessoaDAO();
     private final AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO(this.pessoaDAO);
     private final DietaDAO dietaDAO = new DietaDAO(this.pessoaDAO, this.avaliacaoFisicaDAO, this.tipoDietaDAO);
+    private final SeguirDAO seguirDAO = new SeguirDAO(this.pessoaDAO);
     private final PostDAO postDAO = new PostDAO(this.pessoaDAO);
     private final RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
     private final AlimentoRefeicaoDAO alimentoRefeicaoDAO = new AlimentoRefeicaoDAO();
@@ -41,7 +42,7 @@ public class LoginController {
                         //mostrar timeline
                         this.verTimeline();
 
-                        MensagemDAO mensagemDAO = new MensagemDAO();
+                        MensagemDAO mensagemDAO = new MensagemDAO(this.pessoaDAO);
                         new MenuPrincipalController(this.getMenu(), this.getPostDAO(), this.getSeguirDAO(),
                                 pessoaDAO, mensagemDAO, this.getAvaliacaoFisicaDAO(), this.getAlimentoDAO(),
                                 this.getTipoDietaDAO(), this.getDietaDAO(), this.getPreferenciaDAO(), this.getRefeicaoDAO(), this.getAlimentoRefeicaoDAO());
@@ -73,10 +74,19 @@ public class LoginController {
         builder.append("=======================").append("\n");
         System.out.println(builder);
 
-        List<Post> posts = postDAO.buscaTodos();
+        List<Post> postList = postDAO.buscaTodos();
 
-        for (Post post: posts) { //TODO: fazer lógica para mostrar apenas os posts do usuário logado e dos seus seguidores
-            System.out.println(post.toString());
+        List<Pessoa> seguindoList = seguirDAO.buscarPessoasSeguindo(Util.getPessoaLogada().getId());
+
+        if(postList.size() != 0 && seguindoList.size() != 0) {
+            for (Post post: postList) {
+                for(Pessoa p : seguindoList) {
+                    if(post.getPessoa().equals(Util.getPessoaLogada()) || post.getPessoa().equals(p))
+                        System.out.println(post);
+                }
+            }
+        } else {
+            System.out.println("Feed vazio! Não há nenhum post publicado ainda.");
         }
     }
 

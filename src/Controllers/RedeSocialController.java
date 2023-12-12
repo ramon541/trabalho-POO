@@ -6,6 +6,7 @@ import Models.DAO.PostDAO;
 import Models.DAO.SeguirDAO;
 import Models.Pessoa;
 import Models.Post;
+import Models.Seguir;
 import Models.Util;
 import Views.Menus;
 
@@ -25,7 +26,16 @@ public class RedeSocialController {
                 switch (opc) {
                     case 1:
                         //ver meus posts
-                        //postDAO.mostrarPostsUsuario(Util.getPessoaLogada());
+                        List<Post> meusPosts = postDAO.buscarPostPorIdUsuario(Util.getPessoaLogada().getId());
+
+                        if(meusPosts.size() != 0) {
+                            for(Post p : meusPosts) {
+                                System.out.println(p.toString());
+                            }
+                        }else {
+                            System.out.println("Você não publicou nada ainda.");
+                        }
+
                         break;
                     case 2:
                         Post post = new Post();
@@ -34,8 +44,14 @@ public class RedeSocialController {
                         System.out.println(builder);
 
                         post.setConteudoPost(scan.nextLine());
-                        //post.setPessoa(Util.getPessoaLogada());
-                        postDAO.adicionaPost(post);
+                        post.setPessoa(Util.getPessoaLogada());
+                        long idPost = postDAO.adicionaPost(post);
+
+                        if(idPost != 0) {
+                            System.out.println("Post criado com sucesso!");
+                        }else {
+                            System.out.println("Não foi possível criar o post!");
+                        }
 
                         break;
 
@@ -62,11 +78,23 @@ public class RedeSocialController {
                         try {
                             Pessoa usuarioBuscado = pessoaDAO.buscaPorID(Integer.parseInt(scan.nextLine()));
 
-                            System.out.println("Usuário enctrontrado!");
+                            if(usuarioBuscado != null) {
+                                System.out.println("Usuário enctrontrado!");
 
-                            boolean ehSeguidor = seguirDAO.ehSeguidor(usuarioBuscado);
+                                Seguir seguir = seguirDAO.buscaSeguir(Util.getPessoaLogada().getId(), usuarioBuscado.getId());
 
-                            new RedeSocialBuscarController(menu, usuarioBuscado, ehSeguidor, seguirDAO, mensagemDAO, postDAO);
+                                boolean ehSeguidor = false;
+
+                                if(seguir != null) {
+                                    System.out.println("seguir" + seguir.toString());
+                                    ehSeguidor = seguir.isEstaSeguindo() == 1;
+                                }
+
+                                new RedeSocialBuscarController(menu, usuarioBuscado, ehSeguidor, seguirDAO, mensagemDAO, postDAO, seguir);
+
+                            } else {
+                                System.out.println("Não foi possível buscar esse usuário!");
+                            }
 
                         } catch (ArithmeticException e) {
                             throw new RuntimeException("Erro ao buscar o usuário, digite um id válido.");
@@ -74,7 +102,15 @@ public class RedeSocialController {
 
                         break;
                     case 4:
-                        seguirDAO.mostrarSeguidores();
+                         List<Pessoa> seguidores = seguirDAO.buscarSeguidores(Util.getPessoaLogada().getId());
+
+                         if(seguidores.size() != 0) {
+                             for(Pessoa p : seguidores) {
+                                 System.out.println(p.toString());
+                             }
+                         }else {
+                             System.out.println("Você não tem seguidores!");
+                         }
 
                         break;
 

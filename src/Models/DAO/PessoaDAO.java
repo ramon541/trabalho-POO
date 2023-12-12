@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import java.sql.Connection;
@@ -79,7 +78,7 @@ public class PessoaDAO {
         }
     }
 
-    public List<Pessoa> buscaTodos() throws SQLException {
+    public List<Pessoa> buscaTodos() {
         String sql = "select * from pessoa";
         try (Connection connection = new ConnectionFactory().getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {

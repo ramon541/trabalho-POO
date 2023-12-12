@@ -1,21 +1,16 @@
 package Models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Mensagem {
     protected long id;
-    private static long serial;
-    private final Pessoa remetente;
+    private Pessoa remetente;
     private Pessoa destinatario;
     private String mensagem;
-    private Date dataCriacao;
-    private Date dataModificacao;
+    private LocalDate dataCriacao;
+    private LocalDate dataModificacao;
 
     public Mensagem() {
-        serial++;
-        this.id = serial;
-
-        this.remetente = Util.getPessoaLogada();
     }
 
     public long getId() {
@@ -24,6 +19,10 @@ public class Mensagem {
 
     public Pessoa getRemetente() {
         return this.remetente;
+    }
+
+    public void setRemetente(Pessoa remetente) {
+        this.remetente = remetente;
     }
 
     public Pessoa getDestinatario() {
@@ -42,19 +41,19 @@ public class Mensagem {
         this.mensagem = mensagem;
     }
 
-    public Date getDataCriacao() {
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public Date getDataModificacao() {
+    public LocalDate getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(Date dataModificacao) {
+    public void setDataModificacao(LocalDate dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
 }

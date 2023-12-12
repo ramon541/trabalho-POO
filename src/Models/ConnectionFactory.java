@@ -8,8 +8,8 @@ import java.util.Properties;
 public class ConnectionFactory {
 
     final String user = "root";
-    final String password = "Ra084011@123";
-//    final String password = "Alv180198";
+    //final String password = "Ra084011@123";
+    final String password = "Alv180198";
     final String dbName = "trab_poo";
 
 

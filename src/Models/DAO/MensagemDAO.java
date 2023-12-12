@@ -1,72 +1,91 @@
 package Models.DAO;
 
-import Models.Mensagem;
-import Models.Pessoa;
-import Models.Post;
-import Models.Util;
+import Models.*;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MensagemDAO {
 
-    Mensagem[] mensagens = new Mensagem[10];
+    public final PessoaDAO pessoaDAO;
 
-    StringBuilder builder;
-
-    public boolean enviarMensagem(Pessoa destinatario, String mensagem) {
-
-        int posicaoLivre = proximaPosicaoLivre();
-
-        if(posicaoLivre == -1) {
-            return false;
-        } else {
-            Mensagem msg = new Mensagem();
-            msg.setMensagem(mensagem);
-            msg.setDestinatario(destinatario);
-            this.mensagens[posicaoLivre] = msg;
-            return true;
-        }
+    public MensagemDAO(PessoaDAO pessoaDAO) {
+        this.pessoaDAO = pessoaDAO;
     }
 
-    public void verMensagens(Pessoa usuarioBuscado) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("=======================").append("\n");
-        builder.append("CHAT").append("\n");
-        builder.append("=======================").append("\n");
+    public long enviarMensagem(Pessoa remetente, Pessoa destinatario, String mensagem) {
+        String sql = "insert into mensagem(remetente, destinatario, mensagem) values (?,?,?)";
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, String.valueOf(remetente.getId()));
+            stmt.setString(2, String.valueOf(destinatario.getId()));
+            stmt.setString(3, mensagem);
+            stmt.execute();
 
-        if(this.ehVazio()) {
-            builder.append("Nenhuma mensagem foi enviada.");
-        } else {
-            for (Mensagem msg : this.mensagens) {
-                if (msg != null) {
-                    Pessoa remetente = msg.getRemetente();
-                    Pessoa destinatario = msg.getDestinatario();
-
-                    if ((remetente.equals(Util.getPessoaLogada()) && destinatario.equals(usuarioBuscado)) ||
-                            (remetente.equals(usuarioBuscado) && destinatario.equals(Util.getPessoaLogada()))) {
-
-                        builder.append("Usuário: ").append(remetente.getNome()).append("\n");
-                        builder.append("Mensagem: ").append(msg.getMensagem()).append("\n");
-                        builder.append("=============================").append("\n");
-                    }
-                }
+            //retorna o id do objeto inserido
+            ResultSet rs=stmt.getGeneratedKeys();
+            int retorno=0;
+            if(rs.next()){
+                retorno = rs.getInt(1);
             }
+            System.out.println("O id inserido foi: " + retorno);
+            System.out.println("Gravado!");
+            return retorno;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        System.out.println(builder);
     }
 
-    public boolean ehVazio() {
-        for(Mensagem msg : this.mensagens) {
-            if(msg != null) return false;
-        }
+    private PreparedStatement criaConsulta(Connection con, Pessoa remetente, Pessoa destinatario) throws SQLException {
+        String sql = "select * from mensagem where (remetente = ? and destinatario = ?) or (remetente = ? and destinatario = ?) order by id desc";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, String.valueOf(remetente.getId()));
+        ps.setString(2, String.valueOf(destinatario.getId()));
+        ps.setString(3, String.valueOf(destinatario.getId()));
+        ps.setString(4, String.valueOf(remetente.getId()));
 
-        return true;
+        return ps;
     }
 
-    private int proximaPosicaoLivre() {
-        for(int i = 0; i < this.mensagens.length; i++) {
-            if(this.mensagens[i] == null) return i;
-        }
+    public List<Mensagem> buscaMensagens(Pessoa remetente, Pessoa destinatario) {
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement ps = criaConsulta(connection, remetente, destinatario);
+             ResultSet rs = ps.executeQuery()) {
+            List<Mensagem> mensagens = new ArrayList<Mensagem>();
+            while (rs.next()) {
+                Mensagem msg = new Mensagem();
+                long idRemetente = rs.getLong("remetente");
+                long idDestinatario = rs.getLong("remetente");
 
-        return -1;
+                if(idRemetente == remetente.getId()) {
+                    msg.setRemetente(pessoaDAO.buscaPorID(idRemetente));
+                    msg.setDestinatario(pessoaDAO.buscaPorID(idDestinatario));
+                } else {
+                    msg.setRemetente(pessoaDAO.buscaPorID(idDestinatario));
+                    msg.setDestinatario(pessoaDAO.buscaPorID(idRemetente));
+                }
+
+                msg.setMensagem(rs.getString("mensagem"));
+
+                java.sql.Date currentDate = rs.getDate("dataCriacao");
+                LocalDate dataCriacao = currentDate.toLocalDate();
+                msg.setDataCriacao(dataCriacao);
+
+                java.sql.Date currentDateAtualizacao = rs.getDate("dataAtualizacao");
+                LocalDate dataAtualizacao = currentDateAtualizacao.toLocalDate();
+                msg.setDataModificacao(dataAtualizacao);
+
+                mensagens.add(msg);
+            }
+
+            rs.close();
+            ps.close();
+            return mensagens;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
