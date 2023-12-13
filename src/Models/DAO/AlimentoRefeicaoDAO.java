@@ -3,9 +3,20 @@ package Models.DAO;
 import Models.*;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class AlimentoRefeicaoDAO {
+
+    final AlimentoDAO alimentoDAO;
+    final RefeicaoDAO refeicaoDAO;
+    public AlimentoRefeicaoDAO(AlimentoDAO alimentoDAO, RefeicaoDAO refeicaoDAO){
+        this.alimentoDAO = alimentoDAO;
+        this.refeicaoDAO = refeicaoDAO;
+    }
 
     AlimentoRefeicao[] alimentoRefeicaoList = new AlimentoRefeicao[100];
 
@@ -109,18 +120,53 @@ public class AlimentoRefeicaoDAO {
         return respAlimentoRef;
     }
 
+    public List<AlimentoRefeicao> buscaAlimentoRefeicaoPorIdRefeicao(long idRefeicao) {
+        String sql = "select * from alimentorefeicao where refeicao = ?";
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, idRefeicao);
+            List<AlimentoRefeicao> alimentoRefeicoes = new ArrayList<>();
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                AlimentoRefeicao alimentoRefeicao = new AlimentoRefeicao();
+                alimentoRefeicao.setId(rs.getLong("id"));
+                alimentoRefeicao.setAlimento(alimentoDAO.buscaAlimentoPorId(rs.getLong("alimento")));
+                alimentoRefeicao.setRefeicao(refeicaoDAO.buscaRefeicaoPorId(rs.getLong("refeicao")));
+                alimentoRefeicao.setPorcao(Double.parseDouble(rs.getString("porcao")));
+                alimentoRefeicao.setProteina(Double.parseDouble(rs.getString("proteina")));
+                alimentoRefeicao.setGordura(Double.parseDouble(rs.getString("gordura")));
+                alimentoRefeicao.setCarboidrato(Double.parseDouble(rs.getString("carboidrato")));
+                alimentoRefeicao.setCalorias(Double.parseDouble(rs.getString("calorias")));
+
+                alimentoRefeicoes.add(alimentoRefeicao);
+            }
+            rs.close();
+            stmt.close();
+            return alimentoRefeicoes;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void mostrarRefeicoesDietaUsuario(Dieta ultDieta) {
 
         StringBuilder builder = new StringBuilder();
-
-        if(ehVazio()) {
+        List<Refeicao> refeicoes = refeicaoDAO.buscaUltimasRefeicoesPorDieta(ultDieta.getId());
+        if(refeicoes == null) {
             builder.append("Não há nenhuma refeição cadastrada!");
         } else {
-            for(AlimentoRefeicao refeicao : this.alimentoRefeicaoList) {
-                if(refeicao != null && refeicao.getRefeicao().getDieta().equals(ultDieta)) {
-                    builder.append(refeicao.getRefeicao().toString()).append("\n");
-                    builder.append(refeicao.getAlimento().toString()).append("\n");
+            for (Refeicao refeicao : refeicoes){
+                builder.append(refeicao.getNomeDaRefeicao()).append("\n");
+                List<AlimentoRefeicao> alimentoRefeicoes = buscaAlimentoRefeicaoPorIdRefeicao(refeicao.getId());
+                for (AlimentoRefeicao alimentoRefeicao : alimentoRefeicoes){
+                    builder.append(alimentoRefeicao.getAlimento().getNome() + ":").append("\n");
+                    builder.append("Porção: " + alimentoRefeicao.getPorcao() + "g" + " | ");
+                    builder.append("Proteina: " + alimentoRefeicao.getProteina() + "g" + " | ");
+                    builder.append("Gordura: " + alimentoRefeicao.getGordura() + "g" + " | ");
+                    builder.append("Carboidrato: " + alimentoRefeicao.getCarboidrato() + "g" + " | ");
+                    builder.append("Calorias: " + alimentoRefeicao.getCalorias() + "g" + " | ").append("\n\n");
                 }
+                builder.append("\n-----------------\n\n");
             }
         }
 

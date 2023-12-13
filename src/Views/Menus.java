@@ -178,9 +178,8 @@ public class Menus {
         builder.append("==============================\n");
         builder.append("\n1 - Ver alimentos preferidos");
         builder.append("\n2 - Listar lista de alimentos");
-        builder.append("\n3 - Adicionar alimento;");
-        builder.append("\n4 - Remover alimento;");
-        builder.append("\n5 - Voltar;");
+        builder.append("\n3 - Adicionar preferência;");
+        builder.append("\n4 - Voltar;");
         System.out.println(builder);
 
         return Integer.parseInt(scan.nextLine());

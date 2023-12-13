@@ -16,14 +16,14 @@ public class LoginController {
 
     private final AlimentoDAO alimentoDAO = new AlimentoDAO();
     private final TipoDietaDAO tipoDietaDAO = new TipoDietaDAO();
-    private final PreferenciaDAO preferenciaDAO = new PreferenciaDAO();
     private final PessoaDAO pessoaDAO = new PessoaDAO();
+    private final PreferenciaDAO preferenciaDAO = new PreferenciaDAO(this.pessoaDAO, this.alimentoDAO);
     private final AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO(this.pessoaDAO);
     private final DietaDAO dietaDAO = new DietaDAO(this.pessoaDAO, this.avaliacaoFisicaDAO, this.tipoDietaDAO);
     private final SeguirDAO seguirDAO = new SeguirDAO(this.pessoaDAO);
     private final PostDAO postDAO = new PostDAO(this.pessoaDAO);
     private final RefeicaoDAO refeicaoDAO = new RefeicaoDAO(this.dietaDAO);
-    private final AlimentoRefeicaoDAO alimentoRefeicaoDAO = new AlimentoRefeicaoDAO();
+    private final AlimentoRefeicaoDAO alimentoRefeicaoDAO = new AlimentoRefeicaoDAO(this.alimentoDAO, this.refeicaoDAO);
 
     public LoginController() throws SQLException {
         getMenu().setPessoaDAO(pessoaDAO);

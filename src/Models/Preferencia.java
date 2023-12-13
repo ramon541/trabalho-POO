@@ -1,25 +1,20 @@
 package Models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Preferencia {
     protected long id;
-    private static long serial;
     private Pessoa pessoa;
     private Alimento alimento;
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataModificacao;
-
-    public Preferencia() {
-        serial++;
-        this.id = serial;
-        setDataCriacao(Util.getDataAtual());
-    }
+    private LocalDate dataCriacao;
+    private LocalDate dataModificacao;
 
     public long getId() {
         return this.id;
     }
 
+    public void setId(long id) { this.id = id; }
     public Pessoa getPessoa() {
         return pessoa;
     }
@@ -36,19 +31,28 @@ public class Preferencia {
         this.alimento = alimento;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) {
+    public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDateTime getDataModificacao() {
+    public LocalDate getDataModificacao() {
         return dataModificacao;
     }
 
-    public void setDataModificacao(LocalDateTime dataModificacao) {
+    public void setDataModificacao(LocalDate dataModificacao) {
         this.dataModificacao = dataModificacao;
+    }
+
+    @Override
+    public String toString() {
+        String builder="";
+
+        builder+= "ID: " + getId();
+        builder+= "\nNome: " + getAlimento().getNome();
+        return builder;
     }
 }

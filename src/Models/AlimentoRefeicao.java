@@ -20,6 +20,13 @@ public class AlimentoRefeicao {
         this.id = serial;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
     public Refeicao getRefeicao() {
         return refeicao;
     }

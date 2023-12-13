@@ -13,7 +13,7 @@ public class AlimentoPreferenciaController {
     Scanner scan = new Scanner(System.in);
     public AlimentoPreferenciaController(Menus menu, AlimentoDAO alimentoDAO, PreferenciaDAO preferenciaDAO) throws SQLException {
         int opc = 0;
-        while (opc != 5){
+        while (opc != 4){
             opc = menu.alimentoPreferencia();
 
             switch (opc){
@@ -30,28 +30,13 @@ public class AlimentoPreferenciaController {
                     Alimento alimento = alimentoDAO.buscaAlimentoPorId(Long.parseLong(scan.nextLine()));
 
                     if(alimento != null){
-                        boolean alimentoAdicionado = preferenciaDAO.adicionaPreferencia(alimento);
-
-                        if(alimentoAdicionado) {
-                            System.out.println("Alimento adicionado aos preferidos!");
-                        } else {
-                            System.out.println("Não foi possível adicionar o alimento aos preferidos!");
-                        }
+                        preferenciaDAO.adicionaPreferencia(alimento);
                     } else {
                         System.out.println("Não foi possível encontrar o alimento. Verifique se o nome foi digitado corretamente.");
                     }
                     break;
 
                 case 4:
-                    System.out.print("Digite o nome do alimento que deseja remover dos preferidos: ");
-                    boolean preferenciaRemovida = preferenciaDAO.remover(scan.nextLine());
-                    if(preferenciaRemovida) {
-                        System.out.println("Preferência removida.");
-                    } else {
-                        System.out.println("Não foi possível remover dos preferidos.");
-                    }
-                    break;
-                case 5:
                     System.out.println("Voltando...");
                     break;
                 default:
