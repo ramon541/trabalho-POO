@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 public class AvaliacaoFisica {
     protected long id;
-    private static long serial;
     private Pessoa pessoa;
     private double fatorTaxaAtividade;
     private double peso;
@@ -157,7 +156,7 @@ public class AvaliacaoFisica {
     }
 
     public void calcularTMB(){
-        if (pessoa.getSexo().equals("Masculino")){
+        if (pessoa.getSexo().toUpperCase().equals("M")){
             setTmb(this.fatorTaxaAtividade * (66 + ((13.7 * this.peso) + ( 5 * this.altura) - (6.8 * this.idade))));
         }else {
             setTmb(this.fatorTaxaAtividade * (655 + ((9.6 * this.peso) + ( 1.8 * this.altura) - (4.7 * this.idade))));
@@ -165,7 +164,7 @@ public class AvaliacaoFisica {
     }
 
     public void calcularBodyFat(){
-        if(pessoa.getSexo().equals("Masculino")){
+        if(pessoa.getSexo().toUpperCase().equals("M")){
             this.bodyFat = (86.010 * Math.log10(this.cintura - this.pescoco)) - (70.041 * Math.log10(this.altura)) + 36.76;
         }else {
 
@@ -183,7 +182,7 @@ public class AvaliacaoFisica {
                         "Idade: " + this.idade + " anos\n" +
                         "Pescoço: " + this.pescoco + " cm \n" +
                         "Cintura: " + this.cintura + " cm \n";
-        if (pessoa.getSexo().equals("Feminino")){
+        if (pessoa.getSexo().toUpperCase().equals("F")){
             builder += "Quadril: " + this.quadril + " cm \n";
         }
         builder +=
@@ -203,7 +202,7 @@ public class AvaliacaoFisica {
         String semResposta = "Não encontrado";
         double gordCorp = this.bodyFat;
 
-        if (pessoa.getSexo().equals("Masculino")){
+        if (pessoa.getSexo().toUpperCase().equals("M")){
             if (this.idade >= 20 && this.idade <= 29){
                 if (gordCorp < 11) return "Atleta";
                 if (gordCorp >= 11 && gordCorp <= 13) return "Bom";

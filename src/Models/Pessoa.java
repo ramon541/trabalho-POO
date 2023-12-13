@@ -36,7 +36,7 @@ public class Pessoa {
     }
 
     public void setSexo(String sexo) {
-        this.sexo = sexo;
+        this.sexo = sexo.toUpperCase();
     }
 
     public LocalDate getNascimento() {

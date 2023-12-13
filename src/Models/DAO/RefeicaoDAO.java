@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,10 @@ import java.sql.Connection;
 
 
 public class RefeicaoDAO {
+    final DietaDAO dietaDAO;
+
+    public RefeicaoDAO(DietaDAO dietaDAO) { this.dietaDAO = dietaDAO; }
+
     public long adicionaRefeicao(Refeicao refeicao) {
         String sql = "insert into refeicao(nomeRefeicao, dieta, carboidratos, proteinas, gorduras, calorias) values (?,?,?,?,?,?)";
         try (Connection connection = new ConnectionFactory().getConnection();
@@ -37,6 +42,79 @@ public class RefeicaoDAO {
             System.out.println("Gravado!");
             return retorno;
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private PreparedStatement createPreparedStatement(Connection con, long id) throws SQLException {
+        String sql = "select * from refeicao where id = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setLong(1, id);
+        return ps;
+    }
+
+    public Refeicao buscaRefeicaoPorId(long code) {
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement ps = createPreparedStatement(connection, code);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Refeicao refeicao = new Refeicao();
+                refeicao.setId(rs.getLong("id"));
+                refeicao.setNomeDaRefeicao(rs.getString("nomeRefeicao"));
+                refeicao.setDieta(dietaDAO.buscaDietaPorId(rs.getLong("dieta")));
+                refeicao.setCarboidrato(Double.parseDouble(rs.getString("carboidratos")));
+                refeicao.setProteina(Double.parseDouble(rs.getString("proteinas")));
+                refeicao.setGordura(Double.parseDouble(rs.getString("gorduras")));
+                refeicao.setCalorias(Double.parseDouble(rs.getString("calorias")));
+
+                java.sql.Date currentDate = rs.getDate("dataCriacao");
+                LocalDate dataCriacao = currentDate.toLocalDate();
+                refeicao.setDataCriacao(dataCriacao);
+
+                java.sql.Date currentDateMod = rs.getDate("dataAtualizacao");
+                LocalDate dataMod = currentDateMod.toLocalDate();
+                refeicao.setDataModificacao(dataMod);
+
+                return refeicao;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public List<Refeicao> buscaUltimasRefeicoesPorDieta(long idDieta) {
+        String sql = "select * from refeicao where dieta = ? order by id desc limit 4";
+        try (Connection connection = new ConnectionFactory().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+             stmt.setLong(1, idDieta);
+            List<Refeicao> refeicoes = new ArrayList<>();
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Refeicao refeicao = new Refeicao();
+                refeicao.setId(rs.getLong("id"));
+                refeicao.setNomeDaRefeicao(rs.getString("nomeRefeicao"));
+                refeicao.setDieta(dietaDAO.buscaDietaPorId(rs.getLong("dieta")));
+                refeicao.setCarboidrato(Double.parseDouble(rs.getString("carboidratos")));
+                refeicao.setProteina(Double.parseDouble(rs.getString("proteinas")));
+                refeicao.setGordura(Double.parseDouble(rs.getString("gorduras")));
+                refeicao.setCalorias(Double.parseDouble(rs.getString("calorias")));
+
+                java.sql.Date currentDate = rs.getDate("dataCriacao");
+                LocalDate dataCriacao = currentDate.toLocalDate();
+                refeicao.setDataCriacao(dataCriacao);
+
+                java.sql.Date currentDateMod = rs.getDate("dataAtualizacao");
+                LocalDate dataMod = currentDateMod.toLocalDate();
+                refeicao.setDataModificacao(dataMod);
+
+                refeicoes.add(refeicao);
+            }
+            rs.close();
+            stmt.close();
+            Collections.reverse(refeicoes);
+            return refeicoes;
+        }catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
